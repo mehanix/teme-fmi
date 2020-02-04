@@ -1,0 +1,43 @@
+def verif():
+    ok=1
+    s=0
+    #verificare coloane
+    for a in range(0,n):
+        for i in range(0,n*n,n):
+            s+=v[i+a]
+        if s>1:
+            ok=0
+        s=0
+
+    #verificare randuri
+    s=0
+    for i in range(0,n*n):
+        s+=a[i]
+        if i%n==0:
+            if s>1:
+                ok=0
+            s=0
+
+
+
+
+    print(v)
+    return
+
+def back(i):
+    if i==n*n:
+        return verif()
+    v[i] = 1
+    back(i+1)
+    v[i] = 0
+    back(i+1)
+
+
+
+f = open("damesah.in","r")
+n = int(f.read())
+v = [0] * n*n
+cnt=0
+back(0)
+
+f.close()

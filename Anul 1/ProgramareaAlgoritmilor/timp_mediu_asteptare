@@ -1,0 +1,11 @@
+from pathlib import Path
+
+data = [int(x) for x in Path("tis.txt").read_text().split(' ')]
+#data.sort()
+sum = 0
+current = 0
+for x in data:
+    current = current + x
+    sum = sum + current
+
+print(data, sum, sum/len(data))

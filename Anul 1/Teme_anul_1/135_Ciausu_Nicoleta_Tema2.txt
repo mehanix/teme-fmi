@@ -1,0 +1,126 @@
+.data
+ v: .word 3, 4, -2, 6, 7
+ n: .word 5
+ sp: .asciiz " "
+
+.text
+modif: 
+ subu $sp, 4 #salvare cadru de apel
+ sw $fp, 0($sp)     #sp:(fpv)(v*)(n)
+ addi $fp, $sp, 4   #sp:(fpv)fp:(v*)(n)
+ subu $sp, 4        
+ sw $ra, 0($sp)     #sp:(ra)(fpv)fp:(v*)(n)
+ subu $sp, 4
+ sw $s0, 0($sp)     #sp:(s0)(ra)(fpv)fp:(v*)(n)
+ subu $sp, 4
+ sw $s1, 0($sp)     #sp:(s1)(s0)(fpv)fp:(v*)(n)
+
+ lw $s0, 0($fp) # s0 = v
+ lw $s1, 4($fp) # s1 = n
+
+ beqz $s1, exit_modif # 0 elem ramase => iesi din fct
+
+ lw $t0, 0($s0) # t0 = v[0]
+ addi $t0, $t0, -1 #### scadem 1 pt ca ne trebuie suma patratelor mai mici *strict* decat nr din vector ###
+ #pus t0 pe stiva
+ subu $sp, 4
+ sw $t0, 0($sp)
+ 
+ li $v0, 0 #pregatim v0 pt format suma care va fi pasata inapoi #TODO schimba ca e urat
+ jal suma_patrate
+
+ sw $v0, 0($s0)
+ # TODO handle valoare returnata, salveaz-o pe 0($s0)
+ addu $sp, 4 #stergem t0 din stiva
+
+ addi $s0, 4 # v<-v+1 
+ addi $s1, -1 # scade nr de elem ramase
+ 
+ subu $sp, 4 #pune n pe stiva
+ sw $s1, 0($sp)
+ subu $sp, 4 #pune pointer spre v pe stiva
+ sw $s0, 0($sp)
+ jal modif #recursivitate :D
+
+ addu $sp, 8
+
+exit_modif: #restaurare cadru de apel
+
+ lw $s1, -16($fp)
+ lw $s0, -12($fp)
+ lw $ra, -8($fp)
+ lw $fp, -4($fp)
+ addu $sp, 16
+ jr $ra
+
+
+suma_patrate:
+ subu $sp, 4 #salvare cadru de apel
+ sw $fp, 0($sp) #sp:(fpv)(x)
+ addi $fp, $sp, 4 
+
+ subu $sp, 4 #salvez ra, e nevoie de el mai incolo
+ sw $ra, 0($sp) #sp:(ra)(fpv)fp:(x)
+
+ subu $sp, 4 #salvez pe s0
+ sw $s0, 0($sp) # #sp = (s0v)(ra)(fpv)fp:(x)
+ lw $s0, 0($fp) # s0 = x
+ beqz $s0, exit_suma_patrate
+ blt $s0, 0, exit_nr_negativ # < 0 => returnez 0
+ mul $t1, $s0, $s0 # t0 = s0^2
+ add $v0, $v0, $t1 #adauga la suma
+ addi $s0, -1 # s0-=1
+ 
+ #adaugam pe stiva 
+ subu $sp, 4
+ sw $s0, 0($sp) #s0-1
+ jal suma_patrate
+
+ addu $sp, 4 #goleste memorie
+ 
+
+
+exit_suma_patrate:
+ #restaurare cadru de apel
+ lw $s0, -12($fp)
+ lw $ra, -8($fp)
+ lw $fp, -4($fp)
+ addu $sp, 12
+ jr $ra
+
+ exit_nr_negativ:
+ li $v0, 0 #daca e nr negativ pun 0 direct 
+ j exit_suma_patrate
+
+main:
+ lw $t0, n #pune n pe stiva
+ subu $sp, 4 
+ sw $t0, 0($sp)
+
+ la $t0, v # pune pointer spre v pe stiva
+ subu $sp, 4 
+ sw $t0, 0($sp) 
+
+ jal modif #apel functie
+ addu $sp, 8 #goleste stiva
+
+
+ ### afisare ###
+  lw $t0, n # in $t0 retinem dimensiunea
+  li $t1, 0 # contor i
+  li $t2, 0 # $t2 creste din 4 in 4
+
+  loop:
+  bge $t1, $t0, exit 
+  lw $a0, v($t2) # incarcam in $a0 elementul curent
+  li $v0, 1
+  syscall
+  la $a0, sp # incarcam in $a0 adresa spatiului de afisat
+  li $v0, 4 
+  syscall
+  addi $t2, $t2, 4 # $t2 creste din 4 in 4 pentru a accesa memoria
+  addi $t1, $t1, 1 # $t1 se incrementeaza standard
+  j loop # revenim la loop
+ exit:
+ li $v0, 10
+ syscall
