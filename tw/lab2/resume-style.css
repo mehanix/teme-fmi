@@ -1,0 +1,152 @@
+.resume-container {
+    padding: 5px 30px 30px 30px;
+}
+
+.title {
+    margin:0;
+    font-weight: 700;
+    font-family: 'Raleway';
+    font-size: 38px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+
+}
+
+.subtitle {
+   color:#999;
+   margin-bottom: 1em;
+   font-weight: 700;
+   font-family: 'Raleway';
+   font-size: 1.5em;
+   line-height: 1em;
+   text-align: center;
+   text-transform: uppercase;
+
+}
+
+.menu {
+    width: 990px;
+    margin: 80px auto 0 auto;
+    text-align: center;
+}
+
+.menu-item{
+    display:inline-block;
+    margin-right: 10px;
+    margin-left:20px;
+    padding:10px 40px;
+    background-color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    color:#999;
+    vertical-align: bottom;
+}
+
+.menu-item:active {
+    position: relative;
+    bottom: -1px;
+    color:#c0392b;
+    padding:15px 40px;
+    margin-top:0;
+}
+
+hr {
+    margin-top:25px;
+    margin-bottom:25px;
+    border:1px solid #f1f1f1;
+}
+
+
+.resume-title {
+    font-weight: 700;
+    font-family: 'Raleway';
+    font-size:30px;
+}
+
+.resume-subtitle {
+    font-weight: 700;
+    font-family: 'Raleway';
+}
+ .resume-date {
+float:inline-end;
+background-color: rgb(91,192,222);
+
+color:white;
+padding:2px;
+border: 2px solid rgb(91,192,222);
+border-radius: 5px;
+font-size:0.8em;
+}
+
+.resume-date--green {
+    background-color: rgb(92,184,92);
+    border: 2px solid rgb(92,184,92);
+
+
+}
+
+.skills-bg.photoshop,.skills-bg.indesign,.skills-bg.photoshop,.skills-bg.sketch, .skills-bg.linux {
+    background: linear-gradient(24deg, rgba(3,3,89,1) 25%, rgba(9,9,121,1) 25%, rgba(9,9,121,1) 50%, rgba(3,3,89,1) 50%, rgba(3,3,89,1) 75%, rgba(9,9,121,1) 75%, rgba(3,3,89,1) 100%); 
+        padding-right: 30px;    
+        color:white;
+        
+}
+
+.skills-bg.ilustrator, .skills-bg.xd, .skills-bg.office {
+    background: linear-gradient(24deg, rgba(33,192,179,1) 25%, rgba(24,126,125,1) 25%, rgba(24,126,125,1) 50%, rgba(33,192,179,1) 50%, rgba(33,192,179,1) 75%, rgba(24,126,125,1) 75%, rgba(24,126,125,1) 100%);
+    padding-right: 20px;
+    color:white;
+}
+
+.skills-bg.user, .skills-bg.web, .skills-bg.php, .skills-bg.javascript, .skills-bg.python {
+    color:white;
+    padding-right:30px;
+    background: rgb(182,33,192);
+background: linear-gradient(24deg, rgba(182,33,192,1) 25%, rgba(101,24,126,1) 25%, rgba(101,24,126,1) 50%, rgba(182,33,192,1) 50%, rgba(182,33,192,1) 75%, rgba(101,24,126,1) 75%, rgba(101,24,126,1) 100%);
+}
+
+.skills-bg {
+    color:white;
+    padding-right:60px;
+    background: rgb(192,33,39);
+background: linear-gradient(24deg, rgba(192,33,39,1) 25%, rgba(126,24,24,1) 25%, rgba(126,24,24,1) 50%, rgba(192,33,39,1) 50%, rgba(192,33,39,1) 75%, rgba(126,24,24,1) 75%, rgba(126,24,24,1) 100%);
+}
+.skills-item {
+    border:1px solid lightgray;
+    margin:7px 3px;
+    padding:3px 0px;
+    
+}
+
+ul {
+    list-style-type: none;
+  
+    padding: 0;
+  }
+  
+  .resume-title {
+      font-size: 2.5em;
+      font-weight: bolder;
+  }
+
+.resume-aside {
+
+    width:40%;
+    padding:0px 15px;
+}      
+  
+.resume-info {
+    display:inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width:100%;
+}
+
+.menu-item {
+    font-variant: small-caps;
+}
+.fa {
+    padding:5px;
+}
