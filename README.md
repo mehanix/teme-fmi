@@ -1,7 +1,9 @@
-# Facultatea de Matematica si Informatica, Universitatea din Bucuresti 
+# Teme pentru Facultatea de Matematica si Informatica
 
-Aici vei gasi materialele mele de la facultate - teme, proiecte, resurse de invatat si alte chestii. #opensource
-
+Acest repository conține programe scrise de mine în timpul studiilor de licență la [Facultatea de Matematică și Informatică, Universitatea din București.](http://fmi.unibuc.ro/ro/)
 
 Sunt anul I, 2019-2020.
 
+## Continut
+
+TBA
