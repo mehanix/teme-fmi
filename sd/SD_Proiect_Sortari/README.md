@@ -51,7 +51,7 @@ Algoritmul de partitionare folosit este o versiune modificata a algoritmului lui
       * cu i de la left->mid, si j de la mid+1->right, interclasez valorile vectorului vechi
       * copiez valorile inapoi in vectorul original.
   * In viitor, ar trebui sa optimizez si copierea in vectorul original (ceva cu pointeri?) pentru performanta si mai buna.
-3. Python merge fooarte greu, chiar si cu pypy3. Acest proiect a fost scris original in Python, iar acea sursa se poate gasi aici. Nu m-a multumit, asa ca l-am rescris in C++.
+3. Python merge fooarte greu, chiar si cu pypy3. Acest proiect a fost scris original in Python, iar acea sursa [se poate gasi aici](https://github.com/mehanix/teme-fmi/edit/master/sd/SD_Proiect_Sortari_Vechi). Nu m-a multumit, asa ca l-am rescris in C++.
 
 ## Format fisier intrare
 ```
