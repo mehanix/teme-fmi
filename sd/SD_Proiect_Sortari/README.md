@@ -62,4 +62,3 @@ nr_elemente2 val_max2
 ```
 ## Timpi scosi
 ![time](https://i.imgur.com/hqQ8ATC.png)
-![header-img](https://i.imgur.com/7CybjPr.png)
