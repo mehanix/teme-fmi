@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1584558224 source:/home/nix/Desktop/proiect_sd_1/main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<ctime>
+	<chrono>
+	<algorithm>
+
+1584558224 source:/home/nix/Desktop/SD_Proiect_Sortari/main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<ctime>
+	<chrono>
+	<algorithm>
+
