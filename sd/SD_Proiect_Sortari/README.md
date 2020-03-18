@@ -1,9 +1,8 @@
 # SD_Proiect_Sortari
 Tema 1 la Structuri de Date, Anul I Info UniBuc
 
-![header-img](https://i.imgur.com/7CybjPr.png)
-
-> test input: 10^8 elemente din intervalul [0, 10^9)
+![header-img](https://i.imgur.com/5q7HlKk.png)
+> test input: 10^7 elemente din intervalul [0, 10^7)
 
 ## Cerinta temei
 Sa se scrie un program care sorteaza un vector de numere folosind urmatoarele sort-uri:
@@ -63,3 +62,4 @@ nr_elemente2 val_max2
 ```
 ## Timpi scosi
 ![time](https://i.imgur.com/hqQ8ATC.png)
+![header-img](https://i.imgur.com/7CybjPr.png)
