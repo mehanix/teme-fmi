@@ -254,7 +254,8 @@ int main()
 
         fin>>nr_elem>>val_max;
         cout<<"TEST "<<i<<" ======== NR ELEM: "<<nr_elem<<" ======= VAL MAX: "<<val_max<<"\n";
-        cout<<"Generez elementele -------------- ";
+        if(val_max > 0) {
+                cout<<"Generez elementele -------------- ";
         generate_random(v,nr_elem,val_max);
         cout<<"Done!\n";
 
@@ -348,7 +349,7 @@ int main()
         cout<<"Radix sort ------- ";
         v_copy = v;
         begin = chrono::steady_clock::now();
-        result = radix_sort(v_copy,nr_elem,val_max,10);
+        result = (nr_elem > 0) ? radix_sort(v_copy,nr_elem,val_max,10) : "OK";
         end = chrono::steady_clock::now();
         eta = chrono::duration_cast<chrono::milliseconds>(end - begin).count();
         if(result.compare("OK") == 0) {
@@ -370,7 +371,7 @@ int main()
         cout<<"Radix sort ------- ";
         v_copy = v;
         begin = chrono::steady_clock::now();
-        result = radix_sort(v_copy,nr_elem,val_max,256);
+        result = (nr_elem > 0) ? radix_sort(v_copy,nr_elem,val_max,256):"OK";
         end = chrono::steady_clock::now();
         eta = chrono::duration_cast<chrono::milliseconds>(end - begin).count();
         if(result.compare("OK") == 0) {
@@ -388,6 +389,10 @@ int main()
             cout<<result<<"\n";
 
         cout<<"\n\n";
+
+        } else
+        cout<<"ERROR: input makes no sense, skipping (vector cu elemente in range [0,0) )\n\n";
+
     }
     return 0;
 }
