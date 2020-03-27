@@ -49,6 +49,7 @@ void verify(string& word, int nod_curent, int i_char_curent, const int i_char_fi
     ///daca nu s-a mai ajuns aici cu lungimea asta, mergi pe aici///
 	if(matrice_vizitati[nod_curent][current_lg] == false && is_valid == 0) {
 
+
         matrice_vizitati[nod_curent][current_lg] = true;
 
         ///Daca am ajuns intr-un nod marcat ca nod final si la ultimul caracter din cuvant=> cuvant acceptat de automat

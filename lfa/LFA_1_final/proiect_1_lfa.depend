@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1585337827 source:/home/nix/Desktop/teme-fmi/lfa/LFA_1_final/proiect_1_lfa/main.cpp
+	<iostream>
+	<map>
+	<vector>
+	<fstream>
+	<string>
+	<queue>
+	<algorithm>
+
+1585337827 source:/home/nix/Desktop/teme-fmi/lfa/LFA_1_final/main.cpp
+	<iostream>
+	<map>
+	<vector>
+	<fstream>
+	<string>
+	<queue>
+	<algorithm>
+
