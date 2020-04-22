@@ -16,43 +16,34 @@ struct RBNode
     RBNode *p;
 
     bool color;
-
-public:
     // constructor
-    RBNode(int val = 0, RBNode *l = nullptr, RBNode *r = nullptr, RBNode *parent = nullptr, bool c=BLACK) : key(val), left(l), right(r), p(parent), color(c){};
-
-    // flips red <-> black
-    void flipColor()
-    {
-        color = (color == RED) ? BLACK : RED;
-    }
+    RBNode(int val = 0, RBNode *l = nullptr, RBNode *r = nullptr, RBNode *parent = nullptr, bool c = BLACK) : key(val), left(l), right(r), p(parent), color(c){};
 };
 
 class RBTree
 {
-    RBNode *root;
-
-    // nodul null
-    RBNode *nil = new RBNode(-1, nullptr, nullptr, nullptr, BLACK);
 
 public:
-    RBTree();
-    RBTree(int val) //creates tree with val as root value
+    RBNode *root;
+    RBNode *nil;
+
+    RBTree()
     {
-        root = new RBNode(val);
+        nil = new RBNode(-1, nullptr, nullptr, nullptr, BLACK);
+        root = nil;
     }
 
     /// Rotates around node, helps with balancing O(1) (pointer magic)
-    void leftRotate(RBTree *tree, RBNode *x)
+    void leftRotate(RBNode *x)
     {
         // save right subtree of x.
         RBNode *y = x->right;
         // set y's left subtree as x's right subtree.
         x->right = y->left;
-        if (y->left != tree->nil)
+        if (y->left != nil)
             y->left->p = x;
-        if (x->p == tree->nil)
-            tree->root = y;
+        if (x->p == nil)
+            root = y;
         else if (x == x->p->left)
             x->p->left = y;
         else
@@ -61,25 +52,25 @@ public:
         x->p = y;
     }
 
-    void rightRotate(RBTree *tree, RBNode *x)
+    void rightRotate(RBNode *x)
     {
         RBNode *y = x->left;
         x->left = y->right;
-        if (y->right != tree->nil)
+        if (y->right != nil)
             y->right->p = x;
-        if (x->p == tree->nil)
-            tree->root = y;
+        if (x->p == nil)
+            root = y;
         else if (x == x->p->right)
             x->p->right = y;
         y->right = x;
         x->p = y;
     }
 
-    void insert(RBTree *tree, RBNode *z)
+    void insert(RBNode *z)
     {
-        RBNode *y = tree->nil;
+        RBNode *y = nil;
         RBNode *x = root;
-        while (x != tree->nil)
+        while (x != nil)
         {
             y = x;
             if (z->key < x->key)
@@ -88,20 +79,20 @@ public:
                 x = x->right;
         }
         z->p = y;
-        if (y == tree->nil)
-            tree->root = z;
+        if (y == nil)
+            root = z;
         else if (z->key < y->key)
             y->left = z;
         else
             y->right = z;
-        z->left = tree->nil;
-        z->right = tree->nil;
+        z->left = nil;
+        z->right = nil;
         z->color = RED;
     }
 
-    void insert_fix(RBTree *tree, RBNode *z)
+    void insert_fix(RBNode *z)
     {
-        RBNode* y;
+        RBNode *y;
         if (z->p == z->p->p->left)
         {
             y = z->p->p->right;
@@ -115,11 +106,11 @@ public:
             else if (z == z->p->right)
             {
                 z = z->p;
-                leftRotate(tree, z);
+                leftRotate(z);
             }
             z->p->color = BLACK;
             z->p->p->color = RED;
-            rightRotate(tree, z->p->p);
+            rightRotate(z->p->p);
         }
         else
         {
@@ -134,19 +125,73 @@ public:
             else if (z == z->p->left)
             {
                 z = z->p;
-                rightRotate(tree, z);
+                rightRotate(z);
             }
             z->p->color = BLACK;
             z->p->p->color = RED;
-            leftRotate(tree, z->p->p);
+            leftRotate(z->p->p);
         }
-        tree->root->color = BLACK;
+        root->color = BLACK;
     }
-    RBNode* minimum(RBNode* z) {};
-    void transplant(RBTree *tree, RBNode *u, RBNode *v)
+
+    RBNode *minimum(RBNode *z)
     {
-        if (u->p == tree->nil)
-            tree->root = v;
+        while (z->left != nil)
+        {
+            z = z->left;
+        }
+        return z;
+    };
+
+    int succesor(int val)
+    {
+
+        int last = -1;
+        RBNode *x = root;
+        while (x != nil)
+        {
+            if (x->key == val)
+                return val;
+
+            else if (val < x->key)
+            {
+                last = x->key;
+                x = x->left;
+            }
+            else
+            {
+                x = x->right;
+            }
+        }
+        return last;
+    }
+
+    int predecesor(int val)
+    {
+        int last = -1;
+        RBNode *x = root;
+        while (x != nil)
+        {
+            if (x->key == val)
+                return val;
+
+            else if (val < x->key)
+            {
+                x = x->left;
+            }
+            else
+            {
+                last = x->key;
+                x = x->right;
+            }
+        }
+        return last;
+    }
+
+    void transplant(RBNode *u, RBNode *v)
+    {
+        if (u->p == nil)
+            root = v;
         else if (u == u->p->left)
             u->p->left = v;
         else
@@ -154,44 +199,188 @@ public:
         v->p = u->p;
     }
 
-    void rbDelete(RBTree* tree, RBNode* z) 
+    void rbDelete(RBNode *z)
     {
-        RBNode* y = z;
-        RBNode* x;
+        RBNode *y = z;
+        RBNode *x;
         bool y_originalColor = y->color;
 
-        if(z->left == tree->nil)
+        if (z->left == nil)
         {
             x = z->right;
-            transplant(tree,z,z->right);
+            transplant(z, z->right);
         }
-        else if (z->right == tree->nil) 
+        else if (z->right == nil)
         {
             x = z->left;
-            transplant(tree,z,z->left);
+            transplant(z, z->left);
         }
-        else {
+        else
+        {
             y = minimum(z->right);
             y_originalColor = y->color;
             x = y->right;
-            if(y->p == z)
+            if (y->p == z)
                 x->p = y;
-            else {
-                transplant(tree,y,y->right);
+            else
+            {
+                transplant(y, y->right);
                 y->right = z->right;
                 y->right->p = y;
             }
-            transplant(tree,z,y);
+            transplant(z, y);
             y->left = z->left;
             y->left->p = y;
             y->color = z->color;
         }
-        //if(y_originalColor == BLACK)
-            //delete_fix(tree,x);
+        if (y_originalColor == BLACK)
+            delete_fix(x);
+    }
+
+    void delete_fix(RBNode *x)
+    {
+        while (x != root && x->color == BLACK)
+        {
+            if (x == x->p->left)
+            {
+                RBNode *w = x->p->right;
+                if (w->color == RED)
+                {
+                    leftRotate(x->p);
+                    w = x->p->right;
+                }
+                if (w->left->color == BLACK && w->right->color == BLACK)
+                {
+                    w->color = RED;
+                    x = x->p;
+                }
+                else if (w->right->color == BLACK)
+                {
+                    w->left->color = BLACK;
+                    w->color = RED;
+                    rightRotate(w);
+                    w = x->p->right;
+                }
+                w->color = x->p->color;
+                x->p->color = BLACK;
+                w->right->color = BLACK;
+                leftRotate(x->p);
+                x = root;
+            }
+            else
+            {
+                RBNode *w = x->p->left;
+                if (w->color == RED)
+                {
+                    rightRotate(x->p);
+                    w = x->p->left;
+                }
+                if (w->right->color == BLACK && w->left->color == BLACK)
+                {
+                    w->color = RED;
+                    x = x->p;
+                }
+                else if (w->left->color == BLACK)
+                {
+                    w->right->color = BLACK;
+                    w->color = RED;
+                    leftRotate(w);
+                    w = x->p->left;
+                }
+                w->color = x->p->color;
+                x->p->color = BLACK;
+                w->left->color = BLACK;
+                rightRotate(x->p);
+                x = root;
+            }
+        }
+        x->color = BLACK;
+    }
+
+    void print(RBNode *poz)
+    {
+        if (poz == nil)
+            return;
+        print(poz->left);
+        cout << poz->key << '\n';
+        print(poz->right);
+    }
+
+    RBNode *find(int val)
+    {
+        RBNode *poz = root;
+        while (poz != nil)
+        {
+            if (poz->key == val)
+                return poz;
+            else if (val < poz->key)
+            {
+                poz = poz->left;
+            }
+            else
+            {
+                poz = poz->right;
+            }
+        }
+        return nil;
+    }
+
+    void interval(int left, int right)
+    {
+        int current = succesor(left);
+        while (current <= right)
+        {
+            cout << current << ' ';
+            current = succesor(current + 1);
+        }
+    }
+
+    int del(int val)
+    {
+        int count = 0;
+        RBNode *found = find(val);
+        while (found != nil)
+        {
+            count++;
+            rbDelete(found);
+            found = find(val);
+        }
+        return count;
     }
 };
 
 int main()
 {
-    cout << "hello";
+    int n;
+    cin >> n;
+    RBTree tree = RBTree();
+    for (int i = 0; i < n; i++)
+    {
+        int q, val;
+        cin >> q >> val;
+        switch (q)
+        {
+        case 1:
+            tree.insert(new RBNode(val));
+            break;
+        case 2:
+            cout << tree.del(val) << "\n";
+            break;
+        case 3:
+            cout << (tree.find(val) != tree.nil) << "\n";
+            break;
+        case 4:
+            cout << tree.succesor(val) << "\n";
+            break;
+        case 5:
+            cout << tree.predecesor(val) << "\n";
+            break;
+        case 6:
+            int val2;
+            cin >> val2;
+            tree.interval(val, val2);
+            break;
+        }
+    }
+    tree.print(tree.root);
 };
