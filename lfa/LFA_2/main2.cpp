@@ -137,18 +137,18 @@ Automata lambdaNFAtoNFA(Automata &a)
                 deltaStariFinale.insert(i);
     }
 
-    cout << "DeltaStariFinale:";
-    for (auto &x : deltaStariFinale)
-        cout << x << ' ';
-    cout << "\n";
+    // cout << "DeltaStariFinale:";
+    // for (auto &x : deltaStariFinale)
+    //     cout << x << ' ';
+    // cout << "\n";
 
-    //afisare
-    for (int i = 0; i < a.nrStari; i++)
-    {
-        for (auto &x : a.lambdaInchidere[i])
-            cout << x << " ";
-        cout << '\n';
-    }
+    // //afisare
+    // for (int i = 0; i < a.nrStari; i++)
+    // {
+    //     for (auto &x : a.lambdaInchidere[i])
+    //         cout << x << " ";
+    //     cout << '\n';
+    // }
 
     /*2. calculez deltaStar. iau fiecare nod din automat*/
 
@@ -180,18 +180,18 @@ Automata lambdaNFAtoNFA(Automata &a)
     int newStates[a.nrStari];
     fill(newStates, newStates + a.nrStari, -1);
 
-    for (int i = 0; i < a.nrStari; i++)
-    {
-        cout << i << ":";
-        for (auto &ch : a.alfabet)
-        {
-            cout << ch << ":";
-            for (auto &x : deltaStar[i][a.encoding[ch]])
-                cout << x << ' ';
-            cout << '\n';
-        }
-        cout << '\n';
-    }
+    // for (int i = 0; i < a.nrStari; i++)
+    // {
+    //     cout << i << ":";
+    //     for (auto &ch : a.alfabet)
+    //     {
+    //         cout << ch << ":";
+    //         for (auto &x : deltaStar[i][a.encoding[ch]])
+    //             cout << x << ' ';
+    //         cout << '\n';
+    //     }
+    //     cout << '\n';
+    // }
     //verific fiecare cu fiecare
     map<int, int> rename;
     int nod = 0;
@@ -263,23 +263,23 @@ Automata lambdaNFAtoNFA(Automata &a)
                     nfa.nrMuchii++;
                 }
     }
-    cout << '\n';
+    //cout << '\n';
 
-    for (int i = 0; i < nfa.nrStari; i++)
-    {
-        cout << i << ":\n";
-        for (auto &ch : nfa.alfabet)
-        {
-            if (ch != LAMBDA)
-            {
-                cout << ch << ":";
-                for (auto &x : nfa.delta[i][a.encoding[ch]])
-                    cout << x << ' ';
-                cout << '\n';
-            }
-        }
-        cout << '\n';
-    }
+    // for (int i = 0; i < nfa.nrStari; i++)
+    // {
+    //     cout << i << ":\n";
+    //     for (auto &ch : nfa.alfabet)
+    //     {
+    //         if (ch != LAMBDA)
+    //         {
+    //             cout << ch << ":";
+    //             for (auto &x : nfa.delta[i][a.encoding[ch]])
+    //                 cout << x << ' ';
+    //             cout << '\n';
+    //         }
+    //     }
+    //     cout << '\n';
+    // }
 
     //stari finale
     nfa.nrStariFinale = 0;
@@ -358,6 +358,153 @@ Automata NFAtoDFA(Automata &a)
     return dfa;
 }
 
+bool mat[NRMAX][NRMAX];
+Automata DFAtoDFAmin(Automata &a)
+{
+    auto print = [=]() {
+        for (int i = 0; i < a.nrStari; i++)
+        {
+            for (int j = 0; j < i; j++)
+                cout << mat[i][j] << ' ';
+            cout << '\n';
+        }
+    };
+
+    for (int i = 0; i < a.nrStari; i++)
+        for (int j = 0; j < a.nrStari; j++)
+            mat[i][j] = true;
+
+    //marchez perechi diferite
+    for (int i = 0; i < a.nrStari; i++)
+        for (int j = 0; j < i; j++)
+        {
+            if (a.stariFinale[i] != a.stariFinale[j])
+            {
+                mat[i][j] = false;
+                mat[j][i] = false;
+            }
+        }
+
+    bool modified;
+    do
+    {
+        modified = false;
+        for (int i = 0; i < a.nrStari; i++)
+            for (int j = 0; j < i; j++)
+            {
+                bool isFalse = false;
+
+                for (auto &ch : a.alfabet)
+                {
+                    if (a.delta[i][a.encoding[ch]].size() == 0 || a.delta[j][a.encoding[ch]].size() == 0)
+                        continue;
+                    int x = *a.delta[i][a.encoding[ch]].begin();
+                    int y = *a.delta[j][a.encoding[ch]].begin();
+                    if (x < y)
+                        swap(x, y);
+                    if (mat[x][y] == false)
+                    {
+                        isFalse = true;
+                    }
+                }
+                if (isFalse == true && mat[i][j] == true)
+                {
+                    modified = true;
+                    mat[i][j] = false;
+                    break;
+                }
+
+                if (modified)
+                    break;
+            }
+    } while (modified == true);
+
+    // pas 2
+    vector<set<int>> multimi;
+    for (int i = 0; i < a.nrStari; i++)
+    {
+        bool foundOne = false;
+
+        for (int j = 0; j < i; j++)
+        {
+            if (mat[i][j] == true)
+            {
+                for (auto &s : multimi)
+                {
+                    if (s.find(j) != s.end())
+                    {
+                        s.insert(i);
+                        foundOne = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (foundOne == false)
+        {
+            set<int> aux;
+            aux.insert(i);
+            multimi.push_back(aux);
+        }
+    }
+
+    Automata dfaMin;
+    dfaMin.alfabet = a.alfabet;
+    dfaMin.encoding = a.encoding;
+
+    memset(dfaMin.stariFinale, false, sizeof(dfaMin.stariFinale));
+
+    for (int i = 0; i < multimi.size(); i++)
+    {
+        for (auto &ch : a.alfabet)
+        {
+            set<int> temp;
+            for (auto &x : multimi[i])
+            {
+                bool found = false;
+                if (a.delta[x][a.encoding[ch]].size() > 0)
+                {
+                    for (int j = 0; j < multimi.size(); j++)
+                        if (multimi[j].find(*(a.delta[x][a.encoding[ch]].begin())) != multimi[j].end())
+                        {
+                            found = true;
+                            dfaMin.delta[i][a.encoding[ch]].insert(j);
+                            // cout << i << "->" << j << ' ' << ch << '\n';
+                            break;
+                        }
+                }
+                if (found)
+                    break;
+                //temp.insert(*(a.delta[x][a.encoding[ch]].begin()));
+            }
+            // for (int j = 0; j < multimi.size(); j++)
+            //     if (multimi[j] == temp)
+            //     {
+            //         dfaMin.delta[i][a.encoding[ch]].insert(j);
+            //         cout << i << "->" << j << '\n';
+            //     }
+        }
+    }
+    dfaMin.nrStari = multimi.size();
+    //pasul 3
+
+    for (int i = 0; i < multimi.size(); i++)
+    {
+        for (int j = 0; j < a.nrStari; j++)
+        {
+            if (a.stariFinale[j] == true)
+                if (multimi[i].find(j) != multimi[i].end() && dfaMin.stariFinale[i] == false)
+                {
+                    dfaMin.stariFinale[i] = true;
+                    dfaMin.nrStariFinale++;
+                }
+        }
+
+        if (multimi[i].find(a.stareInitiala) != multimi[i].end())
+            dfaMin.stareInitiala = i;
+    }
+    return dfaMin;
+}
 int main()
 {
     Automata a;
@@ -367,7 +514,8 @@ int main()
     // populeaza automatul
     a.load();
     a.afisare();
-    a = lambdaNFAtoNFA(a);
+    //a = lambdaNFAtoNFA(a);
     //a = NFAtoDFA(a);
+    a = DFAtoDFAmin(a);
     a.afisare();
 }
