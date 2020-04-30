@@ -503,6 +503,79 @@ Automata DFAtoDFAmin(Automata &a)
         if (multimi[i].find(a.stareInitiala) != multimi[i].end())
             dfaMin.stareInitiala = i;
     }
+
+    //pasul 4
+    for (int i = 0; i < dfaMin.nrStari; i++)
+    {
+        queue<int> q;
+        bool viz[dfaMin.nrStari];
+        memset(viz, false, dfaMin.nrStari);
+        q.push(i);
+        viz[i] = true;
+        bool deadEnd = true;
+        while (!q.empty() && deadEnd)
+        {
+            int current = q.front();
+            if (dfaMin.stariFinale[current] == true)
+                deadEnd = false;
+            q.pop();
+            for (auto &ch : dfaMin.alfabet)
+            {
+                if (dfaMin.delta[current][dfaMin.encoding[ch]].empty())
+                    continue;
+                int aux = *dfaMin.delta[current][dfaMin.encoding[ch]].begin();
+                if (!viz[aux])
+                {
+                    q.push(aux);
+                    viz[aux] = true;
+                }
+            }
+        }
+        if (deadEnd)
+        {
+            for (int w = 0; w < dfaMin.nrStari; w++)
+            {
+                for (auto &ch : dfaMin.alfabet)
+                {
+                    dfaMin.delta[w][ch].erase(i);
+                }
+            }
+        }
+    }
+
+    //pasul 5
+    {
+        queue<int> q;
+        bool viz[dfaMin.nrStari];
+        memset(viz, false, dfaMin.nrStari);
+        q.push(dfaMin.stareInitiala);
+        viz[dfaMin.stareInitiala] = true;
+        while (!q.empty())
+        {
+            int current = q.front();
+            q.pop();
+            for (auto &ch : dfaMin.alfabet)
+            {
+                if (dfaMin.delta[current][dfaMin.encoding[ch]].empty())
+                    continue;
+                int aux = *dfaMin.delta[current][dfaMin.encoding[ch]].begin();
+                if (!viz[aux])
+                {
+                    q.push(aux);
+                    viz[aux] = true;
+                }
+            }
+        }
+
+        for (int w = 0; w < dfaMin.nrStari; w++)
+        {
+            if (viz[w] == false)
+                for (auto &ch : dfaMin.alfabet)
+                {
+                    dfaMin.delta[w][ch].clear();
+                }
+        }
+    }
     return dfaMin;
 }
 int main()
