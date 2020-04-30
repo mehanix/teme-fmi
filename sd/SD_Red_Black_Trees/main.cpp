@@ -6,6 +6,9 @@
 
 using namespace std;
 
+ifstream fin("abce.in");
+ofstream fout("abce.out");
+
 struct RBNode
 {
     int key; // valoarea nodului
@@ -33,7 +36,7 @@ public:
         root = nil;
     }
 
-    /// Rotates around node, helps with balancing O(1) (pointer magic)
+    /// Rotates around node, helps with balan fing O(1) (pointer magic)
     void leftRotate(RBNode *x)
     {
         // save right subtree of x.
@@ -246,6 +249,8 @@ public:
                 RBNode *w = x->p->right;
                 if (w->color == RED)
                 {
+                    w->color = BLACK;
+                    x->p->color = RED;
                     leftRotate(x->p);
                     w = x->p->right;
                 }
@@ -254,24 +259,29 @@ public:
                     w->color = RED;
                     x = x->p;
                 }
-                else if (w->right->color == BLACK)
+                else
                 {
-                    w->left->color = BLACK;
-                    w->color = RED;
-                    rightRotate(w);
-                    w = x->p->right;
+                    if (w->right->color == BLACK)
+                    {
+                        w->left->color = BLACK;
+                        w->color = RED;
+                        rightRotate(w);
+                        w = x->p->right;
+                    }
+                    w->color = x->p->color;
+                    x->p->color = BLACK;
+                    w->right->color = BLACK;
+                    leftRotate(x->p);
+                    x = root;
                 }
-                w->color = x->p->color;
-                x->p->color = BLACK;
-                w->right->color = BLACK;
-                leftRotate(x->p);
-                x = root;
             }
             else
             {
                 RBNode *w = x->p->left;
                 if (w->color == RED)
                 {
+                    w->color = BLACK;
+                    x->p->color = RED;
                     rightRotate(x->p);
                     w = x->p->left;
                 }
@@ -280,18 +290,21 @@ public:
                     w->color = RED;
                     x = x->p;
                 }
-                else if (w->left->color == BLACK)
+                else
                 {
-                    w->right->color = BLACK;
-                    w->color = RED;
-                    leftRotate(w);
-                    w = x->p->left;
+                    if (w->left->color == BLACK)
+                    {
+                        w->right->color = BLACK;
+                        w->color = RED;
+                        leftRotate(w);
+                        w = x->p->left;
+                    }
+                    w->color = x->p->color;
+                    x->p->color = BLACK;
+                    w->left->color = BLACK;
+                    rightRotate(x->p);
+                    x = root;
                 }
-                w->color = x->p->color;
-                x->p->color = BLACK;
-                w->left->color = BLACK;
-                rightRotate(x->p);
-                x = root;
             }
         }
         x->color = BLACK;
@@ -302,7 +315,7 @@ public:
         if (poz == nil)
             return;
         print(poz->left);
-        cout << poz->key << '\n';
+        fout << poz->key << '\n';
         print(poz->right);
     }
 
@@ -328,11 +341,15 @@ public:
     void interval(int left, int right)
     {
         int current = succesor(left);
-        while (current <= right)
+        while (current <= right && current != -1)
         {
-            cout << current << ' ';
+            if (find(current) != nil)
+            {
+                fout << current << ' ';
+            }
             current = succesor(current + 1);
         }
+        fout << '\n';
     }
 
     int del(int val)
@@ -352,35 +369,37 @@ public:
 int main()
 {
     int n;
-    cin >> n;
+    fin >> n;
     RBTree tree = RBTree();
     for (int i = 0; i < n; i++)
     {
         int q, val;
-        cin >> q >> val;
+        fin >> q >> val;
         switch (q)
         {
         case 1:
             tree.insert(new RBNode(val));
             break;
         case 2:
-            cout << tree.del(val) << "\n";
+            // fout << tree.del(val) << "\n";
+            tree.del(val);
             break;
         case 3:
-            cout << (tree.find(val) != tree.nil) << "\n";
-            break;
-        case 4:
-            cout << tree.succesor(val) << "\n";
+            fout << (tree.find(val) != tree.nil) << "\n";
             break;
         case 5:
-            cout << tree.predecesor(val) << "\n";
+            fout << tree.succesor(val) << "\n";
+            break;
+        case 4:
+            fout << tree.predecesor(val) << "\n";
             break;
         case 6:
             int val2;
-            cin >> val2;
+            fin >> val2;
             tree.interval(val, val2);
             break;
         }
     }
-    tree.print(tree.root);
+    fin.close();
+    fout.close();
 };

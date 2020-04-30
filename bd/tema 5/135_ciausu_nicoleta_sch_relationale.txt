@@ -1,0 +1,9 @@
+Orase(id_oras#,nume_oras)
+Depozit(id_depozit#,nume_depozit,id_oras,adresa_depozit)
+Produse_stoc_depozit(id_stoc_produs#,id_depozit,id_produs,cantitate,pret)
+Produse(id_produs#,nume_produs,descriere_produs)
+Comenzi_furnizori(id_comanda_fur#,id_produs,id_furnizor,cantitate)
+Furnizori(id_furnizor#,nume_furnizor,nume_persoana
+Comenzi_magazine(id_comanda_mag#,id_produs,id_magazin,cantitate)
+Magazine(id_magazin#,nume_magazin,nume_reprezentant,nr_telefon)
+Angajati(id_angajat#,nume_angajat,id_depozit,job,salariu)

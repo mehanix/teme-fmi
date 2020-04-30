@@ -6,6 +6,7 @@
 #include <map>
 #include <algorithm>
 #include <string>
+#include <cstring>
 using namespace std;
 ifstream f("automat.in");
 
@@ -43,8 +44,8 @@ struct Automata
             alfabet.insert(c);
         }
         f >> stareInitiala >> nrStariFinale;
-
-        for (int aux, i = 0; i < nrStariFinale; i++)
+        int aux;
+        for (int i = 0; i < nrStariFinale; i++)
         {
             f >> aux;
             stariFinale[aux] = true;
@@ -259,6 +260,7 @@ void NFAtoDFA(Automata &a)
 {
     Automata b;
     vector<set<int>> q;
+    memset(b.stariFinale, false, NRMAX);
     set<int> t;
     t.insert(a.stareInitiala);
     q.push_back(t);
@@ -341,10 +343,27 @@ void NFAtoDFA(Automata &a)
     b.nrStari = count;
 
     b.stareInitiala = a.stareInitiala;
+
     for (auto &x : a.stariFinale)
     {
         b.stariFinale[x] = true;
     }
+    for (int i = 0; i < b.nrStari; i++)
+        cout << b.stariFinale[i];
+    cout << endl;
+    //marchez starile noi ca finale sau nu
+    for (int i = 0; i < b.nrStari; i++)
+    {
+        for (auto &ch : a.alfabet)
+        {
+            for (auto &x : b.delta[i][a.encoding[ch]])
+                if (b.stariFinale[x] == true)
+                    b.stariFinale[i] = true;
+        }
+        cout << '\n';
+    }
+    for (int i = 0; i < b.nrStari; i++)
+        cout << b.stariFinale[i];
 
     // a = b;
     for (int i = 0; i < b.nrStari; i++)

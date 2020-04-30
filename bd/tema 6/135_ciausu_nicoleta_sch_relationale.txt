@@ -1,0 +1,8 @@
+Angajati(id_angajat,nume,prenume,CNP,job,id_hotel)
+Hotel(id_hotel,nume_hotel,adresa_hotel,oras)
+Camera(id_camera,numar_camera,id_hotel,id_tip_camera)
+Tip_camera(id_tip_camera,descriere,tarif,capacitate)
+Rezervari(id_rezervare,data_check_in,data_check_out,id_client)
+Clienti(id_client,nume_client,CNP)
+Camere_Rezervate(id_camera_rezervata,id_camera,id_rezervare)
+

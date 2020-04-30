@@ -1,0 +1,22 @@
+1. Proiecte in algebra relationala
+Sa se obtina o lista ce contine numele angatului, tipul jobului, si codul hotelului in care e angajat.
+
+Rezultat = PROJECT(Angajati,nume,job,id_hotel)
+
+Select nume,job,id_hotel from Angajati;
+
+2.Operatorul join in algebra relationala
+
+Sa se obtina informatii referitoare la clienti si rezervarile lor.
+R = SELECT(Rezervari)
+S = SELECT(clienti)
+Rezultat = JOIN(R, S)
+
+select * from rezervari natural join clienti;
+
+3. Selectie in algebra relationala
+Sa se obtina informatii complete despre camerele cu capacitatea 3;
+
+Rezultat = SELECT(Rezervari, capacitate = 3)
+
+select * from tip_camera where capacitate = 3;
