@@ -69,8 +69,9 @@ void generateCharacters(Automata &a)
 bool isEqual(int q1, int q2, set<int> delta[NRMAX][LENALFA], Automata &a)
 {
     for (auto &c : a.alfabet)
-        if (!(delta[q1][a.encoding[c]] == delta[q2][a.encoding[c]]))
-            return false;
+        if (c != LAMBDA)
+            if (!(delta[q1][a.encoding[c]] == delta[q2][a.encoding[c]]))
+                return false;
     return true;
 }
 
@@ -157,28 +158,43 @@ void lambdaNFAtoNFA(Automata &a)
         }
     }
 
-   
     /*4.1 gasesc stari redundante*/
-    int newStates[a.nrStari] = {-1};
+    int newStates[a.nrStari];
+    fill(newStates, newStates + a.nrStari, -1);
 
-    //algoritmul secolului
-    for (int i = 0; i < a.nrStari - 1; i++)
+    for (int i = 0; i < a.nrStari; i++)
     {
-        bool isDifferent = true;
+        cout << i << ":";
+        for (auto &ch : a.alfabet)
+        {
+            cout << ch << ":";
+            for (auto &x : deltaStar[i][a.encoding[ch]])
+                cout << x << ' ';
+            cout << '\n';
+        }
+        cout << '\n';
+    }
+    //algoritmul secolului
+    for (int i = 0; i < a.nrStari; i++)
+    {
+        if (newStates[i] != -1)
+            continue;
+
         for (int j = i + 1; j < a.nrStari; j++)
         {
             //daca starea j identica cu starea i pt fiecare litera din alfabet
             if (isEqual(i, j, deltaStar, a))
             {
-                isDifferent = false;
                 // i < j -> toate aparitiile lui j devin i
                 newStates[j] = i;
             }
         }
         // daca e unica, se pastreaza
-        if (isDifferent)
-            newStates[i] = i;
+        newStates[i] = i;
     }
+
+    for (auto &x : newStates)
+        cout << x << ' ';
 
     /*4.2 elimin stari redundante*/
 
@@ -189,17 +205,28 @@ void lambdaNFAtoNFA(Automata &a)
         // iau fiecare litera
         for (auto &ch : a.alfabet)
         {
+            set<int> temp;
             //iau fiecare element din set
-            for (int j = 0; j < deltaStar[i][a.encoding[ch]].size(); j++)
+            for (auto &j : deltaStar[i][a.encoding[ch]])
             {
-                deltaStar[i][a.encoding[ch]].erase(j);
-                deltaStar[i][a.encoding[ch]].insert(newStates[j]);
+                //deltaStar[i][a.encoding[ch]].erase(j);
+                //deltaStar[i][a.encoding[ch]].insert(newStates[j]);
+                temp.insert(newStates[j]);
             }
+            deltaStar[i][a.encoding[ch]] = temp;
         }
     }
 
-    // set<int> nfa[NRMAX][LENALFA];
     Automata nfa;
+    nfa.alfabet = a.alfabet;
+    nfa.encoding = a.encoding;
+    //nfa.lambdaInchidere = a.lambdaInchidere;
+    nfa.nrMuchii = a.nrMuchii;
+    nfa.nrStari = a.nrStari;
+    nfa.nrStariFinale = a.nrStariFinale;
+    nfa.stareInitiala = a.stareInitiala;
+    //nfa.stariFinale = a.stariFinale;
+
     for (int i = 0; i < a.nrStari; i++)
     {
         // copiem deltaStar in nfa, ignorand starile redundante
@@ -208,6 +235,23 @@ void lambdaNFAtoNFA(Automata &a)
                 nfa.delta[i][a.encoding[ch]] = deltaStar[i][a.encoding[ch]];
     }
     a = nfa;
+    cout << '\n';
+
+    for (int i = 0; i < nfa.nrStari; i++)
+    {
+        cout << i << ":\n";
+        for (auto &ch : nfa.alfabet)
+        {
+            if (ch != LAMBDA)
+            {
+                cout << ch << ":";
+                for (auto &x : nfa.delta[i][a.encoding[ch]])
+                    cout << x << ' ';
+                cout << '\n';
+            }
+        }
+        cout << '\n';
+    }
 }
 
 /*turns NFA to DFA */
@@ -230,6 +274,7 @@ void NFAtoDFA(Automata &a)
         map<char, set<int>> temp;
         for (auto &x : current)
         {
+            cout << x << ' ';
             if (a.stariFinale[x] == true)
             {
                 isFinalState = true;
@@ -246,7 +291,7 @@ void NFAtoDFA(Automata &a)
         for (auto it = temp.begin(); it != temp.end(); ++it)
         {
             // daca nu e deja tratata
-            if (find(q.begin(), q.end(), it->second) != q.end())
+            if (find(q.begin(), q.end(), it->second) == q.end())
             {
                 //adauga starea noua in queue
                 q.push_back(it->second);
@@ -288,6 +333,6 @@ int main()
     // populeaza automatul
     a.load();
 
-    lambdaNFAtoNFA(a);
-    //NFAtoDFA(a);
+    //lambdaNFAtoNFA(a);
+    NFAtoDFA(a);
 }
