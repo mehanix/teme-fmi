@@ -202,6 +202,10 @@ Automata lambdaNFAtoNFA(Automata &a)
 
         for (int j = i + 1; j < a.nrStari; j++)
         {
+            //if (a.stariFinale[i] != a.stariFinale[j])
+            //    continue;
+            // if (a.stareInitiala == i || a.stareInitiala == j)
+            //    continue;
             //daca starea j identica cu starea i pt fiecare litera din alfabet
             if (isEqual(i, j, deltaStar, a))
             {
@@ -587,8 +591,8 @@ int main()
     // populeaza automatul
     a.load();
     a.afisare();
-    //a = lambdaNFAtoNFA(a);
+    a = lambdaNFAtoNFA(a);
     //a = NFAtoDFA(a);
-    a = DFAtoDFAmin(a);
+    //a = DFAtoDFAmin(a);
     a.afisare();
 }
