@@ -263,54 +263,90 @@ void NFAtoDFA(Automata &a)
     t.insert(a.stareInitiala);
     q.push_back(t);
     int index = 0;
+    int count = 0;
+    map<set<int>, int> states;
     while (index < q.size())
     {
         // iau starea curent
         set<int> current = q[index];
-        bool isFinalState = false;
-        b.nrStari++;
-
-        // iau fiecare elem din starea curenta
-        map<char, set<int>> temp;
-        for (auto &x : current)
+        if (!current.empty())
         {
-            cout << x << ' ';
-            if (a.stariFinale[x] == true)
+            cout << count << ". pentru ";
+            for (auto &c : current)
             {
-                isFinalState = true;
+                cout << c << " ";
             }
+            cout << '\n';
+
+            bool isFinalState = false;
+            b.nrStari++;
+
+            // iau fiecare elem din starea curenta
+            map<char, set<int>> temp;
+
+            for (auto &x : current)
+            {
+                if (a.stariFinale[x] == true)
+                {
+                    isFinalState = true;
+                }
+                for (auto &ch : a.alfabet)
+                {
+                    for (auto &n : a.delta[x][a.encoding[ch]])
+                    {
+                        // cout << "cu " << ch << " ajung in " << n << "\n";
+                        temp[ch].insert(n);
+                    }
+                }
+            }
+            cout << "temp\n";
             for (auto &ch : a.alfabet)
             {
-                temp[ch].insert(a.delta[x][a.encoding[ch]].begin(), a.delta[x][a.encoding[ch]].end());
-            }
-        }
-
-        //iterez prin starile noi
-
-        //daca n-a mai fost starea pana acum o adaugam
-        for (auto it = temp.begin(); it != temp.end(); ++it)
-        {
-            // daca nu e deja tratata
-            if (find(q.begin(), q.end(), it->second) == q.end())
-            {
-                //adauga starea noua in queue
-                q.push_back(it->second);
-                //adauga in automat
-                for (auto &x : it->second)
+                cout << ch;
+                for (auto &s : temp[ch])
                 {
-                    b.delta[index][it->first].insert(x);
-                    cout << x << " ";
+                    cout << s;
                 }
-                cout << '\n';
+                cout << "\n";
             }
-            index++;
-            b.nrStariFinale += isFinalState;
-            b.stariFinale[index] = isFinalState;
-        }
-    }
-    b.stareInitiala = a.stareInitiala;
+            cout << "\n";
 
-    a = b;
+            //bag starea in automat
+            for (auto &c : a.alfabet)
+            {
+                states[temp[c]] = count;
+                b.delta[count][a.encoding[c]].insert(temp[c].begin(), temp[c].end());
+            }
+            count++;
+            //vad de ce stari noi mai am nevoie in continuare
+            for (auto &ch : a.alfabet)
+            {
+                if (find(q.begin(), q.end(), temp[ch]) == q.end())
+                {
+                    q.push_back(temp[ch]);
+                    cout << "gasit ";
+                    for (auto &a : temp[ch])
+                        cout << a;
+                    cout << '\n';
+                }
+            }
+        }
+        else
+        {
+            count++;
+        }
+        index++;
+    }
+
+    b.nrStari = count;
+
+    b.stareInitiala = a.stareInitiala;
+    for (auto &x : a.stariFinale)
+    {
+        b.stariFinale[x] = true;
+    }
+
+    // a = b;
     for (int i = 0; i < b.nrStari; i++)
     {
         cout << i << ":";
@@ -324,6 +360,7 @@ void NFAtoDFA(Automata &a)
         cout << '\n';
     }
 }
+
 int main()
 {
     Automata a;
