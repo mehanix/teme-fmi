@@ -33,6 +33,7 @@ struct Automata
     void load()
     {
         f >> nrStari >> nrMuchii;
+        memset(stariFinale, false, NRMAX);
 
         for (int i = 0; i < nrMuchii; i++)
         {
@@ -50,6 +51,26 @@ struct Automata
             f >> aux;
             stariFinale[aux] = true;
         }
+    }
+
+    void afisare()
+    {
+        cout << nrStari << '\n'
+             << nrMuchii << '\n';
+        for (int q1 = 0; q1 < nrStari; q1++)
+        {
+            for (auto &ch : alfabet)
+            {
+                if (!delta[q1][encoding[ch]].empty())
+                    for (auto &q2 : delta[q1][encoding[ch]])
+                        cout << q1 << ' ' << q2 << ' ' << ch << '\n';
+            }
+        }
+        cout << stareInitiala << '\n'
+             << nrStariFinale << '\n';
+        for (int i = 0; i < nrStari; i++)
+            cout << stariFinale[i] << ' ';
+        cout << "\n\n\n";
     }
 };
 
@@ -81,23 +102,12 @@ void lambdaNFAtoNFA(Automata &a)
 {
     set<int> deltaStar[NRMAX][LENALFA]; //matrice de adiacenta
     set<int> deltaStariFinale;
-    /*for (int i = 0; i < a.nrStari; i++)
-    {
-        cout << i << ":";
-        for (auto &ch : a.alfabet)
-        {
-            cout << ch << ":";
-            for (auto &x : a.delta[i][a.encoding[ch]])
-                cout << x << ' ';
-            cout << '\n';
-        }
-        cout << '\n';
-    }*/
     /*1. calculeaza lambda inchiderea fiecarui*/
     for (int node = 0; node < a.nrStari; node++)
     {
         queue<int> q;
-        bool visited[a.nrStari] = {false};
+        bool visited[a.nrStari];
+        memset(visited, 0, sizeof(visited));
         q.push(node);
 
         while (!q.empty())
@@ -175,7 +185,7 @@ void lambdaNFAtoNFA(Automata &a)
         }
         cout << '\n';
     }
-    //algoritmul secolului
+    //verific fiecare cu fiecare
     for (int i = 0; i < a.nrStari; i++)
     {
         if (newStates[i] != -1)
@@ -210,8 +220,6 @@ void lambdaNFAtoNFA(Automata &a)
             //iau fiecare element din set
             for (auto &j : deltaStar[i][a.encoding[ch]])
             {
-                //deltaStar[i][a.encoding[ch]].erase(j);
-                //deltaStar[i][a.encoding[ch]].insert(newStates[j]);
                 temp.insert(newStates[j]);
             }
             deltaStar[i][a.encoding[ch]] = temp;
@@ -226,6 +234,11 @@ void lambdaNFAtoNFA(Automata &a)
     nfa.nrStari = a.nrStari;
     nfa.nrStariFinale = a.nrStariFinale;
     nfa.stareInitiala = a.stareInitiala;
+    for (int i = 0; i < a.nrStari; i++)
+    {
+        nfa.stariFinale[i] = a.stariFinale[i];
+        cout << nfa.stariFinale[i] << ' ';
+    }
     //nfa.stariFinale = a.stariFinale;
 
     for (int i = 0; i < a.nrStari; i++)
@@ -256,128 +269,67 @@ void lambdaNFAtoNFA(Automata &a)
 }
 
 /*turns NFA to DFA */
-void NFAtoDFA(Automata &a)
+Automata NFAtoDFA(Automata &a)
 {
-    Automata b;
+    //pas 1
     vector<set<int>> q;
-    memset(b.stariFinale, false, NRMAX);
-    set<int> t;
-    t.insert(a.stareInitiala);
-    q.push_back(t);
-    int index = 0;
-    int count = 0;
-    map<set<int>, int> states;
-    while (index < q.size())
-    {
-        // iau starea curent
-        set<int> current = q[index];
-        if (!current.empty())
-        {
-            cout << count << ". pentru ";
-            for (auto &c : current)
-            {
-                cout << c << " ";
-            }
-            cout << '\n';
+    set<int> start;
+    start.insert(a.stareInitiala);
+    q.push_back(start);
+    Automata dfa;
+    dfa.alfabet = a.alfabet;
+    dfa.encoding = a.encoding;
+    //nfa.lambdaInchidere = a.lambdaInchidere;
+    dfa.nrStari = a.nrStari;
+    dfa.stareInitiala = a.stareInitiala;
+    memset(dfa.stariFinale, false, NRMAX);
 
-            bool isFinalState = false;
-            b.nrStari++;
-
-            // iau fiecare elem din starea curenta
-            map<char, set<int>> temp;
-
-            for (auto &x : current)
-            {
-                if (a.stariFinale[x] == true)
-                {
-                    isFinalState = true;
-                }
-                for (auto &ch : a.alfabet)
-                {
-                    for (auto &n : a.delta[x][a.encoding[ch]])
-                    {
-                        // cout << "cu " << ch << " ajung in " << n << "\n";
-                        temp[ch].insert(n);
-                    }
-                }
-            }
-            cout << "temp\n";
-            for (auto &ch : a.alfabet)
-            {
-                cout << ch;
-                for (auto &s : temp[ch])
-                {
-                    cout << s;
-                }
-                cout << "\n";
-            }
-            cout << "\n";
-
-            //bag starea in automat
-            for (auto &c : a.alfabet)
-            {
-                states[temp[c]] = count;
-                b.delta[count][a.encoding[c]].insert(temp[c].begin(), temp[c].end());
-            }
-            count++;
-            //vad de ce stari noi mai am nevoie in continuare
-            for (auto &ch : a.alfabet)
-            {
-                if (find(q.begin(), q.end(), temp[ch]) == q.end())
-                {
-                    q.push_back(temp[ch]);
-                    cout << "gasit ";
-                    for (auto &a : temp[ch])
-                        cout << a;
-                    cout << '\n';
-                }
-            }
-        }
-        else
-        {
-            count++;
-        }
-        index++;
-    }
-
-    b.nrStari = count;
-
-    b.stareInitiala = a.stareInitiala;
-
-    for (auto &x : a.stariFinale)
-    {
-        b.stariFinale[x] = true;
-    }
-    for (int i = 0; i < b.nrStari; i++)
-        cout << b.stariFinale[i];
-    cout << endl;
-    //marchez starile noi ca finale sau nu
-    for (int i = 0; i < b.nrStari; i++)
+    int nrMuchii = 0;
+    int nrStariFinale = 0;
+    int i = 0;
+    while (i < q.size())
     {
         for (auto &ch : a.alfabet)
         {
-            for (auto &x : b.delta[i][a.encoding[ch]])
-                if (b.stariFinale[x] == true)
-                    b.stariFinale[i] = true;
-        }
-        cout << '\n';
-    }
-    for (int i = 0; i < b.nrStari; i++)
-        cout << b.stariFinale[i];
+            set<int> temp;
+            bool isFinal = false;
+            for (auto &st : q[i])
+            {
+                if (a.stariFinale[st])
+                    dfa.stariFinale[i] = true;
+                temp.insert(a.delta[st][a.encoding[ch]].begin(), a.delta[st][a.encoding[ch]].end());
+            }
+            if (temp.empty())
+                continue;
 
-    // a = b;
-    for (int i = 0; i < b.nrStari; i++)
-    {
-        cout << i << ":";
-        for (auto &ch : a.alfabet)
-        {
-            cout << ch << ":";
-            for (auto &x : b.delta[i][a.encoding[ch]])
-                cout << x << ' ';
-            cout << '\n';
+            bool found = false;
+            for (int ii = 0; ii < q.size(); ii++)
+            {
+                if (q[ii] == temp)
+                {
+                    dfa.delta[i][a.encoding[ch]].insert(ii);
+                    nrMuchii++;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                q.push_back(temp);
+                nrMuchii++;
+                dfa.delta[i][a.encoding[ch]].insert(q.size() - 1);
+            }
         }
-        cout << '\n';
+        i++;
     }
+
+    dfa.nrStari = q.size();
+    dfa.stareInitiala = a.stareInitiala;
+    dfa.nrMuchii = nrMuchii;
+    for (int i = 0; i < dfa.nrStari; i++)
+        nrStariFinale += dfa.stariFinale[i];
+    dfa.nrStariFinale = nrStariFinale;
+    return dfa;
 }
 
 int main()
@@ -388,7 +340,8 @@ int main()
     generateCharacters(a);
     // populeaza automatul
     a.load();
-
+    a.afisare();
     //lambdaNFAtoNFA(a);
-    NFAtoDFA(a);
+    a = NFAtoDFA(a);
+    a.afisare();
 }

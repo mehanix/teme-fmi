@@ -8,6 +8,10 @@
         "list": "cpp",
         "string_view": "cpp",
         "iosfwd": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "hash_map": "cpp",
+        "unordered_map": "cpp",
+        "initializer_list": "cpp",
+        "valarray": "cpp"
     }
 }
