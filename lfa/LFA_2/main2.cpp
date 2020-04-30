@@ -33,7 +33,7 @@ struct Automata
     void load()
     {
         f >> nrStari >> nrMuchii;
-        memset(stariFinale, false, NRMAX);
+        memset(stariFinale, false, sizeof(stariFinale));
 
         for (int i = 0; i < nrMuchii; i++)
         {
@@ -69,7 +69,8 @@ struct Automata
         cout << stareInitiala << '\n'
              << nrStariFinale << '\n';
         for (int i = 0; i < nrStari; i++)
-            cout << stariFinale[i] << ' ';
+            if (stariFinale[i])
+                cout << i << ' ';
         cout << "\n\n\n";
     }
 };
@@ -98,7 +99,7 @@ bool isEqual(int q1, int q2, set<int> delta[NRMAX][LENALFA], Automata &a)
 }
 
 /* turns lambda NFA to NFA*/
-void lambdaNFAtoNFA(Automata &a)
+Automata lambdaNFAtoNFA(Automata &a)
 {
     set<int> deltaStar[NRMAX][LENALFA]; //matrice de adiacenta
     set<int> deltaStariFinale;
@@ -116,18 +117,11 @@ void lambdaNFAtoNFA(Automata &a)
             q.pop();
 
             //iau unde poti sa te duci din el cu lambda si bag in inchidere si queue
-            bool isFinal = false;
             for (auto &x : a.delta[current][a.encoding[LAMBDA]])
             {
                 a.lambdaInchidere[node].insert(x);
                 q.push(x);
-
-                if (a.stariFinale[x] == true)
-                    isFinal = true;
             }
-            /*3. calculez noile stari finale*/
-            if (isFinal)
-                deltaStariFinale.insert(current);
             visited[current] = true;
         }
 
@@ -135,6 +129,18 @@ void lambdaNFAtoNFA(Automata &a)
         for (int i = 0; i < a.nrStari; i++)
             a.lambdaInchidere[i].insert(i);
     }
+
+    for (int i = 0; i < a.nrStari; i++)
+    {
+        for (auto &x : a.lambdaInchidere[i])
+            if (a.stariFinale[x] == true)
+                deltaStariFinale.insert(i);
+    }
+
+    cout << "DeltaStariFinale:";
+    for (auto &x : deltaStariFinale)
+        cout << x << ' ';
+    cout << "\n";
 
     //afisare
     for (int i = 0; i < a.nrStari; i++)
@@ -148,12 +154,10 @@ void lambdaNFAtoNFA(Automata &a)
 
     for (int i = 0; i < a.nrStari; i++)
     {
-        cout << "pentru " << i << '\n';
         //iau lambda inchiderea fiecarui nod, si iterez prin nodurile alea
         map<char, set<int>> temp;
         for (auto &nod : a.lambdaInchidere[i])
         {
-            cout << "!!" << nod << "\n";
             for (auto &ch : a.alfabet)
                 temp[ch].insert(a.delta[nod][a.encoding[ch]].begin(), a.delta[nod][a.encoding[ch]].end());
         }
@@ -162,10 +166,13 @@ void lambdaNFAtoNFA(Automata &a)
         //iau litera
         for (auto &ch : a.alfabet)
         {
-            //iterez prin set
-            for (auto &x : temp[ch])
-                //dau insert la poz i
-                deltaStar[i][a.encoding[ch]].insert(a.lambdaInchidere[x].begin(), a.lambdaInchidere[x].end());
+            if (ch != LAMBDA)
+            {
+                //iterez prin set
+                for (auto &x : temp[ch])
+                    //dau insert la poz i
+                    deltaStar[i][a.encoding[ch]].insert(a.lambdaInchidere[x].begin(), a.lambdaInchidere[x].end());
+            }
         }
     }
 
@@ -186,6 +193,8 @@ void lambdaNFAtoNFA(Automata &a)
         cout << '\n';
     }
     //verific fiecare cu fiecare
+    map<int, int> rename;
+    int nod = 0;
     for (int i = 0; i < a.nrStari; i++)
     {
         if (newStates[i] != -1)
@@ -202,10 +211,8 @@ void lambdaNFAtoNFA(Automata &a)
         }
         // daca e unica, se pastreaza
         newStates[i] = i;
+        rename[i] = nod++;
     }
-
-    for (auto &x : newStates)
-        cout << x << ' ';
 
     /*4.2 elimin stari redundante*/
 
@@ -230,14 +237,18 @@ void lambdaNFAtoNFA(Automata &a)
     nfa.alfabet = a.alfabet;
     nfa.encoding = a.encoding;
     //nfa.lambdaInchidere = a.lambdaInchidere;
-    nfa.nrMuchii = a.nrMuchii;
-    nfa.nrStari = a.nrStari;
+    nfa.nrStari = 0;
+    nfa.nrMuchii = 0;
     nfa.nrStariFinale = a.nrStariFinale;
-    nfa.stareInitiala = a.stareInitiala;
+    nfa.stareInitiala = rename[a.stareInitiala];
     for (int i = 0; i < a.nrStari; i++)
     {
-        nfa.stariFinale[i] = a.stariFinale[i];
-        cout << nfa.stariFinale[i] << ' ';
+        if (newStates[i] == i)
+            nfa.nrStari++;
+        if (a.stariFinale[i] == true && newStates[i] == i)
+            nfa.stariFinale[rename[i]] = true;
+
+        // cout << nfa.stariFinale[i] << ' ';
     }
     //nfa.stariFinale = a.stariFinale;
 
@@ -246,9 +257,12 @@ void lambdaNFAtoNFA(Automata &a)
         // copiem deltaStar in nfa, ignorand starile redundante
         if (i == newStates[i])
             for (auto &ch : a.alfabet)
-                nfa.delta[i][a.encoding[ch]] = deltaStar[i][a.encoding[ch]];
+                for (auto &x : deltaStar[i][a.encoding[ch]])
+                {
+                    nfa.delta[rename[i]][a.encoding[ch]].insert(rename[x]);
+                    nfa.nrMuchii++;
+                }
     }
-    a = nfa;
     cout << '\n';
 
     for (int i = 0; i < nfa.nrStari; i++)
@@ -266,6 +280,18 @@ void lambdaNFAtoNFA(Automata &a)
         }
         cout << '\n';
     }
+
+    //stari finale
+    nfa.nrStariFinale = 0;
+    for (auto &x : deltaStariFinale)
+    {
+        if (newStates[x] == x)
+        {
+            nfa.stariFinale[rename[x]] = true;
+            nfa.nrStariFinale++;
+        }
+    }
+    return nfa;
 }
 
 /*turns NFA to DFA */
@@ -341,7 +367,7 @@ int main()
     // populeaza automatul
     a.load();
     a.afisare();
-    //lambdaNFAtoNFA(a);
-    a = NFAtoDFA(a);
+    a = lambdaNFAtoNFA(a);
+    //a = NFAtoDFA(a);
     a.afisare();
 }
