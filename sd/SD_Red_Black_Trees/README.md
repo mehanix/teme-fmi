@@ -32,7 +32,7 @@ Cand ai operatii care modifica structura tree-ului (adaugare, stergere nod) exis
 
 Pentru a il rebalansa, fac operatia de *rotatie* la stanga sau la dreapta. Aceasta operatie se face in O(1) (doar mut niste pointeri).
 
-```
+
 Exemplu: Left-Rotate x
 * Am nodul parinte X si nodul Y, fiu de dreapta al lui X. Aplic operatia de left rotate:
 * subtree-ul dreapta al lui Y ramane pe loc.
@@ -40,7 +40,7 @@ Exemplu: Left-Rotate x
 * Y devine parent, X devine fiu stanga pentru Y
 
 La fel si pentru Right Rotate, cu l/r flipped.
-```
+
 
 ### Inserarea
 
@@ -48,9 +48,9 @@ Putem insera un nod in RB tree in O(log n). Inseram un nod in tree, si il colora
 Pentru ca asta ar putea crea o configuratie care incalca regulile unui RB tree corect, trebuie sa recoloram graful.
 
 Algoritmul de recolorare pentru insert functioneaza asa: (z nodul nou)
-```
+
 1. daca unchiul lui z e rosu => colorez unchiul si parintele negru. urc in tree cu z = z.p.p si repet cat timp e nevoie
 2. daca unchiul lui z e negru si z e fiu dreapta => fac left rotate. z devine fiu stanga. aplic cazul 3.
 3. unchiul lui z e negru si z fiu stanga => unchiul lui z e negru(de la cazul 1). asadar, fac right rotate si recolorare a.i. nu mai am 2 noduri rosii unul dupa altul.
 4,5,6:la fel ca 1,2,3 dar mirrored left cu right.
-```
+
