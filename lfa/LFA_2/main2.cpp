@@ -8,7 +8,7 @@
 #include <string>
 #include <cstring>
 using namespace std;
-ifstream f("automat.in");
+ifstream f("test_nfa_dfa.in");
 
 const int NRMAX = 500;
 const int LENALFA = 37;
@@ -590,9 +590,8 @@ int main()
     generateCharacters(a);
     // populeaza automatul
     a.load();
-    a.afisare();
-    a = lambdaNFAtoNFA(a);
-    //a = NFAtoDFA(a);
-    //a = DFAtoDFAmin(a);
+    //a = lambdaNFAtoNFA(a);
+    a = NFAtoDFA(a);
+    a = DFAtoDFAmin(a);
     a.afisare();
 }
