@@ -4,15 +4,17 @@ using namespace std;
 
 ifstream f("heapuri.in");
 ofstream g("heapuri.out");
-priority_queue<int, vector<int>, greater<int>> min_heap;
-int v[200005];
+multiset<int> min_heap;
+vector<int> cron;
 void add(int x)
 {
-    min_heap.push(x);
+    min_heap.insert(x);
+    cron.push_back(x);
 }
 
 void del(int x)
 {
+    min_heap.erase(cron[x]);
 }
 int main()
 {
@@ -31,11 +33,11 @@ int main()
         if (c == 2)
         {
             f >> x;
-            del(caut(x));
+            del(x - 1);
         }
         if (c == 3)
         {
-            g << min_heap.top() << '\n';
+            g << *min_heap.begin() << '\n';
         }
     }
 }
