@@ -14,8 +14,38 @@ Overloading
 --------
 * sa schimbi return type nu e suficient pt a da overload
 * schimbi parametrii fct
+* la operatori:
+  * ++i: type operator++()
+  * i++: type operator++(int x)
+* NU merge overload pe:
+  * ::
+  * .*
+  * ?
+  * .
+* = NU este mostenit din clasa derivata. restul da (curs 4)
+### Overload cu friend (curs 4 pg 60+)
+* trebuie toti operanzii dati ca argumente(vezi << >>)
+* NU merge overload pe = () [] -> cu functii friend
+  * iar pt ++ -- trebuie referinte (nu avem this la friend)
+* se folosesc cand ai chestii gen 100 + ob (pt ca operatorul se apeleaza de pe operandul din stanga)
+ ```cpp
+    friend loc operator+(loc op1, int op2); 
+    friend loc operator+(int op1, loc op2); 
 
+    // loc + int
+    loc operator+(loc op1, int op2){
+    loc temp;
+    temp.longitude = op1.longitude + op2;
+    temp.latitude =op1.latitude + op2;
+    return temp;}
 
+    // + is overloaded for int + loc.
+    loc operator+(int op1, loc op2){
+    loc temp;
+    temp.longitude = op1 + op2.longitude;
+    temp.latitude =op1 + op2.latitude;
+    return temp;}
+```
 Definiții
 --------
 * operator - functie care are ca nume un/mai multe simboluri
@@ -77,6 +107,29 @@ Functii
         void init(int i, int j) { a=i; b=j; } 
         };
     ```
+### Pointeri catre functii
+* Da, exista.
+* La fct polimorfice, trebuie definit a.i. sa fie clar ce functie e.
+  ```cpp
+    int myfunc(int a); 
+    int myfunc(int a, int b); 
+
+    int main() 
+    { 
+        int (*fp)(int a); // !!! pointer to int f(int) 
+        fp = myfunc; // points to myfunc(int) 
+        cout << fp(5); 
+        return 0; 
+    } 
+
+  ```
+
+Constructori
+---
+### De copiere
+* cand pasez obiect in functie: pass-by-value, se apeleaza copy constructor
+* cand ai alocare dinamica tre sa redefinesti copy constructor
+* 
 
 Chichițe a la Păun
 ---------
@@ -102,8 +155,46 @@ Chichițe a la Păun
   X ob = 99; // == X ob(99)
   ```
 * vector de obiecte: merg initializate individual cu {X(param), X(param)} etc.
+   Obiecte globale : constructori apelati in ordinea definirii obiectelor
+  * Destructori apelati in ordinea inversa definirii obiectelor
+* Scope global/local cu :: :
+    ```cpp
+    int i; // global i 
+    void f() 
+    { 
+        int i; // local i 
+        i = 10; // uses local i
+        ::i = 10; // now refers to global i 
+    }
+    ```
+* clasa definita in functie:
+  * nu acceseaza variabilele locale ale functiei
+  * acceseaza variabilele statice
+  * nu am voie sa definesc statice in clasa
+* Eroare de compilare la overload(acelasi tip de date, desi nu pare  ):
+   ```cpp
+    void f(int *p);
+    void f(int p[]); // error, *p is same as p[]
+
+    void f(int x); // a aparut de 2 ori in curs
+    void f(int& x);
+
+   ```
+* Ambiguitati dubioase la fct polimorfice:
+  * intre char si unsigned char
+  * intre fct cu param impliciti:
+  ```cpp
+    int myfunc(int i);
+    int myfunc(int i, int j=1);
+
+    int main()
+    {
+    cout << myfunc(4, 5) << " "; // unambiguous
+    cout << myfunc(10); // ambiguous
+    return 0;
+    }
+```
 De cercetat
 -------
-* funcțiile membru sunt date prin semnătură ??????
 * referinta vs pointer constant?
 * union: curs 3 slideurile 25+
