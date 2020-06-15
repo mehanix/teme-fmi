@@ -1,0 +1,205 @@
+Paradigma de programare se poate descrie prin 3 concepte de baza :
+o INCAPSULAREA reprezinta mecanismul prin care date si modalitati de procesare a acestora sunt puse la un loc in clase. Prin aceasta modalitate se permita o mai buna evidenta si structurare a datelor si de asemeni o buna modularizare si gestiune a eventualelor erori ce pot aparea in cadrul programului.
+o MOSTENIREA reprezinta mecanismul prin care se pot defini noi clase pe baza proprietatilor unor clase deja existente.
+o POLIMORFISMUL reprezinta mecanismul prin intermediul caruia printr-o singura interfata poti manipula o intreaga categorie de actiuni din cadrul unei clase sau a unei ierarhii de clase.
+--------
+Laborator 2:Pointeri catre obiecte. Pointerul this. Functii friend. Supraincarcarea functiilor si a operatorilor.
+Pointeri catre obiecte
+Pointerii catre obiecte sunt similari celor catre oricare alt tip de variabila. Accesul membrilor unei clase (date si metode) cu ajutorul unui pointer catre un obiect se face utilizand operatorul -> in locul operatorului punct.
+--------
+Pointerul this.
+In momentul in care este apelata o functie membru a unei clase, i se paseaza automat un pointer implicit care este un pointer catre obiectul care a generat apelarea (obiectul care a invocat functia). Acest pointer este numit pointerul this.
+-----------------
+Functii friend
+Accesul la membrii unei clase poate fi acordat si altor functii care nu sunt functii membru ale clasei respective. Astfel de functii se numesc functii prietene clasei respective (functii friend) si sunt declarate astfel cu ajutorul specificatorului friend. Functiile friend pot fi functii membru ale altor clase sau pot fi functii independente. O functie friend are acces la membrii private si protected ai clasei careia ii este prietena. Pentru a declara o functie friend, includeti prototipul ei in acea clasa, precedat de cuvantul cheie friend.
+!! Deoarece nu sunt membre ale clasei functiile friend nu se apeleaza prin intermediul unui obiect si nu au pointer this.
+-------------------------
+Supraincarcarea functiilor.
+Un mod prin care se realizeaza polimorfismul in C++ este supraincarcarea (overloading) functiilor. Aceasta inseamna ca doua sau mai multe functii pot avea acelasi nume atata timp cat declaratiile parametrilor sunt diferite: fiecare redefinire a functiei trebuie sa foloseasca sau tipuri diferite sau numar diferit de parametrii. Nu pot fi supraincarcate doua functii care difera doar prin tipul returnat!
+Exemplu:
+Functia “aduna” este supraincarcata pentru a putea fi realizata adunarea dintre un numar complex si un double, un double si un numar complex si doua numere complexe.
+
+Cazuri de ambiguitate
+? Conversia automata a tipului in C++. Compilatorul incearca sa converteasca automat argumentele care sunt folosite pentru a apela o functie in tipurile argumentelor asteptate de functie.
+
+? Folosirea parametrilor cu valori implicite (default) pentru functii 
+Supraincarcarea operatorilor
+Limbajul C++ permite programatorului sa defineasca diverse operatii cu obiecte ale claselor, utilizand simbolurile operatorilor standard.
+Termenul supraincarcarea operatorilor este întâlnit în literatura de specialitate si sub denumirea de redefinirea (overloading) sau supradefinirea operatorilor. Principalele avantaje ale redefinirii operatorilor sunt claritatea si usurinta cu care se exprima anumite operatii specifice unei clase. Solutia alternativa ar fi definirea unor functii si apelul functiilor în cadrul unor expresii.
+Limbajul C++ nu permite crearea de noi operatori, în schimb permite redefinirea majoritatii operatorilor existenti astfel încât atunci când acesti operatori sunt aplicati obiectelor unor clase sa aiba semnificatia corespunzatoare noilor tipuri de date (adica, ale claselor respective).
+Operatorii se supraincarca prin crearea functiilor operator. Functiile operator pot fi sau nu membri ai clasei in care vor opera. Functiile operator care nu sunt de tip membru sunt de obicei functii friend ai clasei in care vor opera. Felul in care sunt scrise functiile operator difera pentru cele de tip membru de cele de tip friend.
+Exemplu
+Utilizarea functiilor operator ca membri ai clasei. Folosind o functie membru pentru a supraincarca un operator, obiectul din stanga operatorului este cel care genereaza apelarea functiei operator supraincarcate. Apoi prin intermediul pointerului this este transmis un pointer catre acest obiect.
+
+------------------------------------
+Laborator 3:Constructori. Constructori de copiere. Destructori. Operatorii New si Delete. Mostenirea
+Constructori
+Constructorul unei clase este o functie speciala atribuita numai acelei clase care dupa cum sugereaza si numele, permite construirea unei instante a clasei respective. Constructorul unei clase are numele clasei respective si nu returneaza nimic in urma executiei de unde rezulta faptul ca in declaratia functiei nu trebuie specificat nici un tip returnat.
+In interiorul constructorului sunt instantiate campurile unei clase. In lipsa definirii explicite a functiei constructor, se aloca un constructor implicit al clasei ce se doreste a fi definita, in cadrul careia se aloca memoria necesara variabilelor membru.
+Functiile constructor sunt apelate in momentul in care obiectele unei clase “intra in existenta”, si anume, in momentul in care sunt declarate in interiorul programului.
+--------
+Ca orice alt tip de functie, constructorul poate primi parametri. Parametri pasati constructorului unei functii sunt folositi pentru a instantia variabilele membru ale unei clase cu o anumita valoare.
+----
+In cazul in care constructorul este definit ca avand un singur parametru, se poate folosi urmatoarea sintaxa pentru a instantia obiecte din clasa respectiva folosind constructorul respectiv.
+-----
+!! In situatia in care se doreste definirea explicita a constructorilor unei clase, trebuie tinut cont de faptul ca obiectele clasei respective pot fi instantiate folosind doar definitiile constructorilor din corpul clasei respective. Spre exemplu, daca in cazul clasei MyClass, definite mai sus, se defineste doar constructorul MyClass(int value), atunci in main pot fi instantiate obiecte ale clasei folosind doar forma de declarare corespunzatoare constructorului respectiv.
+Constructori de copiere
+Un caz special de constructor este cel al constructorilor de copiere. Inainte de a da definitia acestora, ar trebui sa mentionam scopul pentru care sunt destinati acestia. Constructori de copiere sunt folositi in momentul in care se doreste instantierea unui obiect al unei clase pe baza unui alt obiect deja existent al clasei respective. Practic, in cadrul constructorlui de copiere, se executa o copie “bit cu bit” a obiectului deja existent.
+Pentru a fi posibila definirea constructorului de copiere, trebuie pasat ca parametru o referinta constanta catre obiectul ce se doreste a fi copiat. Daca s-ar folosi pasarea parametrului prin valoare, ar fi necesara copierea obiectului pasat ca parametru la executarea constructorului. Acest lucru presupune apelul executiei constructorului de copiere, lucru care ar duce la o recursie infinita. Din acest motiv, obiectul ce se doreste a fi copiat se paseaza folosind pasarea parametrului prin referinta. Pentru a nu putea modifica obiectul respectiv in timpul executiei constructorului, este necesara pasarea valorii trimisa prin referinta ca o constanta.
+------
+Destructori
+Din moment ce exista un tip special de functie ce permite “construirea” obiectelor unei clase, ar trebui sa existe un tip de functie si pentru “distrugerea” obiectelor unei clase. Acest lucru este posibil, si este realizabil prin intermediul functiilor de tip destructor. Aceste functii sunt similare in forma cu functiile constructor cu exceptia faptului ca numele functiei este precedat de caracterul ~. Destructorul unei clase este apelat automat in momentul in care functia in care a fost instantiat obiectul respectiv se termina.
+Scopul principal al destructorului este de a elibera memoria folosita in cadrul obiectului sau de a inchide fisierele care au fost deschise in momentul creeri obiectului.
+--------
+Operatorii new si delete
+In limbajul C, alocarea dinamica a memorie se executa prin intermediul familiei de functii malloc si dezalocarea memoriei se realiza prin intermediul functiei free. In limbajul C++, alocarea dinamica a memoriei se realizeaza prin intermediul operatorilor new si delete care prezinta o sintaxa mult mai simplificata.
+Principala diferenta dintre cele 2 abordari este ca in cazul operatorilor de C++ sunt folositi constructorii respectiv destructorii clasei respective pentru a realiza alocarea si dezalocarea memoriei. Operatorul
+new intoarce un pointer catre zona de memorie alocata dinamic. In cazul in care nu exista suficienta memorie, se intoarce pointerul NULL. Operatorul delete elibereaza memoria catre care pointeaza operandul sau.
+-------
+Mostenirea
+Mostenirea este mecanismul tipic C++ ce permite reutilizarea codului. Mostenirea apare in urma creerii de noi clase prin operatia de derivare. Derivarea reprezinta definirea unei noi clase pe baza proprietatilor deja existente in clasa de baza. In C++ aveti posibilitatea sa realizati derivare simpla( pornind de la o singura clasa de baza) sau derivare multipla( pornind de la mai multe clase de baza).
+In contextul operatiei de derivare, s-a introdus un nou specificator de acces pentru a putea largii principiul incapsularii datelor si in cadrul claselor derivate. Daca pana acum aveam de-a face doar cu specificatorii de acces public si private care sugereau drepturi de acces asupra membrilor unei clase, in contextul mostenirii, s-a introdus specificatorul de acces protected. Daca un membru al unei clase este specificat ca fiind protected atunci membrul respectiv poate fi folosit doar in cadrul metodelor si a functiilor friend ale clasei respective si in cadrul metodelor claselor derivate ce pornesc de la clasa respectiva.
+----------
+In momentul in care se deriva o clasa de baza, se mentioneaza specificatorul de acces cu care sunt mosteniti membri clasei de baza in antetul operatiei de derivare.
+class DerivedClass : <specificator de acces> BaseClass
+{
+…
+};
+Un caz aparte ce trebuie luat in considerare in cazul mostenirii este cel al instantierii in momentul creerii unui obiect derivat a membrilor clasei de baza cu anumite valori specificate de utilizator. Pentru a putea fi posibil acest lucru, trebuie apelat in constructorul clasei derivate, constructorul parametrizat al clasei de baza.
+----
+In cazul mostenirii, ordinea in care sunt executati constructorii claselor este conform operatiunii de derivare, pornind de la clasele de baza spre clasele derivate. Astfel, sunt executati mai intai constructorii claselor de baza urmati de constructorii claselor derivate. In cazul destructorilor, ordinea de apelare este inversa, se apeleaza mai intai destructorul clasei derivate, urmat de destructorul claselor de baza.
+-------------------------------------------
+
+
+Permiterea accesului in cazul mostenirii. Mostenire multipla si virtuala.
+Specificatori de acces (Recapitulare)
+Membrii unei clsase pot fi declarati avand urmatorii modificatori de acces: public, protected si private. Daca nu este specificat nici un modificator, implicit acestia vor fi private. Actiunea fiecaruia dintre ei este sumarizata in tabelul de mai jos.
+Acces
+Public
+Protected
+Private Membrii ai aceleiasi clase DA DA DA
+Membrii claselor derivate
+DA
+DA
+NU In afara clasei DA NU NU
+In momentul in care o clasa derivata mosteneste o clasa de baza, tipul de acces asupra membrilor clasei de baza poate fi modificat in functie de felul mostenirii. Exista 3 tipuri de a mosteni o clasa de baza : public, protected si private. Daca nu este specificat, in mod default mostenirea este private. Forma generala este urmatoarea in fiecare dintre cele 3 cazuri: // Mosteneste Base public class Pub: public Base { }; // Mosteneste Base private class Pri: private Base { }; // Mosteneste Base protected class Pro: protected Base { }; class Def: Base // Modul default este de mostenire privata { };
+Tabelul urmator prezinta drepturile de acces a membrilor unei clase derivate in functie de drepturile de accesare a membrilor unei clase de baza si de tipul modificatorului de acces.
+Drept de acces in clasa de baza
+Modificator de acces in momentul mostenirii
+Drept de acces in clasa derivata public Public public
+private
+Public
+inaccesibil protected Public protected
+public Protected protected
+private
+Protected
+inaccesibil protected Protected protected
+public Private private
+private
+Private
+inaccesibil protected Private private
+!!Retineti ca membrii private ai clasei de baza nu vor fi accesibili in clasa derivata in niciun caz.
+In cazul mostenirii de tip public, toti membrii public ai clasei de baza devin membrii public ai clasei derivate si toti membrii protected ai clasei de baza devin membrii protected ai clasei derivate. Pe scurt, mostenirea publica nu schimba modul de acces al membrilor mosteniti.
+In cazul mostenirii de tip protected, toti membrii public si protected ai clasei de baza devin membrii protected ai clasei derivate. Membrii private, raman private si nu pot fi accesati in clasa derivata.
+Mostenirea de tip private va face ca membrii public si protected din clasa de baza sa devina membrii private in clasa derivata.
+Mostenirea Multipla si Virtuala.
+Mostenire Multipla
+Mostenirea multipla reprezinta proprietatea unei clase de a avea mai multe clase de baza .Astfel, clasa derivata va mosteni proprietati de la toate clasele sale de baza.
+NU este mostenire multipla Mostenire multipla
+Mostenirea multipla nu inseamna ca mai multe clase derivate partajeaza aceeasi clasa de baza. De asemenea, nu inseamna ca o clasa derivata poate mosteni proprietatile unei clase de baza, care la randul ei este o clasa derivata dintr-o alta clasa de baza.
+Sintaxa definirii unei clase derivate din mai multe clase de baza (mostenire multipla):
+class <nume_clasa_derivata> : <modif_acces> <cls_baza1>,
+<modif_acces> <cls_baza2>,
+…
+<modif_acces> <cls_bazan>
+{
+// definitia clasei
+};
+Functiile constructor ale claselor de baza sunt apelate în ordinea enumerarii lor, iar functiile destructor sunt apelate în ordine inversa. Când o clasa mosteneste de la mai multe clase de baza, clasa derivata le transfera argumentele necesare prin utilizarea formei expandate a constructorului clasei derivate.
+-----
+Mostenire Virtuala
+In momentul in care sunt mostenite clase de baza multiple poate aparea un element de ambiguitate. In exemplul de mai jos, clasa derivat3 va contine doua copii ale bazei.
+------
+Deoarece clasa derivat3 mosteneste atat derivat1 cat si derivat2 care la randul lor mostenesc clasa baza, inseamna ca intr-un obiect de tipul derivat3 exista doua copii ale campului i din clasa baza ceea ce produce o eroare de ambiguitate in momentul compilarii deoarece nu se poate stabili despre care i este vorba, cel din derivat1 sau cel din derivat2?
+Exista doua moduri de a remedia aceasta situatie. In primul caz putem selecta manual pe care versiune a campului i dorim sa o accesam, folosind operatorul de specificare a domeniului, :: .
+----
+Desi specificand manual pe care copie a campului i dorim sa o accesam rezolvam problema de ambiguitate, pot exista situatii cand ne dorim ca in derivat3 sa existe doar o copie a clasei baza. Acest lucru este posibil folosind clase de baza virtuale.
+Cand doua sau mai multe obiecte sunt derivate dintr-o clasa de baza comuna, putem preveni prezenta intr-unul dintre aceseta a mai multor copii ale clasi de baza declarand-o virtual in momentul in care ea este mostenita.
+----
+Deoarece atat derivat1 cat si derivat2 au mostenit clasa baza virtual, orice mostenire multipla care le va impiedica va determina prezenta unei singure copii a campului i.
+Chiar daca atat derivat1 cat si derivat2 specifica baza ca fiind virtual, membrul i al clasei baza este inca prezent in obiectele de acel tip. De exemplu putem scrie:
+derrivat1 obj1;
+obj1.i=5;
+-------------------------------------
+
+Laborator 5: Functii Virtuale. Controlul Tipului la Rulare. Clase Abstracte. Interfete
+Functii Virtuale. Controlul Tipului la Rulare
+In cadrul laboratorului de astazi vom discuta despre conceptul de polimorfism de rulare si cum este acesta realizabil in contextul limbajului C++.
+Pana acum am discutat despre polimofismul de compilare ce este posibil prin intermediul conceptului de supraincarcare.Acest lucru permite folosirea aceleasi functionalitati(interfete) oferite in cadrul codului vostru dar cu seturi de parametri diferiti.
+In cadrul paradigmei de programare orientate obiect, este posibil si un alt tip de polimorfism, polimorfismul de rulare. Si anume, schimbarea dinamica(in timpul rularii) a functionalitatilor definite in urma procesului de derivare.
+-------
+Dupa cum se poate observa din exemplul de mai sus, avem definite in ambele clase, functia Print in interiorul careia se afiseaza valorile variabilelor membru ale clasei si faptul ca esti ori in clasa de baza ori in clasa derivata. In programul principal avem definit un pointer catre clasa de baza prin intermediul caruia pointam pe rand la fiecare instanta a claselor noastre, clasa derivata respectiv clasa de baza. Deci, implicit schimbam functionalitatea pointerului p in functie de clasa catre care dorim sa pointam. Dar, in situatia de fata, cand dorim sa pointam catre obiectul derivat si sa ne folosim de functia Print definita in cadrul clasei derivate, avem surpriza de a obtine tot functionalitatea definita in cadrul clasei de baza. Pentru a ne putea folosi de metoda Print definita in cadrul clasei derivata, trebuie sa adaugam cuvantul virtual in fata declaratiei functiei Print din clasa de baza. Astfel functia Print a devenit functie virtuala. Prin intermediul acestui mecanism, este posibil procesul de suprascriere(override) al metodei Print in cadrul eventualelor clase derivate. Atributul virtual este valabil numai in situatia in care obiectele clasei de baza respectiv derivate, sunt accesate via o structura de tip pointer. Astfel, se respecta conceptual de polimorfism, “o singura interfata, functionalitati multiple”. In aceasta situatie, interfata este reprezentata de metoda cu acelasi nume implementata in cadrul ierarhiei de clase. Functionalitatea multipla este realizata prin faptul ca in fiecare clasa din ierarhia de derivare poate avea alta implementare. In orice alta situatie, ele se comporta normal ca orice alta functie. Acest gen de polimorfism este denumit polimorfism de rulare, deoarece functionalitatea se stabileste in timpul rularii, in functie de variabila catre care indica pointerul.
+!! Pentru a putea schimba functionalitatea metodei dorite in timpul executiei, trebuie ca sa aveti neaparat un pointer catre clasa de baza din cadrul ierarhiei de derivare folosite.
+Daca o functie este declarata ca fiind virtuala, atunci aceast atribut este mostenit indiferent de cate derivari au loc.
+------
+!! A nu se confunda conceptul de supraincarcare(overload) cu conceptual de suprascriere(override). Pentru a putea beneficia de atributul virtual al unei functii, trebuie sa aveti aceeasi signatura pentru functia ce o doriti suprascrisa(acelasi nume, acelasi tip returnat , acelasi numar si tip de parametri).
+Pentru a putea schimba controlul tipul la rulare, se pot folosi de asemeni si referinte.
+------
+Clase Abstracte
+Exista posibilitatea de a declara o functie in interiorul clasei de baza, urmand ca aceasta sa fie definite in interiorul claselor derivate. Acest lucru este posibil prin intermediul functiilor virtuale pure.
+In cadrul clasei de baza, se scrie doar antetul functiei virtuale pure, urmand ca aceasta sa fie implementata in clasele derivate, ce mostenesc clasa de baza respectiva.
+Clasele care implementeaza functii virtuale pure se numesc clase abstracte si nu pot fi instantiate obiecte din cadrul acestora. Totusi se pot declara pointeri catre obiecte din cadrul acestei clase.
+-------
+Interfete
+Clasele abstracte ce contin doar metode virtuale pure se numesc interfete. Sunt folosite pentru a putea genera o masca de implementare pentru un anumit set de functionalitati.
+----------------------------------
+
+Laborator 6:Functii si Clase generice (template).
+Functii template
+O functie template defineste un set de operatii care vor fi aplicate unor tipuri de date variate. Unei astfel de functii, tipul de date asupra caruia va opera ii va fi transmis ca parametru. Utilizand acest mecanism, poate fi aplicata aceiasi procedura unui domeniu larg de date. Multi algoritmi au aceiasi logica, indiferent de tipul de date asupra caruia opereaza, de exemplu un algoritm de sortare va functiona la fel indiferent daca este aplicat pe un vector de tip int sau de tip double. Ceea ce difera, este doar tipul de date care va fi sortat. Creand o functie generica, putem defini natura algoritmului, indiferent de date. O data facut acest lucru, cand se executa functia, compilatorul genereaza automat codul corect pentru tipul de date folosit efectiv. In esenta, cand creati o functie generica, creati o functie care se supraincarca singura, automat. O astfel de functie este creata cu ajutorul cuvantului cheie template. Forma generala a unei definitii de functie de tip template este urmatoarea: template < class Tip> tip-returnat nume-functie (lista parametri) { //corpul functiei } Tip este un nume care tine locul tipului de date folosit de catre functie. Compilatorul il va inlocui autimat cu tipul de date efectiv , atunci cand va crea o versiune specifica a functiei.
+ -------
+ Linia template <class X> void swapargs(X &a, X &b) spune compilatorului 2 lucruri: ca este creat un template si ca va urma definirea generica. X este aici un tip generic care este folosit ca substitut. Dupa zona template este declarata functia swapargs(), folosind pe X ca tip de data pentru valorile care vor fi inversate. In main(), functia swapargs() este apelata cu 3 tipuri de date: int, float si char. Deoarece swapargs() este o functie generica, compilatorul ii va crea automat 3 versiuni - una care va inversa valorile intregi, una care va inversa pe cele in virgula mobila si una care va inversa caractere.
+----- 
+ Intr-o instructiune template putem defini mai mult de un tip generic, folosind o lista separata prin virgula. In exemplul de mai sus, type1 si type2 sunt inlocuiti de catre compilator cu tipurile de date int si char*, respectiv double si long atunci cand genereaza exemplarele specifice pentru myfunc din cadrul lui main.
+Supraincarcarea explicita a unei functii template
+Chiar daca o functie generic a se supraincarca singura atunci cand este necesar, aceasta poate fii supraincarcata si explicit. Atunci cand o functie generica este supraincarcata, ea suprascrie functia template relativa la acea versiune specifica. 
+------
+ !!! Restrictii ale functiilor template: o functie virtuala nu poate fi functie template si destructorii nu pot fi functii template.
+Clase template (generice)
+In afara de functiile template, putem defini si clase template. Cand facem asta, cream o clasa care defineste toti algoritmii folositi de ea, dar tipul de date care este manevrat efectiv va fi specificat ca un parametru la crearea obiectelor acelei clase. Clasele template sunt folositoare cand avem de implementat o clasa ce contine caracteristici generale. Forma generala a declararii unei clasegenerice este urmatoarea: 
+Template <class Tip> class nume-clasa {..…}
+Tip tine locul tipului ce il vom specifica cand se defineste un exemplar al clasei. Daca este necesar, putem define mai mult de un tip de date generice, folosind o lista separata prin virgule. O data ce am construit o clasa generic, putem crea o instanta a acesteia folosind forma generala: nume-clasa<tip> ob; In acest caz, tip este numele tipului de date cu care va opera clasa. Functiile membre ale claselor template sunt automat si ele insele template. 
+
+-----------------------------------
+
+Laborator 7:Membri Statici. Membri Const
+Membri Statici
+In contextul paradigmei de programare orientate obiect avem posibilitatea sa ne definim membri ai unei clase ca fiind statici. In sectiunea imediat urmatoare vom explica si exemplifica acest lucru.
+Pentru a putea defini un membru al unei clase ca fiind static (fie variabila membru sau functie membru) trebuie precedata declararea acelui membru de cuvantul static. Cand un membru al unei clase este definit ca fiind static, atunci compilatorul retine faptul ca exista o singura copie a acelei variabile indiferent de cate instante ale clasei respective exista. De asemenea, membrul static al clasei respective, poate fi accesat indiferent de obiectul apelant.
+Practic, spre deosebire de obiectele obisnuite din cadrul clasei respective, variabile membru statice ale clasei respective sunt instantiate o singura data si initializate cu valoarea 0, lucrul acesta executandu-se la definirea clasei, inainte ca sa se instantieze orice obiect.
+Variabilele membru statice nu sunt definite(nu se aloca spatial necesar din memorie) in momentul declararii lor in cadrul clasei. Pentru a putea fi definite, sunt redeclarate in exteriorul clasei respective, folosind operatorul de rezolutie ca in exemplul de mai jos.
+-----
+Dat fiind faptul ca variabilele membru statice sunt declarate si initializate indiferent daca sunt instantiate sau nu obiecte, putem accesa variabilele respective, fara a ne folosi de vreun obiect ci prin intermediul operatorului de rezolutie cu trimitere la clasa respectiva.
+-----
+Conceptul de membru static, poate fi extins si asupra functiilor membru din cadrul unei clase. Ele sunt definite in aceeasi maniera ca celelalte functii cu exceptia faptului ca antetul functiei este precedat de cuvantul static. Totusi sunt cateva restrictii care sunt aplicate metodelor statice. In cadrul acestor functii se poate opera numai asupra variabilelor membru statice. In cadrul acestor functii nu exista pointerul this, deoarece aceste metode se apeleaza indiferent daca exista sau nu un obiect apelant. O metoda statica nu poate avea natura virtuala si nu pot exista 2 versiuni ale aceleasi functii, dintre care una sa fie statica si una non – statica .
+Practic, metodele statice sunt utilizate indeosebi pentru a accesa variabile membru statice ce au fost declarate ca fiind private(principiul incapsularii).
+-----
+Membri Const
+Puteti sa declarati variabile membru constante in cadrul unei clase. Acestea vor avea aceeasi valoarea in decursul existentei unui obiect si nu pot fi modificate. Pentru a putea declara astfel de obiecte, definitia lor trebuie precedata de cuvantul const. De asemeni ele pot fi initializate in cadrul constructorului de copiere prin intermediul listei de initializare. Pentru detalii, aveti exemplul de mai jos:
+-----
+In cadrul unei clase, aveti de asemenea posibilitatea sa declarati functiile membru ca fiind constante. Pentru a putea defini o functie ca fiind constanta, trebuie sa specificati cuvantul const dupa antetul functiei respective. Acest lucru impune ca in cadrul acelei functii sa nu puteti modifica valoarea din cadrul pointerului this. Practic, nu aveti posibilitatea sa modificati variabilele membru ale obiectului apelant.
+In situatia in care aveti declarate obiecte constant din cadrul unei clase, prin intermediul acelor obiecte puteti apela numai functiile membru constante ale clasei respective, in schimb, daca aveti obiecte non – constante, puteti apela si metode constante si non – constante.
+-----------------------
+Laborator 8 : Tratarea exceptiilor
+Tratarea exceptiilor
+Routina de tratare a exceptiilor, este un mecanism tipic paradigmei de programare orientata obiect ce implica gestiunea erorilor ce pot aparea in momentul rularii unei secvente de cod.
+Practic prin intermediul acestui automatism, va asigurati de faptul ca erorile ce pot surveni in cadrul codului vostru sunt automat gestionate. Astfel, puteti furniza comportamentul dorit ce doriti sa fie executat in situatiile cand apar erori de rulare.
+Rutina de gestiune/tratare a exceptiilor este posibila prin intermediul a 3 cuvinte cheie try, throw, catch. Sintaxa pentru o astfel de rutina este ilustrata mai jos :
+-------
+In cadrul sectiunii try introduceti codul pe care doriti sa-l monitorizati in timpul executiei si asupra caruia doriti executia automata a erorilor de rulare. In momentul in care in codul respectiv apare o eroare de rulare, eroarea respectiva este transmisa catre blocul corespunzator de catch unde se va executa sectiunea de gestiune a erorii respective.
+Puteti arunca exceptii prin intermediul instructiunii throw, asa cum reiese in exemplul de mai jos.
+-----
+Dupa cum reiese din structura declarativa, puteti arunca orice tip de exceptie si puteti avea secvente de gestiune a erorilor, corespunzator oricarei exceptii aruncate.
+---
+In cazul de mai sus, exceptia in sine a constat intr-o variabila int respective double, dar ea poate fi orice tip de obiect, inclusiv unul explicit creat de voi special pentru gestiunea erorilor.
+

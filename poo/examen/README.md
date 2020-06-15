@@ -46,11 +46,24 @@ Overloading
     temp.latitude =op1 + op2.latitude;
     return temp;}
 ```
-Definiții
---------
-* operator - functie care are ca nume un/mai multe simboluri
-  * cin>>x » operator>>(cin,x)
-* :: » scope resolution operator
+### Overload pe new/delete
+Se poate face doar pt **un obiect** (inauntrul clasei) sau **global** (inafara oricarei clase).
+
+Pentru new/delete definiti si global si in clasa, cel din clasa e folosit pentru elemente de tipul clasei, si in rest e folosit cel redefinit global.
+
+```cpp
+void *loc::operator new(size_t size){   
+    void *p;  
+    cout << "In overloaded new.\n";   
+    p = malloc(size);  
+    if(!p) { bad_alloc ba; throw ba; }
+ return p;} 
+
+void loc::operator delete(void *p){ 
+     cout << "In overloaded delete.\n"; 
+     free(p); 
+}
+```
 
 Referinte
 --------
@@ -126,6 +139,15 @@ Functii
 
 Constructori
 ---
+* Constructor cu un parametru » conversie implicita
+  ```
+  X(int j){a=j}
+  ...
+  X ob = 99; // == X ob(99)
+  ```
+* vector de obiecte: merg initializate individual cu {X(param), X(param)} etc.
+  * Obiecte globale : constructori apelati in ordinea definirii obiectelor
+  * Destructori apelati in ordinea inversa definirii obiectelor
 ### De copiere
 * cand pasez obiect in functie: pass-by-value, se apeleaza copy constructor
 * cand ai alocare dinamica tre sa redefinesti copy constructor
@@ -148,15 +170,6 @@ Chichițe a la Păun
     }
     ```
 * nu poti pune auto, extern, register in clasa
-* Constructor cu un parametru » conversie implicita
-  ```
-  X(int j){a=j}
-  ...
-  X ob = 99; // == X ob(99)
-  ```
-* vector de obiecte: merg initializate individual cu {X(param), X(param)} etc.
-   Obiecte globale : constructori apelati in ordinea definirii obiectelor
-  * Destructori apelati in ordinea inversa definirii obiectelor
 * Scope global/local cu :: :
     ```cpp
     int i; // global i 

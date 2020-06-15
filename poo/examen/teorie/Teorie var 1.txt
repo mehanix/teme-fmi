@@ -1,0 +1,168 @@
+Teorie
+
+
+Principii de baza:
+
+1. Incapsularea = procesul prin care se creaza o clasa ca un concept
+                  nou de date, prin gruparea unor date si metode si
+                  protejarea accesului asupra lor prin intermediul
+                  specificatorilor de acces;
+
+2. Mostenirea = creare unei clase derivate, dintr-o clasa
+                (mostenirea simpla) deja existenta, numita clasa
+                de baza, prin preluarea in clasa derivata a tuturor
+                elementelor (campuri de date si metode) din clasa de
+                baza, eventual cu modificarea drepturilor de acces
+                asupra lor ca elemente ale clasei derivate si adaugarea
+                unor elemente specifice clasei derivate;
+
+3. Polimorfismul = capacitatea unei functii de a se comporta diferit,
+                   sub acelasi nume, in contexte diferite (a. domeniul
+                   din care este apelata functia; b. parametrii
+                   (formali, cu care e definita, si actuali cu care e
+                   apelata(argumente) nu sunt intotdeauna identici));
+                   3.1 Polimorfismul "de compilare"
+                        3.1.1 Supraincarcare(def de mai multe ori ale aceleiasi
+                                functii intr-un anumit context/domeniu)
+                                3.1.1.1 Supraincarcarea operatorilor
+                                3.1.1.2 Supraincarcarea operatorilor ca functiilor
+                                          independente (inclusiv cu utilizarea
+                                          conceptului de "friend")
+                        3.1.2 Polimorfismul prin conversie (o functie poate sa
+                                functioneze si in alte contexte decat in cel pt
+                                care a fost scris-putem sa scriem o singura def si
+                                ea poate sa fie utilizata in contexte diferite prin
+                                conversia parametrilor);
+                        3.1.3 Polimorfismul prin utilizarea valorilor implicite
+                                asociate parametrilor;
+                        3.1.4 Polimorfismul prin sabloane
+                   3.2 Polimorfismul "de executie";
+
+
+
+Gestiunea/Manipularea Obiectelor:
+
+aka operatiile pe care le putem face cu obiectele
+                   1.Creare (instantiere)
+                    1.1 Constructori
+                        1.1.1 Constructori impliciti
+                              (min 2 - de init fara param si cop)
+                        1.1.2 Constructorul de initializare (inclusiv vers implicita)
+                        1.1.3 Constructorul generic
+                              (constr fara param care reexpune constr
+                              implicit fara param)
+                        1.1.4 Constructorul explicit
+                              (se foloseste pentru constructorul
+                              cu un param care sunt in general folositi
+                              ca metode de conversie. daca e declarat
+                              explicit compilatorul nu va folosi constr
+                              ca constr de conversie decat daca la return
+                              scriem constr aplicat- ret un ob care se
+                              aplica in mod explicit constructorului)
+                              ex: B f(int b) {return b;} //merge prin
+                              //B(int) daca explicit B(int)=>error
+                              //solutie: return B(b)-conversie explicita
+                              //prin intermediul acelui constructor
+                    1.2 Acces
+                        1.2.1 Specificatori de acces
+                        1.2.2 Getter-e
+                    1.3 Creare prin Mostenire
+                        1.3.1 Comportamentul costructorilor de initializare
+                        1.3.2 Impactul si Modificarea specificatorilor de acces
+                   2.Copiere (cop intr-un ob nou)
+                    2.1 Constructorul de copiere (inclusiv vers
+                        implicita-care apeleaza constr de cop din clasa
+                        de baza (celalalt apeleaza constr implicit din
+                        clasa de baza si trebuie specificat ce constr
+                        sa apeleze))
+                        2.1.1 Comportamentul la Mostenire
+                   3.Atribuire (vers implicite-bit cu bit)
+                    3.1 Operatorul de atribuire (inclusiv vers implicita)
+                        3.1.1 Comportamentul la Mostenire
+                   4.Conversii (tranformari ale unui ob de un tip in alt tip)
+                    4.1 Constructorul de conversie (cu un param - dinspre un tip de
+                                                   date existent catre noul tip de date
+                                                   clasa noastra)
+                    4.2 Operatorul de conversie supraincarcat (cast)
+                                                   (pt conversii in sens invers:
+                                                   de la noul tip de date catre un
+                                                   tip de date existent)
+                                                   (ex: class B { operator int() { } };)
+                    4.3 Conversia implicita la Mostenire
+                   5.Transferul in functii (ca parametrii) si
+                                din functii (ca rezultat)
+                    5.1 Transferul parametrilor
+                        5.1.1 Prin valoare
+                        5.1.2 Prin referinta
+                            5.1.2.1 Prin referinta constanta
+                    5.2 Intoarcerea rezultatului
+                        5.2.1 Prin valoare
+                        5.2.2 Prin referinta
+                            5.2.2.1 Prin referinta constanta
+                   (prin val=copiere; prin referinta e altceva)
+                   6.Modificarea obiectelor prin metode specifice clasei
+                    6.1 Setter-e
+                    6.2 Metode specifice clasei
+                   7.Distrugere
+                    7.1 Destructorul (inclusiv vers implicita)
+                    7.2 Comportamentul la mostenire
+                        7.2.1 Destructorul virtual
+                            ex: A* p = new B;  //creat cu constr din B
+                                delete p; //se ap destr din A (destr din clasa
+                                          //de baza trebuie pus virtual si este
+                                          //legat la destr clasei din care s-a
+                                          //creat ob), desi crede ca apeleaza destr
+                                          //din baza, el apeleaza destr din derivata
+
+
+Compunere vs Mostenire
+1. mecanisme de creare folosind clase deja existente
+2. diferentele specifice
+
+1. Compunere = se preia clasa intreaga (avem obiecte din alte clase); a avea
+        B: |A a1;|
+           |A a2;|
+           |.    |
+           |.    |
+           |_____|
+
+2. Mostenire = se preiau elementele; a fi
+        B: |A    |
+           |_____|
+           |.    |
+           |.    |
+           |_____|
+
+
+
+        class A
+        {
+           int x;
+        };
+
+1.
+        class B
+        {
+           A a1;
+           A a2;
+        };
+        b.a1.x
+
+2.
+        class B: A
+        {
+
+        };
+        b.x
+
+Parametrizare
+1. Parametrizarea datelor utilizate intr-o clasa prin utilizarea sabloanelor
+        (Sabloane-se aplica atunci cand algoritmii sunt aceeasi,
+        tipurile de date se schimba)
+2. Parametrizarea metodelor unei clase (prin polimorfismul de executie-
+                                       o interfata si mai multe implementari)
+Elemente constante
+Elemente statice
+Tratarea exceptiilor
+
+

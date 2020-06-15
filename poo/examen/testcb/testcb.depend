@@ -1,0 +1,4 @@
+# depslib dependency file v1.0
+1591639834 source:/home/nix/Work/teme-fmi/poo/examen/testcb/main.cpp
+	<iostream>
+
