@@ -6,6 +6,7 @@ ifstream f("heapuri.in");
 ofstream g("heapuri.out");
 multiset<int> min_heap;
 vector<int> cron;
+
 void add(int x)
 {
     min_heap.insert(x);

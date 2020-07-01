@@ -1,0 +1,8 @@
+Exemple:
+
+L = {x | x apartine {a,b}* }
+{a,b}* -> toate cuvintele care sunt facute din a, b
+
+a + b == a reunit cu b -> sau
+a . b -> si (de obicei se lipesc literele nu se mai pune pct)
+* -> 0 sau mai multi din

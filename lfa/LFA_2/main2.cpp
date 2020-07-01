@@ -282,6 +282,7 @@ Automata lambdaNFAtoNFA(Automata &a)
     //             cout << '\n';
     //         }
     //     }
+    //
     //     cout << '\n';
     // }
 
