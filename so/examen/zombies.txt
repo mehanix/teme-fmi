@@ -1,0 +1,7 @@
+parinte creeaza copil
+copilu cand da exit da exit code
+parintele tre sa l astepte cu wait sa ia exit codeul ca sa fie scos din process table
+
+1. daca parintele se blocheaza => copilul devine zombie
+2. daca parintele se termina inaintea copilului => copil orfan, adoptat si omorat de init
+3. 

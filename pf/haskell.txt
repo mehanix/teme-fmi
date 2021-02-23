@@ -1,0 +1,41 @@
+# haskell - operatori
+
+[] ++ []: concatenare liste [a,b] ++ [c,d] = [a,b,c,d]
+: []: adauga elem la inceput a:[b,c] = [a,b,c]
+[] !! : scos elem index [a,b,c,d] !! 2 = c (0-indexed)
+head []: scoate primul elem din lista(rapid) - head [a,b,c] = a
+tail []: scoate restul inafara de primul elem - tail [a,b,c] = [b,c]
+last []: scoate ultimul elem(lent) - last [a,b,c] = c
+init []: scoate tot inafara de ultimul elem - init [a,b,c] = [a,b]
+^ niciuna pe empty lists
+length []
+reverse []
+take x [] : ia primele x nr din []
+drop x []: sterge primele x din []
+minimum [], maximum[], sum[],product[]
+x `elem` []: true daca x e elem al lui []
+
+
+# Ranges
+[x..y] => nr de la x la y
+[p,x..y] => nr de la x la y din p in p
+nu cu floats
+
+# liste infinite
+
+cycle [] : ia lista, face lista infinita (treb afisat cu take x)
+repeat nr: ia nr, face lista infinita (treb afisat cu take)
+replicate x y = [y,y,y..y] de x ori
+
+# list comprehension!
+
+ca n python
+
+[x*2 | x <- [1..10], x*2 >=12]
+
+# functii pe tupluri
+on pairs:
+fst (x,y): x
+snd (x,y): y
+zip [a,b,c] [x,y,z] = [(a,x),(b,y),(c,z)], daca o lista e mai lunga o taie
+

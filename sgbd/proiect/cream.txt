@@ -1,0 +1,5 @@
+Create table Clienti(
+	id_client int(7) primary key,
+	nume varchar(255),
+	prenume varchar(255),
+	varsta int(7)) 

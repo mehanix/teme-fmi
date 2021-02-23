@@ -1,0 +1,10 @@
+/sys/proiect.c
+
+/sys/kern/syscalls.master
+
+/sys/kern/sys_generic.c
+
+intrebari:
+time e mereu 0 ??
+
+sunt suficiente datele/e afisarea ok?

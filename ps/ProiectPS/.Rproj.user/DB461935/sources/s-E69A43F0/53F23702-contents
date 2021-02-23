@@ -1,0 +1,6 @@
+i = 109
+Fx(x) = (x- a)/(b - a) = x / i
+Fy(y) = P(Y <= y) = P(sqrtx(X) <= y) = P(X <= y^2) = Fx(y^2) = y^2 / i
+f(y) = (Fy(y))’ = 2y / i
+f(y) = 2y/i
+F(y) = y^2 / i
