@@ -1,0 +1,21 @@
+alg < 1.1*opt
+
+L1 = 80
+L2 = 120
+
+Suma duratelor celor N activitati este 80+120 = 200.
+
+a) Fie setul de activitati 80, 60, 60;
+OPT:
+L1= 80
+L2= 120
+
+ALG:
+L1 = 80
+L2 = 120
+
+In acest caz, ALG = OPT.
+Rezulta ca algoritmul este posibil sa fie 1.1-aproximativ.
+
+
+

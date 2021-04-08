@@ -1,0 +1,38 @@
+package com.company.entitati;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Categorie {
+    private String nume;
+    private List<Produs> produse;
+
+    public Categorie(String nume) {
+        this.nume = nume;
+        this.produse = new ArrayList<Produs>();
+    }
+
+    public String getNume() {
+        return nume;
+    }
+
+    public void setNume(String nume) {
+        this.nume = nume;
+    }
+
+    public List<Produs> getProduse() {
+        return produse;
+    }
+
+    public void afiseaza() {
+        System.out.print(nume + ": [ ");
+        for (Produs p : produse) {
+            System.out.print(p.getNume() + " " );
+        }
+        System.out.println(" ]");
+    }
+
+    public void adaugaProdus(Produs p) {
+        this.produse.add(p);
+    }
+}

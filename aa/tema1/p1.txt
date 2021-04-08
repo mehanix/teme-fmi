@@ -1,0 +1,36 @@
+a) 
+Fie matricea dp[i][j] cu 1<=i<=n si 1<=j<=K.
+
+for i in range(1,n+1):
+	for j in range(1,k+1):
+		dp[i][j]=max(dp[i-1][j], dp[i-1][j-s[i-1]] + s[i-1])
+
+return dp[n][k];
+
+
+b) 
+L -> lista de numere
+s = 0, m = -1
+for i in range(len(L)):
+	if L[i] <= k - s:
+		s += L[i]
+	if L[i] > m:
+		m = L[i]
+
+ALG(I) = max(s,m)
+
+Algoritmul compune o suma incercand sa se apropie cat mai mult de valoarea K parcurgand L si adunand numarul L[i] daca "mai este loc" pentru el (daca spatiul ramas permite sa-l mai adun si pe L[i] fara sa depasesc K)
+In timp ce fac parcurgerea, mai calculez si valoarea maxima din L si aleg maximul dintre s si aceasta pt a obtine o solutie 1/2-aproximativa.
+
+Cum stiu ca s[i] <= K, am 2 situatii in functie de maxim:
+	daca m >= k/2, OPT(i) < 2 * ALG(i)
+	daca m < k/2, cum m e cel mai mare nr din lista => toata lista e formata din numere < k/2 si parcurgand toata lista voi obtine o suma >=k/2 deoarece garantat voi putea aduna numere pana cand depasesc k/2, deci OPT(i) < 2 * ALG(I)
+
+
+	
+
+
+
+
+	
+ 
