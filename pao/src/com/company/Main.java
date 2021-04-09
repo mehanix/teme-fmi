@@ -27,7 +27,6 @@ public class Main {
             System.out.println("8. Alerta stoc - afiseaza produsele cu stoc 0");
             System.out.println("9. Vezi detaliile unui produs");
             System.out.println("10. Vezi istoric livrari");
-            System.out.println("11. Iesire");
 
             command = in.nextLine();
             try {
