@@ -11,6 +11,7 @@ public class Service {
     private final Stoc stoc = new Stoc();
     private final ArrayList<Categorie> categorii = new ArrayList<Categorie>();
     private final ArrayList<Distribuitor> distribuitori = new ArrayList<Distribuitor>();
+    private List<Tranzactie> tranzactii;
 
     // 1
     public void adaugaCategorie(Scanner in) {
@@ -42,6 +43,7 @@ public class Service {
         } catch (Exception e) {
             System.out.println("Ai introdus input gresit!");
         }
+        in.nextLine();
     }
 
 
@@ -68,6 +70,11 @@ public class Service {
 
     //4
     public Categorie veziProduseCategorie(Scanner in) {
+        if (categorii.isEmpty())
+        {
+            System.out.println("Nu exista categorii");
+            return null;
+        }
         afiseazaCategorii();
         System.out.println();
         Categorie c = null;
@@ -79,6 +86,7 @@ public class Service {
         } catch (Exception e) {
             System.out.println("Ai introdus input gresit!");
         }
+        in.nextLine();
         return c;
     }
 
@@ -86,6 +94,11 @@ public class Service {
         Categorie cat;
         String nume;
         Integer pret;
+        if (categorii.isEmpty())
+        {
+            System.out.println("Trebuie creata minim o categorie pentru a adauga produse!");
+            return;
+        }
         afiseazaCategorii();
         try {
             System.out.println("Din ce categorie face parte produsul?");
@@ -110,10 +123,11 @@ public class Service {
             } else if (res == 2) {
                 System.out.println("Introdu lungimea perioadei de garantie a produsului: (in ani)");
                 int garantie = in.nextInt();
-                p = new ProdusPerisabil(nume,pret,garantie);
+                p = new ProdusNeperisabil(nume,pret,garantie);
             } else { return; }
 
             categorii.get(idCategorie).adaugaProdus(p);
+            in.nextLine();
 
 
         } catch (Exception e) {
@@ -163,13 +177,19 @@ public class Service {
 
         stoc.adaugaLivrare(l);
 
-        System.out.println("Livrare adaugata cu succes!" + l.toString());
+        System.out.println("Livrare adaugata cu succes!");
 
+        in.nextLine();
 
 
     }
 
     public void veziDetaliiProdus(Scanner in) {
+        if (categorii.isEmpty())
+        {
+            System.out.println("Nu exista categorii!");
+            return;
+        }
         Categorie catSelectata = veziProduseCategorie(in);
         int idProdus;
         Produs p;
@@ -180,14 +200,85 @@ public class Service {
             p = catSelectata.getProdus(idProdus);
             p.afiseaza();
         } catch (Exception e) {System.out.println(e);};
+        in.nextLine();
+
     }
 
     public void afiseazaStoc() {
         stoc.afiseaza();
     }
 
+    private Produs findProdus(int id) {
+        for (Categorie cat : categorii) {
+            Produs p = cat.getProdus(id);
+            if (p != null)
+                return p;
+        }
+        return null;
+    }
+
     public void veziIstoricLivrari() {
         stoc.afiseazaIstoric();
+    }
+
+    public void efectueazaTranzactie(Scanner in) {
+        Tranzactie t = new Tranzactie();
+
+        afiseazaStoc();
+
+        int idProdus, cantitate;
+        Produs p;
+
+        try {
+            do {
+                System.out.print("Introdu id-ul produsului care te intereseaza, sau -1 pentru a termina: ");
+                idProdus = in.nextInt();
+                if (idProdus == -1) {
+                    if (t.getProduseCumparate() == null)
+                        return;
+
+                    int total = t.afiseazaBon();
+                    System.out.print("Confirmi tranzactia? y/n: ");
+                    String res = in.next();
+                    if(res.equals("y"))
+                    {
+                        stoc.efectueaza(t);
+                        System.out.println("Tranzactie efectuata cu succes!");
+                        return;
+                    }
+                    System.out.println("Tranzactie anulata!");
+                    return;
+                }
+                p = findProdus(idProdus);
+                int remaining = stoc.get(p);
+                System.out.print("Cate bucati din " + p.getNume() + " vrei? (max. " + remaining + " bucati)");
+                cantitate = in.nextInt();
+                if (cantitate > remaining) {
+                    System.out.println("Stoc insuficient!");
+                    in.nextLine();
+                    return;
+                }
+                t.adaugaPeBon(p, cantitate);
+                System.out.println("Adaugat!");
+            } while(true);
+        } catch (Exception e) {System.out.println(e);};
+        in.nextLine();
+
+
+    }
+
+    public void afiseazaStocZero() {
+        boolean ok = false;
+        System.out.println("Urmatoarele produse nu se afla pe stoc:");
+        for(Categorie c : categorii) {
+            for(Produs p: c.getProduse()) {
+                if (!stoc.getStoc().containsKey(p) || stoc.get(p) == 0) {
+                    System.out.println("[" + p.getId() + "] " + p.getNume());
+                    ok = true;
+                }
+            }
+
+        }
     }
 
 }

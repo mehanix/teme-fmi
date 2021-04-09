@@ -7,6 +7,7 @@ import java.util.*;
 public class Stoc {
     private Set<Livrare> istoricLivrari;
     private Map<Produs,Integer> stoc;
+    static private Integer incasari = 0;
 
 
     Comparator<Livrare> sortByDate = new Comparator<Livrare>() {
@@ -47,13 +48,22 @@ public class Stoc {
         System.out.println("===========================");
 
         stoc.forEach((produs, cantitate) -> {
-            System.out.println(produs.getNume() + ": " + cantitate);
+            if(cantitate > 0)
+                System.out.println("[" + produs.getId() + "] " + produs.getNume() + ": " + cantitate);
         });
+
+        System.out.println("---------------------------");
+        System.out.println("Incasari totale: " + incasari + " lei");
 
     }
 
     public void afiseazaIstoric() {
 
+        if (istoricLivrari.isEmpty())
+        {
+            System.out.println("Nu exista livrari!");
+            return;
+        }
         System.out.println("===========================");
         System.out.println("=     Istoric livrari     =");
         System.out.println("===========================");
@@ -61,6 +71,20 @@ public class Stoc {
         for (Livrare l : istoricLivrari) {
             l.afiseaza();
 
+        }
+    }
+
+    public int get(Produs p) {
+        return stoc.get(p);
+    }
+
+    public void efectueaza(Tranzactie t) {
+        incasari += t.getTotal();
+
+        for (Map.Entry<Produs, Integer> entry : t.getProduseCumparate().entrySet()) {
+            Produs p = entry.getKey();
+            Integer c = entry.getValue();
+            stoc.put(p,stoc.get(p) - c);
         }
     }
 

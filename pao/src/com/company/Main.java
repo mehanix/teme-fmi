@@ -2,13 +2,15 @@ package com.company;
 
 import com.company.servicii.Service;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         Scanner in = new Scanner(System.in);
         Service service = new Service();
+
         String command = "";
         while (command != "11") {
             System.out.println("========================================");
@@ -24,7 +26,7 @@ public class Main {
             System.out.println("7. Efectueaza o tranzactie");
             System.out.println("8. Alerta stoc - afiseaza produsele cu stoc 0");
             System.out.println("9. Vezi detaliile unui produs");
-            System.out.println("10. Vezi istoric tranzactii");
+            System.out.println("10. Vezi istoric livrari");
             System.out.println("11. Iesire");
 
             command = in.nextLine();
@@ -54,16 +56,20 @@ public class Main {
                         service.afiseazaStoc();
                         break;
                     }
+                    case "7": {
+                        service.efectueazaTranzactie(in);
+                        break;
+                    }
+                    case "8": {
+                        service.afiseazaStocZero();
+                        break;
+                    }
                     case "9": {
                         service.veziDetaliiProdus(in);
                         break;
                     }
                     case "10": {
                         service.veziIstoricLivrari();
-                        break;
-                    }
-                    case "11": {
-                        System.out.println("Pa-pa!");
                         break;
                     }
                 }
