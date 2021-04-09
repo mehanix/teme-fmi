@@ -18,4 +18,11 @@ public class ProdusPerisabil extends Produs {
         super(nume, pret);
         this.valabilitate = valabilitate;
     }
+
+    public void afiseaza() {
+        super.afiseaza();
+
+        System.out.println("Produs perisabil cu valabilitate: " + valabilitate + " luni");
+    }
 }
+

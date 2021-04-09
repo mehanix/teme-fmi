@@ -28,4 +28,22 @@ public class Produs {
         this.nume = nume;
         this.pret = pret;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void afiseaza() {
+        System.out.println("=======================");
+        System.out.println("= Fisa detalii produs =");
+        System.out.println("=======================");
+        System.out.println("Nume: " + nume);
+        System.out.println("Pret: " + pret + " lei");
+
+
+    }
 }

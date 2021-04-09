@@ -16,4 +16,10 @@ public class ProdusNeperisabil extends Produs {
     public void setAniGarantie(Integer aniGarantie) {
         this.aniGarantie = aniGarantie;
     }
+
+    public void afiseaza() {
+        super.afiseaza();
+
+        System.out.println("Produs neperisabil cu perioada de garantie: " + aniGarantie + " ani");
+    }
 }

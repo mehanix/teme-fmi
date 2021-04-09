@@ -10,7 +10,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         Service service = new Service();
         String command = "";
-        while (command != "exit") {
+        while (command != "11") {
             System.out.println("========================================");
             System.out.println("= Sistem de gestionare al magazinului: =");
             System.out.println("========================================");
@@ -44,6 +44,26 @@ public class Main {
                     }
                     case "4": {
                         service.veziProduseCategorie(in);
+                        break;
+                    }
+                    case "5": {
+                        service.adaugaLivrare(in);
+                        break;
+                    }
+                    case "6": {
+                        service.afiseazaStoc();
+                        break;
+                    }
+                    case "9": {
+                        service.veziDetaliiProdus(in);
+                        break;
+                    }
+                    case "10": {
+                        service.veziIstoricLivrari();
+                        break;
+                    }
+                    case "11": {
+                        System.out.println("Pa-pa!");
                         break;
                     }
                 }

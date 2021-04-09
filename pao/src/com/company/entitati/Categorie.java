@@ -27,11 +27,14 @@ public class Categorie {
     public void afiseaza() {
         System.out.print(nume + ": [ ");
         for (Produs p : produse) {
-            System.out.print(p.getNume() + " " );
+            System.out.print("(" + p.getId() + "):" + p.getNume() + " " );
         }
         System.out.println(" ]");
     }
 
+    public Produs getProdus(int idProdus) {
+        return produse.stream().filter(p -> p.getId().equals(idProdus)).findFirst().orElse(null);
+    }
     public void adaugaProdus(Produs p) {
         this.produse.add(p);
     }
