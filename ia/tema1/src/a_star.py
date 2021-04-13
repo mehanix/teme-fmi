@@ -1,0 +1,10 @@
+idddgii
+idiidid
+iidddii
+iddgiig
+dgggiid
+didiigg
+gigddgg
+gdggggg
+gggiggd
+dgggddg

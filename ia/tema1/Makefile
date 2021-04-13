@@ -2,7 +2,7 @@
 INPUT_FOLDER = input
 OUTPUT_FOLDER = output 
 
-NR_SOL = 4
+NR_SOL = 2
 TIMEOUT = 2
 
 run:

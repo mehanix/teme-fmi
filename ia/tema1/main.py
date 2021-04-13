@@ -1,12 +1,20 @@
 
-import sys, getopt
-from pathlib import Path
+import sys, getopt, os
+from src.incuietoare import Incuietoare
+from src.ucs import ucs
+nsol = -1
+timeout = -1
 
 def main(argv):
+    """ Incarca, parseaza datele de intrare, verifica corectitudinea lor.
+
+    Args:
+        argv (list): lista argumentelor pasate in command-line.
+    """
+    global nsol,timeout
     input_folder = ''
     output_folder = ''
-    nsol = -1
-    timeout = -1
+
     try:
         opts, args = getopt.getopt(argv, "i:o:n:t:")
     except getopt.GetoptError:
@@ -25,10 +33,50 @@ def main(argv):
             print("Argument error")
             sys.exit(2)
     
-    assert timeout != -1
-    assert nsol != -1
-    assert Path(input_folder).is_dir()
-    assert Path(output_folder).is_dir()
+    if timeout == -1 or nsol == -1 or not os.path.isdir(input_folder):
+        print("Argument error")
+        sys.exit(2)
+
+    if not os.path.exists(output_folder):
+        os.mkdir(output_folder)
+    
+    for filename in os.listdir(input_folder):
+        output_filename = "output_" + filename
+        inp = open("{0}/{1}".format(input_folder, filename),"r")
+        out = open("{0}/{1}".format(output_folder,output_filename),"w")
+        run_test(inp, out)
+        inp.close()
+        out.close()
+
+def run_test(inp, out):
+    """ Pregateste variabilele pentru testul cu datele din fisierul inp.
+
+    Args:
+        inp (IO): Fisier input
+        out (IO): Fisier output
+    """
+
+    # citesc cheile din fisier
+    key_strings = inp.readlines()
+    key_strings = [s.strip() for s in key_strings]
+    
+    nr_incuietori = len(key_strings[0])
+    for key in key_strings:
+        if len(key) != nr_incuietori:
+            print("Input error in fisierul {0}! Chei cu lungime diferita. ".format(inp.name))
+            sys.exit(-1)
+        for ch in key:
+            if ch not in ['i','d','g']:
+                print("Input error, caracter nerecunoscut in cheia: ",key)
+                sys.exit(-1)
+
+    # la inceput, toate incuietorile sunt inchise 1 data
+    start = [Incuietoare(1) for x in range (nr_incuietori)]
+    scopuri = [Incuietoare(0) for x in range (nr_incuietori)]
+    
+    ucs(start,key_strings,scopuri,nsol)
+
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
