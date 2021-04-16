@@ -1,11 +1,18 @@
 import copy
+import time
+
+start_time = 0
+ucs_noduri_totale = 0
+timeout = 0
 #informatii despre un nod din arborele de parcurgere (nu din graful initial)
 class NodParcurgere:
+	out = None
 	def __init__(self, info, cost, parinte, key=None):
 		self.info=info
 		self.parinte=parinte #parintele din arborele de parcurgere
 		self.g=cost #acesta este costul
 		self.key = key #cheia care a fost aplicata pt a obtine acest nod (sau None pt nod start)
+
 	def obtineDrum(self):
 		l=[self]
 		nod=self
@@ -14,17 +21,23 @@ class NodParcurgere:
 			nod=nod.parinte
 		return l
 		
-	def afisDrum(self): #returneaza si lungimea drumului
+	def afisDrum(self,lungimeCoada): #returneaza si lungimea drumului
+		stop_time = time.time()
 		l = self.obtineDrum()
 		chei = [x.key for x in l]
 		lg = len(l)
 		for i in range(lg):
-			print("{0}) {1}".format(i,repr(l[i])))
+			NodParcurgere.out.write("{0}) {1}\n".format(i,repr(l[i])))
 			if i != lg-1:
-				print("Folosim cheia: [", chei[i+1], "] pentru a ajunge la...")
+				NodParcurgere.out.write("Folosim cheia: [" + repr(chei[i+1]) + "] pentru a ajunge la...\n")
 
-		print("\nStare scop:", "".join(repr(l[-1])))
-		print("Numar chei folosite:",lg-1)
+		NodParcurgere.out.write("\nStare scop: " + "".join(repr(l[-1])) +'\n')
+		NodParcurgere.out.write("\n------------\nStats:\n")
+		NodParcurgere.out.write("Lungime drum: " +str(lg-1) +'\n')
+		NodParcurgere.out.write("Timp gasire solutie: " +str(round(1000*(stop_time - start_time))) +'ms\n')
+		NodParcurgere.out.write("Nr noduri existente in coada: " +str(lungimeCoada) +'\n')
+		NodParcurgere.out.write("Nr noduri calculate total pana acum: " +str(ucs_noduri_totale) +'\n')
+
 		return len(l)
 
 
@@ -78,7 +91,7 @@ class Graph:
 		"""
 
 		listaSuccesori=[]
-
+		global  ucs_noduri_totale
 		for key in Graph.keys:
 			incuietori = copy.deepcopy(nodCurent.info)
 			incuietori = Graph.apply_key(incuietori, key)
@@ -88,6 +101,7 @@ class Graph:
 			# 	continue
 			listaSuccesori.append(NodParcurgere(incuietori,nodCurent.g + 1, nodCurent, key))
 
+		ucs_noduri_totale += len(listaSuccesori)
 		return listaSuccesori
 		
 
@@ -125,11 +139,18 @@ class Graph:
 #                                 Initializare problema                                      #
 ##############################################################################################		
 
-def ucs(start, keys, scopuri, nsol):
+def ucs(start, keys, scopuri,out, nsol,t):
+	global start_time
+	timeout = t
+	out.write("#######################################\n")
+	out.write("#         Uniform Cost Search         #\n")
+	out.write("#######################################\n")
 
+	NodParcurgere.out = out
 	Graph.keys = keys
 	gr = Graph(keys, start, scopuri)
-	uniform_cost(gr,nsol)
+	start_time = time.time()
+	uniform_cost(gr,out,nsol)
 
 
 #### algoritm Uniform Cost Search
@@ -138,12 +159,17 @@ def ucs(start, keys, scopuri, nsol):
 #si doar oprim algoritmul la afisarea primei solutii
 
 
-def uniform_cost(gr, nrSolutiiCautate=1):
-
+def uniform_cost(gr,out, nrSolutiiCautate=1):
+	global timeout
 	# Initializez cu configuratia de start (toate incuietorile pe 1)
 	c = [ NodParcurgere(gr.start, 0, None) ]
 	
 	while len(c)>0:
+
+		current_time = time.time()
+		if (round(start_time - current_time) < timeout):
+			out.write("Timeout!")
+			return
 		#print(c)
 		# input()
 		
@@ -152,12 +178,9 @@ def uniform_cost(gr, nrSolutiiCautate=1):
 		
 		# daca e solutie, afisam si scadem nr de solutii
 		if gr.testeaza_scop(nodCurent):
-			print("nrsolcaut",nrSolutiiCautate)
-			print("Solutie: ")
-			nodCurent.afisDrum()
-			print("\n----------------\n")
-			nrSolutiiCautate-=1
-			input()
+			nodCurent.afisDrum(len(c))
+			out.write("\n----------------\n")
+			nrSolutiiCautate -= 1
 			
 			if nrSolutiiCautate==0:
 				return

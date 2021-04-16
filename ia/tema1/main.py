@@ -74,7 +74,7 @@ def run_test(inp, out):
     start = [Incuietoare(1) for x in range (nr_incuietori)]
     scopuri = [Incuietoare(0) for x in range (nr_incuietori)]
     
-    ucs(start,key_strings,scopuri,nsol)
+    ucs(start,key_strings,scopuri,out,nsol,timeout)
 
 
 
