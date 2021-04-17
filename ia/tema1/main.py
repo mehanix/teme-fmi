@@ -2,6 +2,8 @@
 import sys, getopt, os
 from src.incuietoare import Incuietoare
 from src.ucs import ucs
+from src.graph import Graph, NodParcurgere
+from src.a_star import a_star
 nsol = -1
 timeout = -1
 
@@ -74,7 +76,13 @@ def run_test(inp, out):
     start = [Incuietoare(1) for x in range (nr_incuietori)]
     scopuri = [Incuietoare(0) for x in range (nr_incuietori)]
     
-    ucs(start,key_strings,scopuri,out,nsol,timeout)
+    Graph.keys = key_strings
+    Graph.timeout = timeout
+    Graph.nsol = nsol
+    Graph.out = out
+    NodParcurgere.out = out
+    ucs(start,scopuri,out)
+    a_star(start,scopuri,out)
 
 
 
