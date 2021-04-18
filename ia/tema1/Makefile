@@ -3,7 +3,7 @@ INPUT_FOLDER = input
 OUTPUT_FOLDER = output 
 
 NR_SOL = 3
-TIMEOUT = 10
+TIMEOUT = 1
 
 run:
 	python main.py -i ${INPUT_FOLDER} -o ${OUTPUT_FOLDER} -n ${NR_SOL} -t ${TIMEOUT}

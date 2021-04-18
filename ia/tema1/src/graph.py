@@ -117,11 +117,11 @@ class Graph:
 				return 1
 			return 0
 		if self.euristica == "admisibila_1":
-			return sum([x.get() for x in nod])
-		if self.euristica == "admisibila_2":
 			return max([x.get() for x in nod])
+		if self.euristica == "admisibila_2":
+			return min([x.get() for x in nod])
 		if self.euristica == "neadmisibila":
-			return 0
+			return sum([x.get() for x in nod])
 
 
 	def apply_key(incuietori, key):

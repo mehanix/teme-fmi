@@ -3,10 +3,14 @@ import time
 from src.graph import *
 
 def a_star(start,scopuri,out,euristica="banala"):
-	out.write("#######################################\n")
-	out.write("#                  A*                 #\n")
-	out.write("#######################################\n")
-	out.write( "#### Euristica: " + euristica + " ####\n")
+	out.write("########################################\n")
+	out.write("#                   A*                 #\n")
+	out.write("########################################\n")
+	msg = "Euristica: " + euristica
+	spaces = (38 - len(msg))//2
+	out.write("#" + " "*spaces + msg + " "*(spaces+1) + "#\n")
+	out.write("########################################\n")
+
 	gr = Graph(start, scopuri,euristica)
 	astar(gr,out)
 
