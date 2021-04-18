@@ -22,11 +22,11 @@ def uniform_cost(gr,out):
 	c = [ NodParcurgere(gr.start, 0, None) ]
 	
 	while len(c)>0:
-
+		Graph.maxim = max(Graph.maxim, len(c))
 		current_time = time.time()
-		print(gr.start_time,current_time,gr.timeout, round(gr.start_time - current_time) < gr.timeout)
-		if (round(gr.start_time - current_time) > gr.timeout):
-			out.write("Timeout!")
+		#print(round(gr.start_time - current_time) )
+		if (round(current_time - gr.start_time) > gr.timeout):
+			out.write("Timeout!\n")
 			return
 		# print(c)
 

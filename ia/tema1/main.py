@@ -82,7 +82,10 @@ def run_test(inp, out):
     Graph.out = out
     NodParcurgere.out = out
     ucs(start,scopuri,out)
-    a_star(start,scopuri,out)
+    a_star(start,scopuri,out,euristica="banala")
+    a_star(start,scopuri,out,euristica="admisibila_1")
+    # a_star(start,scopuri,out,euristica='admisibila_2')
+    # a_star(start,scopuri,out,euristica="neadmisibila")
 
 
 

@@ -12,6 +12,8 @@ class Incuietoare:
     
     def __eq__(self, other):
         return self.nr_incuieri == other.nr_incuieri
+    def __lt__(self, other):
+        return self.nr_incuieri < other.nr_incuieri
     def update(self, valoare):
         self.nr_incuieri += valoare
     

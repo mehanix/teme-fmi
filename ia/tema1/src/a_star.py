@@ -2,12 +2,12 @@ import copy
 import time
 from src.graph import *
 
-def a_star(start,scopuri,out):
+def a_star(start,scopuri,out,euristica="banala"):
 	out.write("#######################################\n")
 	out.write("#                  A*                 #\n")
 	out.write("#######################################\n")
-
-	gr = Graph(start, scopuri)
+	out.write( "#### Euristica: " + euristica + " ####\n")
+	gr = Graph(start, scopuri,euristica)
 	astar(gr,out)
 
 def astar(gr, out):
@@ -15,15 +15,15 @@ def astar(gr, out):
 
 	c = [ NodParcurgere(gr.start, 0, None) ]
 	while len(c) > 0:
-
+		Graph.maxim = max(Graph.maxim, len(c))
 		current_time = time.time()
-		if (round(gr.start_time - current_time) > gr.timeout):
-			out.write("Timeout!")
+		if (round(current_time - gr.start_time) > gr.timeout):
+			out.write("Timeout!\n")
 			return
 
 
 		nodCurent = c.pop(0)
-		print(nodCurent.info, nodCurent.g,nodCurent.h,nodCurent.f)
+		# print(nodCurent.info, nodCurent.g,nodCurent.h,nodCurent.f)
 		# daca e solutie, afisam si scadem nr de solutii
 		if gr.testeaza_scop(nodCurent):
 			nodCurent.afisDrum(len(c))

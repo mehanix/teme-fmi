@@ -36,15 +36,17 @@ class NodParcurgere:
 		NodParcurgere.out.write("\nStare scop: " + "".join(repr(l[-1])) +'\n')
 		NodParcurgere.out.write("\n------------\nStats:\n")
 		NodParcurgere.out.write("Lungime drum: " +str(lg-1) +'\n')
+		NodParcurgere.out.write("Cost drum: " +str(lg-1) +'\n')
 		NodParcurgere.out.write("Timp gasire solutie: " +str(round(1000*(stop_time - Graph.start_time))) +'ms\n')
-		NodParcurgere.out.write("Nr noduri existente in coada: " +str(lungimeCoada) +'\n')
-		NodParcurgere.out.write("Nr noduri calculate total pana acum: " +str(Graph.noduriTotale) +'\n')
+		NodParcurgere.out.write("Nr noduri maxim existente in memorie: " +str(Graph.maxim) +'\n')
+		NodParcurgere.out.write("Nr total noduri calculate: " +str(Graph.noduriTotale) +'\n')
 
 		return len(l)
 
 
 	def contineInDrum(self, infoNodNou):
 		nodDrum=self
+		# print(infoNodNou, nodDrum.info, infoNodNou == nodDrum.info)
 		while nodDrum is not None:
 			if(infoNodNou==nodDrum.info):
 				return True
@@ -71,11 +73,13 @@ class Graph:
 	timeout = 0
 	keys = []
 	nsol = 0
+	maxim = 0
 	def __init__(self, start, scopuri, euristica: str = "banala"):
 		self.euristica = euristica
 		self.start=start
 		self.scopuri=scopuri
-		self.noduriTotale = 0
+		Graph.noduriTotale = 0
+		Graph.maxim = 0
 		Graph.start_time = time.time()
 
 	def testeaza_scop(self, nodCurent):
@@ -97,12 +101,11 @@ class Graph:
 		"""
 
 		listaSuccesori=[]
-		print(Graph.keys)
 		for key in Graph.keys:
 			incuietori = copy.deepcopy(nodCurent.info)
 			infoNodNou = Graph.apply_key(incuietori, key)
-
-			listaSuccesori.append(NodParcurgere(infoNodNou, g = nodCurent.g + 1, parinte = nodCurent, key = key, h= self.calculeaza_h(infoNodNou)))
+			if not nodCurent.contineInDrum(infoNodNou):
+				listaSuccesori.append(NodParcurgere(infoNodNou, g = nodCurent.g + 1, parinte = nodCurent, key = key, h= self.calculeaza_h(infoNodNou)))
 
 		Graph.noduriTotale += len(listaSuccesori)
 		return listaSuccesori
@@ -112,6 +115,12 @@ class Graph:
 		if self.euristica == "banala":
 			if nod != self.scopuri:
 				return 1
+			return 0
+		if self.euristica == "admisibila_1":
+			return sum([x.get() for x in nod])
+		if self.euristica == "admisibila_2":
+			return max([x.get() for x in nod])
+		if self.euristica == "neadmisibila":
 			return 0
 
 
@@ -132,7 +141,7 @@ class Graph:
 				res[i].update(1)
 			elif ch == 'd' and res[i].get() > 0:
 				res[i].update(-1)
-		print("Aplic", key,incuietori, " Rezulta: ", res)
+		#print("Aplic", key,incuietori, " Rezulta: ", res)
 	
 		return res
 
