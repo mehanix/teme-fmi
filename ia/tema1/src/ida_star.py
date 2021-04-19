@@ -3,7 +3,8 @@ import time
 from src.graph import *
 
 
-def construieste_drum(nodCurent: NodParcurgere, limita, gr):
+def construieste_drum(nodCurent: NodParcurgere, limita, out, gr):
+
     if nodCurent.info == gr.scopuri:
         nodCurent.afisDrum(-1)
         return (True, 0)
@@ -13,12 +14,18 @@ def construieste_drum(nodCurent: NodParcurgere, limita, gr):
     
     mini = float('inf')
 
+    Graph.maxim = max(Graph.maxim, 0)
+    current_time = time.time()
+    if (round(current_time - gr.start_time) > gr.timeout):
+        out.write("Timeout!\n")
+        return (True, mini)
+
     for nod in gr.genereazaSuccesori(nodCurent):
         info = nod.info
         g = nod.g
         h = nod.h 
         key = nod.key
-        (ajuns, lim) = construieste_drum(NodParcurgere(info, g, nodCurent, key, h), limita, gr)
+        (ajuns, lim) = construieste_drum(NodParcurgere(info, g, nodCurent, key, h), limita,out, gr)
         if ajuns:
             return(True, 0)
         mini = min(mini, lim)
@@ -45,13 +52,7 @@ def idastar(gr, out):
     nivel = gr.calculeaza_h(gr.start)
     nodStart = NodParcurgere(gr.start, 0,None, None, gr.calculeaza_h(gr.start))
     while True:
-        Graph.maxim = max(Graph.maxim, 0)
-        current_time = time.time()
-        if (round(current_time - gr.start_time) > gr.timeout):
-            out.write("Timeout!\n")
-            return
-
-        (ajuns, lim) = construieste_drum(nodStart, nivel,gr)
+        (ajuns, lim) = construieste_drum(nodStart, nivel,out,gr)
         if ajuns:
             break
         if lim == float('inf'):
