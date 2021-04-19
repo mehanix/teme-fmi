@@ -5,6 +5,8 @@ from src.ucs import ucs
 from src.graph import Graph, NodParcurgere
 from src.a_star import a_star
 from src.a_star_v2 import a_star_v2
+from src.ida_star import ida_star
+
 nsol = -1
 timeout = -1
 
@@ -87,11 +89,14 @@ def run_test(inp, out):
     # a_star(start,scopuri,out,euristica="admisibila_1")
     # a_star(start,scopuri,out,euristica='admisibila_2')
     # a_star(start,scopuri,out,euristica="neadmisibila")
-    a_star_v2(start,scopuri,out,euristica="banala")
-    a_star_v2(start,scopuri,out,euristica="admisibila_1")
-    a_star_v2(start,scopuri,out,euristica="admisibila_2")
-    a_star_v2(start,scopuri,out,euristica="neadmisibila")
-
+    # a_star_v2(start,scopuri,out,euristica="banala")
+    # a_star_v2(start,scopuri,out,euristica="admisibila_1")
+    # a_star_v2(start,scopuri,out,euristica="admisibila_2")
+    # a_star_v2(start,scopuri,out,euristica="neadmisibila")
+    ida_star(start,scopuri,out,euristica="banala")
+    ida_star(start,scopuri,out,euristica="admisibila_1")
+    ida_star(start,scopuri,out,euristica="admisibila_2")
+    ida_star(start,scopuri,out,euristica="neadmisibila")
 
 if __name__ == "__main__":
     main(sys.argv[1:])
