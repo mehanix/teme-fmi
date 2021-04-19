@@ -57,7 +57,7 @@ def ida_star(start,scopuri,out,euristica="banala"):
     _idastar(gr,out)
 
 def _idastar(gr, out):
-     """Ruleaza IDA* pe graful gr si scrie rezultatele in out.
+    """Ruleaza IDA* pe graful gr si scrie rezultatele in out.
 
     Args:
         gr (graph): Graful problemei

@@ -36,12 +36,13 @@ def insert(node, lista):
   lista.insert(idx, node)
 
 def _astar_v2(gr, out):
-     """Ruleaza A* varianta optimizata pe graful gr si scrie rezultatele in out.
+    """Ruleaza A* varianta optimizata pe graful gr si scrie rezultatele in out.
 
     Args:
         gr (graph): Graful problemei
         out (IO): Fisier iesire.
     """
+
     print("astar_v2")
 
     opened = [NodParcurgere(gr.start, 0, None)]
