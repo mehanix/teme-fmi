@@ -4,6 +4,7 @@ from src.incuietoare import Incuietoare
 from src.ucs import ucs
 from src.graph import Graph, NodParcurgere
 from src.a_star import a_star
+from src.a_star_v2 import a_star_v2
 nsol = -1
 timeout = -1
 
@@ -81,12 +82,15 @@ def run_test(inp, out):
     Graph.nsol = nsol
     Graph.out = out
     NodParcurgere.out = out
-    ucs(start,scopuri,out)
-    a_star(start,scopuri,out,euristica="banala")
-    a_star(start,scopuri,out,euristica="admisibila_1")
-    a_star(start,scopuri,out,euristica='admisibila_2')
-    a_star(start,scopuri,out,euristica="neadmisibila")
-
+    # ucs(start,scopuri,out)
+    # a_star(start,scopuri,out,euristica="banala")
+    # a_star(start,scopuri,out,euristica="admisibila_1")
+    # a_star(start,scopuri,out,euristica='admisibila_2')
+    # a_star(start,scopuri,out,euristica="neadmisibila")
+    a_star_v2(start,scopuri,out,euristica="banala")
+    a_star_v2(start,scopuri,out,euristica="admisibila_1")
+    a_star_v2(start,scopuri,out,euristica="admisibila_2")
+    a_star_v2(start,scopuri,out,euristica="neadmisibila")
 
 
 if __name__ == "__main__":

@@ -122,6 +122,7 @@ class Graph:
 			return min([x.get() for x in nod])
 		if self.euristica == "neadmisibila":
 			return sum([x.get() for x in nod])
+		return 0
 
 
 	def apply_key(incuietori, key):
