@@ -49,12 +49,12 @@ def main(argv):
         output_filename = "output_" + filename
         inp = open("{0}/{1}".format(input_folder, filename),"r")
         out = open("{0}/{1}".format(output_folder,output_filename),"w")
-        run_test(inp, out)
+        run(inp, out)
         inp.close()
         out.close()
 
-def run_test(inp, out):
-    """ Pregateste variabilele pentru testul cu datele din fisierul inp.
+def run(inp, out):
+    """ Pregateste variabilele pentru testul cu datele din fisierul inp. Ruleaza algoritmii.
 
     Args:
         inp (IO): Fisier input

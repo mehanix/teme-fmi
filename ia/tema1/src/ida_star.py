@@ -2,11 +2,13 @@ import copy
 import time
 from src.graph import *
 
+total = 0
 
 def construieste_drum(nodCurent: NodParcurgere, limita, out, gr):
+    global total
 
     if nodCurent.info == gr.scopuri:
-        nodCurent.afisDrum(-1)
+        nodCurent.afisDrum(total)
         return (True, 0)
     
     if nodCurent.f > limita:
@@ -21,6 +23,7 @@ def construieste_drum(nodCurent: NodParcurgere, limita, out, gr):
         return (True, mini)
 
     for nod in gr.genereazaSuccesori(nodCurent):
+        total+=1
         info = nod.info
         g = nod.g
         h = nod.h 
@@ -34,6 +37,14 @@ def construieste_drum(nodCurent: NodParcurgere, limita, out, gr):
 
 
 def ida_star(start,scopuri,out,euristica="banala"):
+    """Wrapper pentru algoritmul IDA*. Pregateste graful problemei si ruleaza algoritmul.
+
+    Args:
+        start ([Incuietoare]): Configuratia de start (toate incuietorile pe 1)
+        scopuri ([Incuietoare]): Configuratia de stop (toate incuietorile pe 0)
+        out (IO): Fisierul de iesire
+        euristica(string): ce euristica voi folosi in estimarea costului drumului nodCurent -> stareScop
+    """
     out.write("########################################\n")
     out.write("#                 IDA*                 #\n")
     out.write("########################################\n")
@@ -43,10 +54,18 @@ def ida_star(start,scopuri,out,euristica="banala"):
     out.write("########################################\n")
 
     gr = Graph(start, scopuri,euristica)
-    idastar(gr,out)
+    _idastar(gr,out)
 
-def idastar(gr, out):
+def _idastar(gr, out):
+     """Ruleaza IDA* pe graful gr si scrie rezultatele in out.
+
+    Args:
+        gr (graph): Graful problemei
+        out (IO): Fisier iesire.
+    """
     print("idastar")
+    global total
+    total = 0
     #niv = h(startNod) facem dfs din nodurile care au niv >= f, daca f > niv nu apelam dfs pe succesori, 
     #niv = min({f(nod) | f(nod) > niv si nod este o frunza a arborelui expandat})
     nivel = gr.calculeaza_h(gr.start)

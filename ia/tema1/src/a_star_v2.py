@@ -3,6 +3,14 @@ import time
 from src.graph import *
 
 def a_star_v2(start,scopuri,out,euristica="banala"):
+    """Wrapper pentru algoritmul A*, varianta optimizata. Pregateste graful problemei si ruleaza algoritmul.
+
+    Args:
+        start ([Incuietoare]): Configuratia de start (toate incuietorile pe 1)
+        scopuri ([Incuietoare]): Configuratia de stop (toate incuietorile pe 0)
+        out (IO): Fisierul de iesire
+        euristica(string): ce euristica voi folosi in estimarea costului drumului nodCurent -> stareScop
+    """
     out.write("########################################\n")
     out.write("#   A* - open/closed, doar sol min     #\n")
     out.write("########################################\n")
@@ -12,7 +20,7 @@ def a_star_v2(start,scopuri,out,euristica="banala"):
     out.write("########################################\n")
 
     gr = Graph(start, scopuri,euristica)
-    astar_v2(gr,out)
+    _astar_v2(gr,out)
 
 
 def in_list(nod_info, lista):
@@ -27,9 +35,15 @@ def insert(node, lista):
     idx += 1
   lista.insert(idx, node)
 
-def astar_v2(gr, out):
+def _astar_v2(gr, out):
+     """Ruleaza A* varianta optimizata pe graful gr si scrie rezultatele in out.
+
+    Args:
+        gr (graph): Graful problemei
+        out (IO): Fisier iesire.
+    """
     print("astar_v2")
-    #de completat
+
     opened = [NodParcurgere(gr.start, 0, None)]
 
     closed = []

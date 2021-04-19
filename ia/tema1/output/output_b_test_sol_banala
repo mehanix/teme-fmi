@@ -1,0 +1,242 @@
+#######################################
+#         Uniform Cost Search         #
+#######################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 1
+Nr total noduri calculate: 1
+
+----------------
+########################################
+#                   A*                 #
+########################################
+#          Euristica: banala           #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 1
+Nr total noduri calculate: 1
+
+----------------
+########################################
+#                   A*                 #
+########################################
+#       Euristica: admisibila_1        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 1
+Nr total noduri calculate: 1
+
+----------------
+########################################
+#                   A*                 #
+########################################
+#       Euristica: admisibila_2        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 1
+Nr total noduri calculate: 1
+
+----------------
+########################################
+#                   A*                 #
+########################################
+#       Euristica: neadmisibila        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 1
+Nr total noduri calculate: 1
+
+----------------
+########################################
+#   A* - open/closed, doar sol min     #
+########################################
+#          Euristica: banala           #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 2
+Nr total noduri calculate: 1
+########################################
+#   A* - open/closed, doar sol min     #
+########################################
+#       Euristica: admisibila_1        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 2
+Nr total noduri calculate: 1
+########################################
+#   A* - open/closed, doar sol min     #
+########################################
+#       Euristica: admisibila_2        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 2
+Nr total noduri calculate: 1
+########################################
+#   A* - open/closed, doar sol min     #
+########################################
+#       Euristica: neadmisibila        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 2
+Nr total noduri calculate: 1
+########################################
+#                 IDA*                 #
+########################################
+#          Euristica: banala           #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 0
+Nr total noduri calculate: 1
+########################################
+#                 IDA*                 #
+########################################
+#       Euristica: admisibila_1        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 0
+Nr total noduri calculate: 1
+########################################
+#                 IDA*                 #
+########################################
+#       Euristica: admisibila_2        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 0
+Nr total noduri calculate: 1
+########################################
+#                 IDA*                 #
+########################################
+#       Euristica: neadmisibila        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 0
+Nr total noduri calculate: 1

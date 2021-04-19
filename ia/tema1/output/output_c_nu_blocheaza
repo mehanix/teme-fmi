@@ -15,7 +15,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 132ms
+Timp gasire solutie: 159ms
 Nr noduri maxim existente in memorie: 844
 Nr total noduri calculate: 961
 
@@ -34,12 +34,11 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 739ms
+Timp gasire solutie: 1013ms
 Nr noduri maxim existente in memorie: 2550
 Nr total noduri calculate: 2908
 
 ----------------
-Timeout!
 ########################################
 #                   A*                 #
 ########################################
@@ -59,7 +58,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 11ms
+Timp gasire solutie: 13ms
 Nr noduri maxim existente in memorie: 101
 Nr total noduri calculate: 114
 
@@ -78,30 +77,9 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 39ms
+Timp gasire solutie: 50ms
 Nr noduri maxim existente in memorie: 372
 Nr total noduri calculate: 423
-
-----------------
-0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
-Folosim cheia: ['gdgg'] pentru a ajunge la...
-1) Incuietori: [inc(i,1), inc(d,0), inc(i,1), inc(i,1)]
-Folosim cheia: ['iddd'] pentru a ajunge la...
-2) Incuietori: [inc(i,2), inc(d,0), inc(d,0), inc(d,0)]
-Folosim cheia: ['dggg'] pentru a ajunge la...
-3) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(d,0)]
-Folosim cheia: ['dggg'] pentru a ajunge la...
-4) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
-
-Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
-
-------------
-Stats:
-Lungime drum: 4
-Cost drum: 4
-Timp gasire solutie: 151ms
-Nr noduri maxim existente in memorie: 1175
-Nr total noduri calculate: 1338
 
 ----------------
 ########################################
@@ -123,7 +101,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 4ms
+Timp gasire solutie: 8ms
 Nr noduri maxim existente in memorie: 43
 Nr total noduri calculate: 48
 
@@ -142,30 +120,9 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 17ms
+Timp gasire solutie: 29ms
 Nr noduri maxim existente in memorie: 143
 Nr total noduri calculate: 163
-
-----------------
-0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
-Folosim cheia: ['gdgg'] pentru a ajunge la...
-1) Incuietori: [inc(i,1), inc(d,0), inc(i,1), inc(i,1)]
-Folosim cheia: ['dggg'] pentru a ajunge la...
-2) Incuietori: [inc(d,0), inc(d,0), inc(i,1), inc(i,1)]
-Folosim cheia: ['iddd'] pentru a ajunge la...
-3) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(d,0)]
-Folosim cheia: ['dggg'] pentru a ajunge la...
-4) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
-
-Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
-
-------------
-Stats:
-Lungime drum: 4
-Cost drum: 4
-Timp gasire solutie: 58ms
-Nr noduri maxim existente in memorie: 503
-Nr total noduri calculate: 575
 
 ----------------
 ########################################
@@ -187,7 +144,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 347ms
+Timp gasire solutie: 516ms
 Nr noduri maxim existente in memorie: 2221
 Nr total noduri calculate: 2532
 
@@ -206,12 +163,11 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 610ms
+Timp gasire solutie: 892ms
 Nr noduri maxim existente in memorie: 3949
 Nr total noduri calculate: 4508
 
 ----------------
-Timeout!
 ########################################
 #                   A*                 #
 ########################################
@@ -252,30 +208,9 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 4
 Cost drum: 4
-Timp gasire solutie: 5ms
+Timp gasire solutie: 6ms
 Nr noduri maxim existente in memorie: 45
 Nr total noduri calculate: 51
-
-----------------
-0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
-Folosim cheia: ['gdgg'] pentru a ajunge la...
-1) Incuietori: [inc(i,1), inc(d,0), inc(i,1), inc(i,1)]
-Folosim cheia: ['iddd'] pentru a ajunge la...
-2) Incuietori: [inc(i,2), inc(d,0), inc(d,0), inc(d,0)]
-Folosim cheia: ['dggg'] pentru a ajunge la...
-3) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(d,0)]
-Folosim cheia: ['dggg'] pentru a ajunge la...
-4) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
-
-Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
-
-------------
-Stats:
-Lungime drum: 4
-Cost drum: 4
-Timp gasire solutie: 8ms
-Nr noduri maxim existente in memorie: 60
-Nr total noduri calculate: 69
 
 ----------------
 ########################################
@@ -297,7 +232,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 20ms
+Timp gasire solutie: 22ms
 Nr noduri maxim existente in memorie: 90
 Nr total noduri calculate: 175
 ########################################
@@ -341,7 +276,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 63ms
+Timp gasire solutie: 56ms
 Nr noduri maxim existente in memorie: 184
 Nr total noduri calculate: 510
 ########################################
@@ -387,7 +322,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 13ms
+Timp gasire solutie: 11ms
 Nr noduri maxim existente in memorie: 0
 Nr total noduri calculate: 147
 ########################################
@@ -409,7 +344,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 6ms
+Timp gasire solutie: 5ms
 Nr noduri maxim existente in memorie: 0
 Nr total noduri calculate: 57
 ########################################
@@ -431,7 +366,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 12ms
+Timp gasire solutie: 10ms
 Nr noduri maxim existente in memorie: 0
 Nr total noduri calculate: 129
 ########################################
@@ -453,6 +388,6 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 4ms
+Timp gasire solutie: 2ms
 Nr noduri maxim existente in memorie: 0
 Nr total noduri calculate: 23
