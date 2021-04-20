@@ -55,6 +55,10 @@ Estimez costul ca fiind incuietoarea care a fost incuiata de cele mai multe ori 
 Aceasta euristica face ca algoritmul sa prefere starile cu incuietori "cat mai descuiate".
 
 ### Admisibila 2
+```python
+    return min([x.get() for x in nod])
+```
+Aceasta euristica prefera starile care au macar 1 incuietoare descuiata, avand ca efect evitarea starilor care se indeparteaza de starea scop (de exemplu, dintre `i  d  i` si `i i2 i` voi prefera prima stare, care intr-adevar e mai aproape de solutie. )
 
 ### Neadmisibila
 Euristica neadmisibila atribuie fiecarei stari un scor in functie de cate ori e incuiata fiecare portiune a lacatului. Acest scor reprezinta numarul de mutari estimat ca trebuie facute pentru a ajunge in starea scop.
