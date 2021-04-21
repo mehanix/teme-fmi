@@ -34,9 +34,7 @@ class Celula:
         self.zid[2]=pygame.Rect(left,top+h-self.__class__.grosimeZid//2, w,self.__class__.grosimeZid)
 
         self.zid[3]=pygame.Rect(left-1-self.__class__.grosimeZid//2,top, self.__class__.grosimeZid,h)
-   
-
-        #print(self.zid)
+ 
         #0001 zid doar sus
         #0011 zid sus si dreapta etc
     def deseneaza(self):
@@ -57,6 +55,9 @@ class Celula:
         pygame.draw.circle(Interfata.dotSurface,self.culoarePuncte,(self.dreptunghi.x+self.dreptunghi.h,self.dreptunghi.y + self.dreptunghi.w),self.razaPuncte)
         pygame.draw.circle(Interfata.dotSurface,self.culoarePuncte,(self.dreptunghi.x+self.dreptunghi.h,self.dreptunghi.y),self.razaPuncte)
 
+    def exista_zid(self, i_zid):
+        print(self.cod & 2**i_zid)
+        return self.cod & 2**i_zid
 
 
 class Interfata:
@@ -84,29 +85,47 @@ class Interfata:
                     self.deseneazaImag(self.img_x, cel)
         pygame.display.update()
 
+    #mutari calculator, yay
     def mutari(self,jucator):
         l_mutari = []
 
-    def aplica_mutare(self,pos):
+        #iterez prin toata tabla mea
+        # for il, linie in enumerate(self.matrCelule):
+        #     for ic, cel in enumerate(linie):                    
+        #         for iz,zid in enumerate(cel.zid):
+        #             if cel.
+
+    def aplica_mutare_player(self,pos):
         zidGasit=[]
 
         for il, linie in enumerate(self.matrCelule):
             for ic, cel in enumerate(linie):                    
                 for iz,zid in enumerate(cel.zid):
-                    if zid and zid.collidepoint(pos):
+                    if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
                         zidGasit.append((cel,iz,zid))
-        celuleAfectate=[]
-        if 0<len(zidGasit)<=2:
-            for (cel,iz,zid) in zidGasit:
-                pygame.draw.rect(Config.ecran, Celula.culoareLinii,zid)
-                cel.cod|=2**iz
-                celuleAfectate.append(cel)
 
+        celuleAfectate = self.alege_zid(zidGasit)
+        if celuleAfectate is None:
+            return False  
+        self.update_valori(celuleAfectate)
+        return True
     
+    def alege_zid(self,zidGasit):
+        celuleAfectate = []
+        if zidGasit == []:
+            return
+        for (cel,iz,zid) in zidGasit:
+            pygame.draw.rect(Config.ecran, Celula.culoareLinii,zid)
+            cel.cod|=2**iz
+            celuleAfectate.append(cel)
+        return celuleAfectate
+
+    def update_valori(self,celuleAfectate):
         for celA in celuleAfectate:
             if celA.cod==15:
                 self.deseneazaImag(Interfata.img_x, celA)
-    
+
+
     @classmethod
     def jucator_opus(cls, jucator):
         return cls.JMAX if jucator==cls.JMIN else cls.JMIN

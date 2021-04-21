@@ -29,9 +29,10 @@ while True:
                 sys.exit()
             elif ev.type == pygame.MOUSEBUTTONDOWN: 
                 pos = pygame.mouse.get_pos()
-                stare_curenta.tabla_joc.aplica_mutare(pos)
-                tabla_curenta.afiseazaDebug()
-                stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
+                mutare_corecta = stare_curenta.tabla_joc.aplica_mutare_player(pos)
+                if mutare_corecta:
+                    tabla_curenta.afiseazaDebug()
+                    stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
 
             ecr.blit(game.Interfata.dotSurface,(0,0))
 
