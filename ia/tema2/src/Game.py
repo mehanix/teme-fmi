@@ -70,15 +70,12 @@ class Interfata:
 
     def __init__(self, matr, nrLinii=7, nrColoane=10):
         self.ultima_mutare = None
+        self.nrLinii=nrLinii
+        self.nrColoane=nrColoane
+        self.matrCelule=matr if matr is not None else [[Celula(left=col*(self.__class__.dimCelula+1)+30, top=lin*(self.__class__.dimCelula+1)+30, w=self.__class__.dimCelula, h=self.__class__.dimCelula, lin=lin, col=col, interfata=self) for col in range(nrColoane)] for lin in range(nrLinii) ]
+        
+        self.matCoordZiduri = self.getMatCoordZiduri(self.matrCelule)
 
-        if matr is None:
-            self.nrLinii=nrLinii
-            self.nrColoane=nrColoane
-            self.matrCelule=[[Celula(left=col*(self.__class__.dimCelula+1)+30, top=lin*(self.__class__.dimCelula+1)+30, w=self.__class__.dimCelula, h=self.__class__.dimCelula, lin=lin, col=col, interfata=self) for col in range(nrColoane)] for lin in range(nrLinii) ]
-            
-            self.matCoordZiduri = self.getMatCoordZiduri(self.matrCelule)
-        else:
-            self.matrCelule = matr
 
     def getMatCoordZiduri(self,matr):
         coords = set()
@@ -124,7 +121,7 @@ class Interfata:
                 jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane)
 
                 l_mutari.append(jn)
-                print(jn)
+        return l_mutari
 
     def aplica_mutare_player(self,pos):
         zidGasit=[]
@@ -220,16 +217,16 @@ class Stare:
 
     def mutari(self):        
         l_mutari=self.tabla_joc.mutari(self.j_curent)
-        juc_opus=Joc.jucator_opus(self.j_curent)
-        l_stari_mutari=[Stare(mutare, juc_opus, self.adancime-1, parinte=self) for mutare in l_mutari]
+        juc_opus=Interfata.jucator_opus(self.j_curent)
 
+        l_stari_mutari=[Stare(mutare, juc_opus, self.adancime-1, parinte=self) for mutare in l_mutari]
         return l_stari_mutari
         
     
     def __str__(self):
-        sir= str(self.tabla_joc) + "(Juc curent:"+self.j_curent+")\n"
+        sir= "Stare("+str(self.tabla_joc.matrCelule) + "(Juc curent:"+self.j_curent+"))\n"
         return sir    
     def __repr__(self):
-        sir= str(self.tabla_joc) + "(Juc curent:"+self.j_curent+")\n"
+        sir= "Stare("+str(self.tabla_joc.matrCelule) + "(Juc curent:"+self.j_curent+"))\n"
         return sir
     
