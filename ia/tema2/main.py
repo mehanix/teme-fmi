@@ -19,18 +19,28 @@ tabla_curenta = game.Interfata(nr_linii,nr_coloane)
 tabla_curenta.deseneazaEcranJoc()
 tabla_curenta.afiseazaDebug()
 
-stare_curenta = game.Stare(tabla_curenta,'x',game.Config.ADANCIME_MAX)
-while True:        
-    for ev in pygame.event.get(): 
-        if ev.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif ev.type == pygame.MOUSEBUTTONDOWN: 
-            pos = pygame.mouse.get_pos()
-            stare_curenta.tabla_joc.aplica_mutare(pos)
-            tabla_curenta.afiseazaDebug()
+stare_curenta = game.Stare(tabla_curenta,'X',game.Config.ADANCIME_MAX)
+while True:
+######### USER
+    if (stare_curenta.j_curent == game.Interfata.JMIN):
+        for ev in pygame.event.get(): 
+            if ev.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif ev.type == pygame.MOUSEBUTTONDOWN: 
+                pos = pygame.mouse.get_pos()
+                stare_curenta.tabla_joc.aplica_mutare(pos)
+                tabla_curenta.afiseazaDebug()
+                stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
 
-        ecr.blit(game.Interfata.dotSurface,(0,0))
+            ecr.blit(game.Interfata.dotSurface,(0,0))
+
+ ######### COMPUTER
+    else:
+        print("pc turn")
+        # TODO: ai stuff
+        stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
+
 
 
 

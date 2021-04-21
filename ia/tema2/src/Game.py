@@ -106,6 +106,11 @@ class Interfata:
         for celA in celuleAfectate:
             if celA.cod==15:
                 self.deseneazaImag(Interfata.img_x, celA)
+    
+    @classmethod
+    def jucator_opus(cls, jucator):
+        return cls.JMAX if jucator==cls.JMIN else cls.JMIN
+
 
     @classmethod
     def initializeaza(cls,tip_joc,dificultate,nr_linii,nr_coloane):
