@@ -57,7 +57,6 @@ class Celula:
         pygame.draw.circle(Interfata.dotSurface,self.culoarePuncte,(self.dreptunghi.x+self.dreptunghi.h,self.dreptunghi.y),self.razaPuncte)
 
     def exista_zid(self, i_zid):
-        print(self.cod & 2**i_zid)
         return self.cod & 2**i_zid
 
     def __repr__(self):
@@ -68,23 +67,22 @@ class Interfata:
     JMIN = None #player
     JMAX = None #computer
 
-    def __init__(self, matr, nrLinii=7, nrColoane=10):
+    def __init__(self, matr, nrLinii=7, nrColoane=10, capturaPlayer=[],capturaComputer=[]):
         self.ultima_mutare = None
         self.nrLinii=nrLinii
         self.nrColoane=nrColoane
         self.matrCelule=matr if matr is not None else [[Celula(left=col*(self.__class__.dimCelula+1)+30, top=lin*(self.__class__.dimCelula+1)+30, w=self.__class__.dimCelula, h=self.__class__.dimCelula, lin=lin, col=col, interfata=self) for col in range(nrColoane)] for lin in range(nrLinii) ]
         
         self.matCoordZiduri = self.getMatCoordZiduri(self.matrCelule)
-
+        self.capturaPlayer = capturaPlayer
+        self.capturaComputer = capturaComputer
 
     def getMatCoordZiduri(self,matr):
         coords = set()
-        print(matr)
         for lin in matr:
             for cel in lin:
                 for zid in cel.zid:
                     coords.add(zid.center)
-        print(coords)
         return coords
 
     def deseneazaImag(self, imag, cel):
@@ -92,14 +90,16 @@ class Interfata:
 
     def deseneazaEcranJoc(self):
         Config.ecran.fill(self.__class__.culoareEcran)
-        for linie in self.matrCelule:
-            for cel in linie:
-                cel.deseneaza()  
-                print(cel.cod)
+        for il, linie in enumerate(self.matrCelule):
+            for ic, cel in enumerate(linie):     
+                cel.deseneaza() 
                 if cel.cod == 15:
-                    self.deseneazaImag(self.img_x, cel)
-        pygame.display.update()
-
+                    if (il,ic) in self.capturaPlayer:
+                        self.deseneazaImag(self.img_x, cel)
+                    else:
+                        self.deseneazaImag(self.img_0,cel)
+                    print("PLAYER",self.capturaPlayer)
+                    print("Computer",self.capturaComputer)
     #mutari calculator, yay
     def mutari(self,jucator):
         l_mutari = []
@@ -116,9 +116,16 @@ class Interfata:
         
             if zidGasit != []:
                 matr_tabla_noua = copy.deepcopy(self.matrCelule)
-                for (il,ic,iz) in zidGasit:
-                    matr_tabla_noua[il][ic].cod|=2**iz
                 jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane)
+                for (il,ic,iz) in zidGasit:
+                    jn.matrCelule[il][ic].cod|=2**iz
+                    if jn.matrCelule[il][ic].cod == 15:
+                        if jucator == Interfata.JMIN:
+                            jn.capturaPlayer.append((il,ic))
+                        else:
+                            # TODO fix, se aduna mereu, cv e aiurea
+                            jn.capturaComputer.append((il,ic))
+                            
 
                 l_mutari.append(jn)
         return l_mutari
@@ -130,7 +137,7 @@ class Interfata:
             for ic, cel in enumerate(linie):                    
                 for iz,zid in enumerate(cel.zid):
                     if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
-                        zidGasit.append((cel,iz,zid))
+                        zidGasit.append((il,ic,cel,iz,zid))
 
         celuleAfectate = self.alege_zid(zidGasit)
         if celuleAfectate is None:
@@ -146,9 +153,11 @@ class Interfata:
         if zidGasit == []:
             return
 
-        for (cel,iz,zid) in zidGasit:
+        for (il,ic,cel,iz,zid) in zidGasit:
             #pygame.draw.rect(Config.ecran, Celula.culoareLinii,zid)
             cel.cod|=2**iz
+            if cel.cod == 15:
+                self.capturaPlayer.append((il,ic))
             celuleAfectate.append(cel)
         return celuleAfectate
 

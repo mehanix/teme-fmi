@@ -2,6 +2,7 @@ import pygame
 import sys
 import src.Game as game
 import random
+import time
 pygame.init()
 
 # TODO: interfata selectare aici
@@ -32,10 +33,9 @@ while True:
                 pos = pygame.mouse.get_pos()
                 mutare_corecta = stare_curenta.tabla_joc.aplica_mutare_player(pos)
                 if mutare_corecta:
-                    tabla_curenta.afiseazaDebug()
+                    # tabla_curenta.afiseazaDebug()
                     stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
-                    tabla_curenta.deseneazaEcranJoc()
-
+                    tabla_curenta.deseneazaEcranJoc()            
             ecr.blit(game.Interfata.dotSurface,(0,0))
 
  ######### COMPUTER
@@ -43,12 +43,11 @@ while True:
         print("pc turn")
         # TODO: ai stuff
         stari_noi = stare_curenta.mutari()
-        print(stari_noi)
 
         # TODO: aici bagi minmax
         stare_actualizata = stari_noi[random.randrange(len(stari_noi))]
         stare_curenta.tabla_joc = stare_actualizata.tabla_joc
-        
+        time.sleep(0.2)
         stare_curenta.tabla_joc.deseneazaEcranJoc()
         stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
 
