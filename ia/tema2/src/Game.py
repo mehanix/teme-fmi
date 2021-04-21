@@ -1,4 +1,5 @@
 import pygame
+import copy
 
 class Config:
 
@@ -8,7 +9,8 @@ class Config:
         cls.dificultate = dificultate
         cls.latime_ecran = lat
         cls.lungime_ecran = lung
-        cls.ADANCIME_MAX = 3    
+        cls.ADANCIME_MAX = 3
+ 
     @classmethod
     def set_ecran(cls,ecr):
         cls.ecran = ecr
@@ -21,9 +23,8 @@ class Celula:
     razaPuncte = 12
     afisImagini=True
 
-    def __init__ (self, left, top, w, h, display, lin, col,interfata, cod=0):
+    def __init__ (self, left, top, w, h,  lin, col,interfata, cod=0):
         self.dreptunghi=pygame.Rect(left, top, w, h)
-        self.display=display
         self.zid=[None,None,None,None]
         #zidurile vor fi pe pozitiile 0-sus, 1-dreapta, 2-jos, 3-stanga
         self.cod=0
@@ -38,13 +39,13 @@ class Celula:
         #0001 zid doar sus
         #0011 zid sus si dreapta etc
     def deseneaza(self):
-        pygame.draw.rect(self.display, self.__class__.fundalCelula, self.dreptunghi)
+        pygame.draw.rect(Config.ecran, self.__class__.fundalCelula, self.dreptunghi)
         #masti=[1,2,4,8]
         masca=1
         for i in range(4):
             if self.cod & masca:
                 if self.zid[i]:
-                    pygame.draw.rect(self.display, self.__class__.culoareLinii, self.zid[i])        
+                    pygame.draw.rect(Config.ecran, self.__class__.culoareLinii, self.zid[i])        
             masca*=2
 
                 # top left
@@ -59,19 +60,36 @@ class Celula:
         print(self.cod & 2**i_zid)
         return self.cod & 2**i_zid
 
+    def __repr__(self):
+        return "Celula " + str(self.dreptunghi.x) + '  ' + str(self.dreptunghi.y)
 
 class Interfata:
     culoareEcran=(255,255,255)
     JMIN = None #player
     JMAX = None #computer
 
-    def __init__(self, nrLinii=7, nrColoane=10):
+    def __init__(self, matr, nrLinii=7, nrColoane=10):
         self.ultima_mutare = None
 
-        self.nrLinii=nrLinii
-        self.nrColoane=nrColoane
-        self.matrCelule=[[Celula(display=Config.ecran, left=col*(self.__class__.dimCelula+1)+30, top=lin*(self.__class__.dimCelula+1)+30, w=self.__class__.dimCelula, h=self.__class__.dimCelula, lin=lin, col=col, interfata=self) for col in range(nrColoane)] for lin in range(nrLinii) ]
- 
+        if matr is None:
+            self.nrLinii=nrLinii
+            self.nrColoane=nrColoane
+            self.matrCelule=[[Celula(left=col*(self.__class__.dimCelula+1)+30, top=lin*(self.__class__.dimCelula+1)+30, w=self.__class__.dimCelula, h=self.__class__.dimCelula, lin=lin, col=col, interfata=self) for col in range(nrColoane)] for lin in range(nrLinii) ]
+            
+            self.matCoordZiduri = self.getMatCoordZiduri(self.matrCelule)
+        else:
+            self.matrCelule = matr
+
+    def getMatCoordZiduri(self,matr):
+        coords = set()
+        print(matr)
+        for lin in matr:
+            for cel in lin:
+                for zid in cel.zid:
+                    coords.add(zid.center)
+        print(coords)
+        return coords
+
     def deseneazaImag(self, imag, cel):
         Config.ecran.blit(imag,(cel.dreptunghi.left+self.__class__.paddingCelula,  cel.dreptunghi.top+self.__class__.paddingCelula))
 
@@ -90,10 +108,23 @@ class Interfata:
         l_mutari = []
 
         #iterez prin toata tabla mea
-        # for il, linie in enumerate(self.matrCelule):
-        #     for ic, cel in enumerate(linie):                    
-        #         for iz,zid in enumerate(cel.zid):
-        #             if cel.
+        # pt fiecare zid, iau celulele pe care selectarea lui le va afecta
+        for pos in self.matCoordZiduri:
+            zidGasit = []
+            for il, linie in enumerate(self.matrCelule):
+                for ic, cel in enumerate(linie):                    
+                    for iz,zid in enumerate(cel.zid):
+                        if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
+                                zidGasit.append((il,ic,iz))
+        
+            if zidGasit != []:
+                matr_tabla_noua = copy.deepcopy(self.matrCelule)
+                for (il,ic,iz) in zidGasit:
+                    matr_tabla_noua[il][ic].cod|=2**iz
+                jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane)
+
+                l_mutari.append(jn)
+                print(jn)
 
     def aplica_mutare_player(self,pos):
         zidGasit=[]
@@ -107,23 +138,28 @@ class Interfata:
         celuleAfectate = self.alege_zid(zidGasit)
         if celuleAfectate is None:
             return False  
-        self.update_valori(celuleAfectate)
+        #self.update_valori(celuleAfectate)
         return True
+
+    def aplica_mutare_computer(self):
+        return NotImplemented
     
     def alege_zid(self,zidGasit):
         celuleAfectate = []
         if zidGasit == []:
             return
+
         for (cel,iz,zid) in zidGasit:
-            pygame.draw.rect(Config.ecran, Celula.culoareLinii,zid)
+            #pygame.draw.rect(Config.ecran, Celula.culoareLinii,zid)
             cel.cod|=2**iz
             celuleAfectate.append(cel)
         return celuleAfectate
 
-    def update_valori(self,celuleAfectate):
-        for celA in celuleAfectate:
-            if celA.cod==15:
-                self.deseneazaImag(Interfata.img_x, celA)
+    #def update_valori(self,celuleAfectate):
+        #for celA in celuleAfectate:
+            #if celA.cod==15:
+                #self.deseneazaImag(Interfata.img_x, celA)
+
 
 
     @classmethod
@@ -138,6 +174,8 @@ class Interfata:
         cls.paddingCelula=5
         cls.dimImagine=cls.dimCelula-2*cls.paddingCelula
         cls.dotSurface = None
+        cls.nrLinii = nr_linii
+        cls.nrColoane = nr_coloane
         cls.img_x = pygame.image.load('src/x.png')
         cls.img_0 = pygame.image.load('src/zero.png')
         cls.img_x = pygame.transform.scale(cls.img_x, (cls.dimImagine,cls.dimImagine))

@@ -6,8 +6,8 @@ pygame.init()
 # TODO: interfata selectare aici
 tip_joc = "minimax"
 dificultate = "1"
-nr_linii = 4
-nr_coloane = 4
+nr_linii = 1
+nr_coloane = 1
 game.Interfata.initializeaza(tip_joc,dificultate,nr_linii,nr_coloane)
 game.Interfata.JMIN = 'X'
 game.Interfata.JMAX = '0'
@@ -15,7 +15,7 @@ game.Interfata.JMAX = '0'
 
 ecr = pygame.display.set_mode(size=(game.Config.latime_ecran,game.Config.lungime_ecran))
 game.Config.set_ecran(ecr)
-tabla_curenta = game.Interfata(nr_linii,nr_coloane)
+tabla_curenta = game.Interfata(None,nr_linii,nr_coloane)
 tabla_curenta.deseneazaEcranJoc()
 tabla_curenta.afiseazaDebug()
 
@@ -33,6 +33,7 @@ while True:
                 if mutare_corecta:
                     tabla_curenta.afiseazaDebug()
                     stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
+                    tabla_curenta.deseneazaEcranJoc()
 
             ecr.blit(game.Interfata.dotSurface,(0,0))
 
@@ -40,6 +41,7 @@ while True:
     else:
         print("pc turn")
         # TODO: ai stuff
+        stare_curenta.tabla_joc.mutari(game.Interfata.JMAX)
         stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
 
 
