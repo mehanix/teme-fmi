@@ -5,6 +5,20 @@ import random
 import time
 import copy
 import src.Alegeri as alegeri
+import src.Minmax as m
+
+def afis_daca_final(stare_curenta):
+
+    final=stare_curenta.tabla_joc.final()
+    if(final):
+        if (final=="remiza"):
+            print("Remiza!")
+        else:
+            print("A castigat "+final)
+            
+        return True
+        
+    return False
 
 def main():
     pygame.init()
@@ -18,9 +32,8 @@ def main():
     nr_linii = 3
     nr_coloane = 3
 
-    game.Interfata.initializeaza(tip_joc,dificultate,nr_linii,nr_coloane)
-    game.Interfata.JMIN = simbol_player
-    game.Interfata.JMAX = '0' if simbol_player == 'X' else 'X'
+    game.Interfata.initializeaza(tip_joc,dificultate,nr_linii,nr_coloane,simbol_player)
+
 
     ##### Incep joc
     ecr = pygame.display.set_mode(size=(game.Config.latime_ecran,game.Config.lungime_ecran))
@@ -45,7 +58,7 @@ def main():
                         # tabla_curenta.afiseazaDebug()
                         stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
                         tabla_curenta.deseneazaEcranJoc()
-                        if(stare_curenta.tabla_joc.eStareFinala()):
+                        if(stare_curenta.tabla_joc.final()):
                             break 
             ecr.blit(game.Interfata.dotSurface,(0,0))
 
@@ -57,19 +70,24 @@ def main():
 
             # TODO: aici bagi minmax
             if len(stari_noi):
-                stare_actualizata = stari_noi[random.randrange(len(stari_noi))]
+                stare_actualizata = m.min_max(stare_curenta)
+                # stare_actualizata = stari_noi[random.randrange(len(stari_noi))]
                 # TODO: if stuff acts weird, investigate
-                stare_curenta.tabla_joc.matrCelule = stare_actualizata.tabla_joc.matrCelule
-                time.sleep(0.2)
+                stare_curenta.update(stare_actualizata.stare_aleasa)
+                # stare_curenta.tabla_joc.matrCelule = stare_actualizata.tabla_joc.matrCelule
                 stare_curenta.tabla_joc.deseneazaEcranJoc()
 
-                if(stare_curenta.tabla_joc.eStareFinala()):
-                    break
+                end = afis_daca_final(stare_curenta)
+                if(end):
+                    pygame.display.update()
+                    return end 
                 stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
             else:
                 stare_curenta.tabla_joc.deseneazaEcranJoc()
-                if(stare_curenta.tabla_joc.eStareFinala()):
-                    break
+                end = afis_daca_final(stare_curenta)
+                if(end):
+                    pygame.display.update()
+                    return end 
 
 
 
@@ -77,7 +95,9 @@ def main():
 
     
 if __name__ == "__main__" :
-    main()
+    mesaj = main()
+
+    print(mesaj)
     while True :
         for event in pygame.event.get():
             if event.type== pygame.QUIT:

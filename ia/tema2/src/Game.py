@@ -9,7 +9,7 @@ class Config:
         cls.dificultate = dificultate
         cls.latime_ecran = lat
         cls.lungime_ecran = lung + 40
-        cls.ADANCIME_MAX = 3
+        cls.ADANCIME_MAX = 2 + int(dificultate)
  
     @classmethod
     def set_ecran(cls,ecr):
@@ -66,6 +66,7 @@ class Interfata:
     culoareEcran=(255,255,255)
     JMIN = None #player
     JMAX = None #computer
+    scor_maxim = 0
 
     def __init__(self, matr, nrLinii=7, nrColoane=10, capturaPlayer=None,capturaComputer=None):
         self.ultima_mutare = None
@@ -85,9 +86,20 @@ class Interfata:
                     coords.add(zid.center)
         return coords
 
-    def eStareFinala(self):
+
+    def final(self):
         nrPatrate = self.nrColoane * self.nrLinii
-        return (len(self.capturaComputer) + len(self.capturaPlayer)) == nrPatrate
+        scorPc = len(self.capturaComputer)
+        scorPlayer = len(self.capturaPlayer)
+        if nrPatrate == scorPc + scorPlayer:
+            if scorPc == scorPlayer:
+                return 'remiza'
+            elif scorPc > scorPlayer:
+                return Interfata.JMAX
+            else:
+                return Interfata.JMIN
+        else:
+            return False
 
     def deseneazaImag(self, imag, cel):
         Config.ecran.blit(imag,(cel.dreptunghi.left+self.__class__.paddingCelula,  cel.dreptunghi.top+self.__class__.paddingCelula))
@@ -99,9 +111,9 @@ class Interfata:
                 cel.deseneaza() 
                 if cel.cod == 15:
                     if (il,ic) in self.capturaPlayer:
-                        self.deseneazaImag(self.img_x, cel)
+                        self.deseneazaImag(self.img_player, cel)
                     else:
-                        self.deseneazaImag(self.img_0,cel)
+                        self.deseneazaImag(self.img_computer,cel)
                     print("PLAYER",self.capturaPlayer)
                     print("Computer",self.capturaComputer)
             
@@ -128,12 +140,25 @@ class Interfata:
                         if jucator == Interfata.JMIN:
                             jn.capturaPlayer.append((il,ic))
                         else:
-                            # TODO fix, se aduna mereu, cv e aiurea
                             jn.capturaComputer.append((il,ic))
                             
 
                 l_mutari.append(jn)
         return l_mutari
+
+    def estimeaza_scor(self, adancime):
+        #de revizuit
+        t_final = self.final()
+        # if (adancime==0):
+        if t_final == self.__class__.JMAX:
+            return (self.__class__.scor_maxim + adancime)
+        elif t_final == self.__class__.JMIN:
+            return (-self.__class__.scor_maxim - adancime)
+        elif t_final == 'remiza':
+            return 0
+        else:
+            return len(self.capturaComputer) -len(self.capturaPlayer)
+
 
     def aplica_mutare_player(self,pos):
         zidGasit=[]
@@ -179,7 +204,7 @@ class Interfata:
 
 
     @classmethod
-    def initializeaza(cls,tip_joc,dificultate,nr_linii,nr_coloane):
+    def initializeaza(cls,tip_joc,dificultate,nr_linii,nr_coloane,simbol_player):
 
         cls.dimCelula=80
         cls.paddingCelula=5
@@ -187,10 +212,17 @@ class Interfata:
         cls.dotSurface = None
         cls.nrLinii = nr_linii
         cls.nrColoane = nr_coloane
-        cls.img_x = pygame.image.load('src/x.png')
-        cls.img_0 = pygame.image.load('src/zero.png')
-        cls.img_x = pygame.transform.scale(cls.img_x, (cls.dimImagine,cls.dimImagine))
-        cls.img_0 = pygame.transform.scale(cls.img_0,  (cls.dimImagine,cls.dimImagine))
+        cls.JMIN = simbol_player
+        cls.JMAX = '0' if simbol_player == 'X' else 'X'
+        cls.scor_maxim = nr_coloane*nr_linii
+        
+        img_x = pygame.image.load('src/x.png')
+        img_0 = pygame.image.load('src/zero.png')
+        img_x = pygame.transform.scale(img_x, (cls.dimImagine,cls.dimImagine))
+        img_0 = pygame.transform.scale(img_0,  (cls.dimImagine,cls.dimImagine))
+
+        cls.img_player = img_x if simbol_player == 'X' else img_0
+        cls.img_computer = img_0 if simbol_player == 'X' else img_x
         Config.set(tip_joc,dificultate,nr_coloane*cls.dimCelula+60,nr_linii*cls.dimCelula+60)
         cls.dotSurface = pygame.surface.Surface((Config.latime_ecran,Config.lungime_ecran),pygame.SRCALPHA, 32)
 
@@ -229,12 +261,37 @@ class Stare:
 
 
 
+    def update(self,stare_actualizata):
+        self.tabla_joc.matrCelule = stare_actualizata.tabla_joc.matrCelule
+        self.tabla_joc.capturaComputer = stare_actualizata.tabla_joc.capturaComputer
+        self.tabla_joc.capturaPlayer = stare_actualizata.tabla_joc.capturaPlayer
+        self.tabla_joc.ultima_mutare = stare_actualizata.tabla_joc.ultima_mutare
+        
+
     def mutari(self):        
         l_mutari=self.tabla_joc.mutari(self.j_curent)
         juc_opus=Interfata.jucator_opus(self.j_curent)
 
         l_stari_mutari=[Stare(mutare, juc_opus, self.adancime-1, parinte=self) for mutare in l_mutari]
         return l_stari_mutari
+
+
+        # mesaj = ""
+        # if self.tabla_joc.eStareFinala():
+        #     scor_pc = len(self.tabla_joc.capturaComputer)
+        #     scor_player = len(self.tabla_joc.capturaPlayer)
+        #     if scor_pc == scor_player:
+        #         mesaj = "Remiza!"
+        #     elif scor_pc > scor_player:
+        #         mesaj = " Castigator: " + Interfata.JMAX
+        #     else:
+        #         mesaj = " Castigator: " + Interfata.JMIN
+
+            
+        #     return True, mesaj
+        # return False, None
+
+
         
     
     def __str__(self):
