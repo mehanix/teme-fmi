@@ -136,6 +136,7 @@ class Interfata:
                 jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane,self.capturaPlayer,self.capturaComputer)
                 for (il,ic,iz) in zidGasit:
                     jn.matrCelule[il][ic].cod|=2**iz
+                    # daca mutarea captureaza un patrat
                     if jn.matrCelule[il][ic].cod == 15:
                         if jucator == Interfata.JMIN:
                             jn.capturaPlayer.append((il,ic))
@@ -151,9 +152,9 @@ class Interfata:
         t_final = self.final()
         # if (adancime==0):
         if t_final == self.__class__.JMAX:
-            return (self.__class__.scor_maxim + adancime)
+            return (Interfata.scor_maxim + adancime)
         elif t_final == self.__class__.JMIN:
-            return (-self.__class__.scor_maxim - adancime)
+            return (Interfata.scor_maxim - adancime)
         elif t_final == 'remiza':
             return 0
         else:
@@ -169,27 +170,29 @@ class Interfata:
                     if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
                         zidGasit.append((il,ic,cel,iz,zid))
 
-        celuleAfectate = self.alege_zid(zidGasit)
+        celuleAfectate, aCapturat = self.alege_zid(zidGasit)
         if celuleAfectate is None:
-            return False  
+            return False, False
         # self.update_valori(celuleAfectate)
-        return True
+        return True, aCapturat
 
     def aplica_mutare_computer(self):
         return NotImplemented
     
     def alege_zid(self,zidGasit):
         celuleAfectate = []
+        aCapturat = False
         if zidGasit == []:
-            return
+            return None, False
 
         for (il,ic,cel,iz,zid) in zidGasit:
             # pygame.draw.rect(Config.ecran, Celula.culoareLinii,zid)
             cel.cod|=2**iz
             if cel.cod == 15:
                 self.capturaPlayer.append((il,ic))
+                aCapturat = True
             celuleAfectate.append(cel)
-        return celuleAfectate
+        return celuleAfectate, aCapturat
 
     # def update_valori(self,celuleAfectate):
     #     for celA in celuleAfectate:

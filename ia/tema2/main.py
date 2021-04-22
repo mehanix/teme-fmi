@@ -29,8 +29,8 @@ def main():
     tip_joc, dificultate, simbol_player = alegeri.deseneaza_alegeri(ecr)
     print(tip_joc,dificultate,simbol_player)
 
-    nr_linii = 3
-    nr_coloane = 3
+    nr_linii = 2
+    nr_coloane = 2
 
     game.Interfata.initializeaza(tip_joc,dificultate,nr_linii,nr_coloane,simbol_player)
 
@@ -43,6 +43,7 @@ def main():
     tabla_curenta.afiseazaDebug()
 
     stare_curenta = game.Stare(tabla_curenta,'X',game.Config.ADANCIME_MAX)
+
     while True:
     ######### USER
 
@@ -53,13 +54,17 @@ def main():
                     sys.exit()
                 elif ev.type == pygame.MOUSEBUTTONDOWN: 
                     pos = pygame.mouse.get_pos()
-                    mutare_corecta = stare_curenta.tabla_joc.aplica_mutare_player(pos)
+                    mutare_corecta, a_capturat = stare_curenta.tabla_joc.aplica_mutare_player(pos)
                     if mutare_corecta:
                         # tabla_curenta.afiseazaDebug()
-                        stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
+                        if not a_capturat:
+                            stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
                         tabla_curenta.deseneazaEcranJoc()
-                        if(stare_curenta.tabla_joc.final()):
-                            break 
+
+                        end = afis_daca_final(stare_curenta)
+                        if(end):
+                            pygame.display.update()
+                            return end 
             ecr.blit(game.Interfata.dotSurface,(0,0))
 
     ######### COMPUTER
@@ -71,6 +76,7 @@ def main():
             # TODO: aici bagi minmax
             if len(stari_noi):
                 stare_actualizata = m.min_max(stare_curenta)
+
                 # stare_actualizata = stari_noi[random.randrange(len(stari_noi))]
                 # TODO: if stuff acts weird, investigate
                 stare_curenta.update(stare_actualizata.stare_aleasa)
