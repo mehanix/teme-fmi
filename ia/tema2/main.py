@@ -7,8 +7,8 @@ import copy
 import src.Alegeri as alegeri
 pygame.init()
 pygame.display.set_caption("Dots and Boxes - Nicoleta Ciausu")
-# TODO: interfata selectare aici
 
+##### SETUP
 ecr = pygame.display.set_mode(size=(300,300))
 tip_joc, dificultate, simbol_player = alegeri.deseneaza_alegeri(ecr)
 print(tip_joc,dificultate,simbol_player)
@@ -20,7 +20,7 @@ game.Interfata.initializeaza(tip_joc,dificultate,nr_linii,nr_coloane)
 game.Interfata.JMIN = simbol_player
 game.Interfata.JMAX = '0' if simbol_player == 'X' else 'X'
 
-
+##### Incep joc
 ecr = pygame.display.set_mode(size=(game.Config.latime_ecran,game.Config.lungime_ecran))
 game.Config.set_ecran(ecr)
 tabla_curenta = game.Interfata(None,nr_linii,nr_coloane)
