@@ -134,11 +134,12 @@ class Interfata:
             if zidGasit != []:
                 matr_tabla_noua = copy.deepcopy(self.matrCelule)
                 jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane,self.capturaPlayer,self.capturaComputer)
+                switchPlayer = True
                 for (il,ic,iz) in zidGasit:
                     jn.matrCelule[il][ic].cod|=2**iz
-                    switchPlayer = True
                     # daca mutarea captureaza un patrat
                     if jn.matrCelule[il][ic].cod == 15:
+                        print("nu switch!")
                         switchPlayer = False
                         if jucator == Interfata.JMIN:
                             jn.capturaPlayer.append((il,ic))
@@ -147,6 +148,9 @@ class Interfata:
                             
 
                 l_mutari.append((jn,juc_opus if switchPlayer else jucator))
+        for m in l_mutari:
+            print(m)
+        # input()
         return l_mutari
 
     def estimeaza_scor(self, adancime):
@@ -194,6 +198,7 @@ class Interfata:
                 self.capturaPlayer.append((il,ic))
                 aCapturat = True
             celuleAfectate.append(cel)
+
         return celuleAfectate, aCapturat
 
     # def update_valori(self,celuleAfectate):
