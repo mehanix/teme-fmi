@@ -3,6 +3,7 @@ import sys
 import src.Game as game
 import random
 import time
+import copy
 pygame.init()
 
 # TODO: interfata selectare aici
@@ -24,6 +25,7 @@ tabla_curenta.afiseazaDebug()
 stare_curenta = game.Stare(tabla_curenta,'X',game.Config.ADANCIME_MAX)
 while True:
 ######### USER
+
     if (stare_curenta.j_curent == game.Interfata.JMIN):
         for ev in pygame.event.get(): 
             if ev.type == pygame.QUIT:
@@ -36,7 +38,7 @@ while True:
                     # tabla_curenta.afiseazaDebug()
                     stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
                     tabla_curenta.deseneazaEcranJoc()            
-            ecr.blit(game.Interfata.dotSurface,(0,0))
+        ecr.blit(game.Interfata.dotSurface,(0,0))
 
  ######### COMPUTER
     else:

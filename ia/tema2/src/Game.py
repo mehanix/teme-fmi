@@ -67,15 +67,15 @@ class Interfata:
     JMIN = None #player
     JMAX = None #computer
 
-    def __init__(self, matr, nrLinii=7, nrColoane=10, capturaPlayer=[],capturaComputer=[]):
+    def __init__(self, matr, nrLinii=7, nrColoane=10, capturaPlayer=None,capturaComputer=None):
         self.ultima_mutare = None
         self.nrLinii=nrLinii
         self.nrColoane=nrColoane
         self.matrCelule=matr if matr is not None else [[Celula(left=col*(self.__class__.dimCelula+1)+30, top=lin*(self.__class__.dimCelula+1)+30, w=self.__class__.dimCelula, h=self.__class__.dimCelula, lin=lin, col=col, interfata=self) for col in range(nrColoane)] for lin in range(nrLinii) ]
         
         self.matCoordZiduri = self.getMatCoordZiduri(self.matrCelule)
-        self.capturaPlayer = capturaPlayer
-        self.capturaComputer = capturaComputer
+        self.capturaPlayer = copy.deepcopy(capturaPlayer) if capturaPlayer is not None else []
+        self.capturaComputer = copy.deepcopy(capturaComputer) if capturaComputer is not None else []
 
     def getMatCoordZiduri(self,matr):
         coords = set()
@@ -100,6 +100,7 @@ class Interfata:
                         self.deseneazaImag(self.img_0,cel)
                     print("PLAYER",self.capturaPlayer)
                     print("Computer",self.capturaComputer)
+            
     #mutari calculator, yay
     def mutari(self,jucator):
         l_mutari = []
@@ -116,7 +117,7 @@ class Interfata:
         
             if zidGasit != []:
                 matr_tabla_noua = copy.deepcopy(self.matrCelule)
-                jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane)
+                jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane,self.capturaPlayer,self.capturaComputer)
                 for (il,ic,iz) in zidGasit:
                     jn.matrCelule[il][ic].cod|=2**iz
                     if jn.matrCelule[il][ic].cod == 15:
@@ -142,7 +143,7 @@ class Interfata:
         celuleAfectate = self.alege_zid(zidGasit)
         if celuleAfectate is None:
             return False  
-        #self.update_valori(celuleAfectate)
+        # self.update_valori(celuleAfectate)
         return True
 
     def aplica_mutare_computer(self):
@@ -154,17 +155,17 @@ class Interfata:
             return
 
         for (il,ic,cel,iz,zid) in zidGasit:
-            #pygame.draw.rect(Config.ecran, Celula.culoareLinii,zid)
+            # pygame.draw.rect(Config.ecran, Celula.culoareLinii,zid)
             cel.cod|=2**iz
             if cel.cod == 15:
                 self.capturaPlayer.append((il,ic))
             celuleAfectate.append(cel)
         return celuleAfectate
 
-    #def update_valori(self,celuleAfectate):
-        #for celA in celuleAfectate:
-            #if celA.cod==15:
-                #self.deseneazaImag(Interfata.img_x, celA)
+    # def update_valori(self,celuleAfectate):
+    #     for celA in celuleAfectate:
+    #         if celA.cod==15:
+    #             self.deseneazaImag(Interfata.img_x, celA)
 
 
 
