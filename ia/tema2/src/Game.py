@@ -8,7 +8,7 @@ class Config:
         cls.tip_joc = tip_joc
         cls.dificultate = dificultate
         cls.latime_ecran = lat
-        cls.lungime_ecran = lung
+        cls.lungime_ecran = lung + 40
         cls.ADANCIME_MAX = 3
  
     @classmethod
@@ -84,6 +84,10 @@ class Interfata:
                 for zid in cel.zid:
                     coords.add(zid.center)
         return coords
+
+    def eStareFinala(self):
+        nrPatrate = self.nrColoane * self.nrLinii
+        return (len(self.capturaComputer) + len(self.capturaPlayer)) == nrPatrate
 
     def deseneazaImag(self, imag, cel):
         Config.ecran.blit(imag,(cel.dreptunghi.left+self.__class__.paddingCelula,  cel.dreptunghi.top+self.__class__.paddingCelula))
