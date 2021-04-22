@@ -9,7 +9,7 @@ class Config:
         cls.dificultate = dificultate
         cls.latime_ecran = lat
         cls.lungime_ecran = lung + 40
-        cls.ADANCIME_MAX = 2 + int(dificultate)
+        cls.ADANCIME_MAX = 1 + int(dificultate)
  
     @classmethod
     def set_ecran(cls,ecr):
@@ -120,7 +120,7 @@ class Interfata:
     #mutari calculator, yay
     def mutari(self,jucator):
         l_mutari = []
-
+        juc_opus = self.jucator_opus(jucator)
         #iterez prin toata tabla mea
         # pt fiecare zid, iau celulele pe care selectarea lui le va afecta
         for pos in self.matCoordZiduri:
@@ -130,21 +130,23 @@ class Interfata:
                     for iz,zid in enumerate(cel.zid):
                         if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
                                 zidGasit.append((il,ic,iz))
-        
+
             if zidGasit != []:
                 matr_tabla_noua = copy.deepcopy(self.matrCelule)
                 jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane,self.capturaPlayer,self.capturaComputer)
                 for (il,ic,iz) in zidGasit:
                     jn.matrCelule[il][ic].cod|=2**iz
+                    switchPlayer = True
                     # daca mutarea captureaza un patrat
                     if jn.matrCelule[il][ic].cod == 15:
+                        switchPlayer = False
                         if jucator == Interfata.JMIN:
                             jn.capturaPlayer.append((il,ic))
                         else:
                             jn.capturaComputer.append((il,ic))
                             
 
-                l_mutari.append(jn)
+                l_mutari.append((jn,juc_opus if switchPlayer else jucator))
         return l_mutari
 
     def estimeaza_scor(self, adancime):
@@ -269,13 +271,14 @@ class Stare:
         self.tabla_joc.capturaComputer = stare_actualizata.tabla_joc.capturaComputer
         self.tabla_joc.capturaPlayer = stare_actualizata.tabla_joc.capturaPlayer
         self.tabla_joc.ultima_mutare = stare_actualizata.tabla_joc.ultima_mutare
+        self.j_curent = stare_actualizata.j_curent
         
 
     def mutari(self):        
         l_mutari=self.tabla_joc.mutari(self.j_curent)
-        juc_opus=Interfata.jucator_opus(self.j_curent)
+        #juc_opus=Interfata.jucator_opus(self.j_curent)
 
-        l_stari_mutari=[Stare(mutare, juc_opus, self.adancime-1, parinte=self) for mutare in l_mutari]
+        l_stari_mutari=[Stare(mutare, juc, self.adancime-1, parinte=self) for (mutare,juc) in l_mutari]
         return l_stari_mutari
 
 

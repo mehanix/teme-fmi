@@ -29,8 +29,8 @@ def main():
     tip_joc, dificultate, simbol_player = alegeri.deseneaza_alegeri(ecr)
     print(tip_joc,dificultate,simbol_player)
 
-    nr_linii = 2
-    nr_coloane = 2
+    nr_linii = 3
+    nr_coloane = 3
 
     game.Interfata.initializeaza(tip_joc,dificultate,nr_linii,nr_coloane,simbol_player)
 
@@ -63,10 +63,9 @@ def main():
 
                         end = afis_daca_final(stare_curenta)
                         if(end):
-                            pygame.display.update()
                             return end 
             ecr.blit(game.Interfata.dotSurface,(0,0))
-
+            pygame.display.update()
     ######### COMPUTER
         else:
             print("pc turn")
@@ -87,24 +86,26 @@ def main():
                 if(end):
                     pygame.display.update()
                     return end 
-                stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
+                # stare_curenta.j_curent = game.Interfata.jucator_opus(stare_curenta.j_curent)
             else:
                 stare_curenta.tabla_joc.deseneazaEcranJoc()
+                ecr.blit(game.Interfata.dotSurface,(0,0))
                 end = afis_daca_final(stare_curenta)
+                pygame.display.update()
                 if(end):
                     pygame.display.update()
                     return end 
 
 
 
-        pygame.display.update()
 
     
 if __name__ == "__main__" :
     mesaj = main()
-
     print(mesaj)
     while True :
+        game.Config.ecran.blit(game.Interfata.dotSurface,(0,0))
+        pygame.display.update()
         for event in pygame.event.get():
             if event.type== pygame.QUIT:
                 pygame.quit()
