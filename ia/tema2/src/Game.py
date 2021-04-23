@@ -1,6 +1,11 @@
 import pygame
 import copy
 
+from collections import defaultdict
+
+def def_val():
+    return []
+
 class Config:
 
     @classmethod
@@ -74,17 +79,28 @@ class Interfata:
         self.nrColoane=nrColoane
         self.matrCelule=matr if matr is not None else [[Celula(left=col*(self.__class__.dimCelula+1)+30, top=lin*(self.__class__.dimCelula+1)+30, w=self.__class__.dimCelula, h=self.__class__.dimCelula, lin=lin, col=col, interfata=self) for col in range(nrColoane)] for lin in range(nrLinii) ]
         
-        self.matCoordZiduri = self.getMatCoordZiduri(self.matrCelule)
+        # self.matCoordZiduri = self.getMatCoordZiduri(self.matrCelule)
         self.capturaPlayer = copy.deepcopy(capturaPlayer) if capturaPlayer is not None else []
         self.capturaComputer = copy.deepcopy(capturaComputer) if capturaComputer is not None else []
 
-    def getMatCoordZiduri(self,matr):
-        coords = set()
-        for lin in matr:
-            for cel in lin:
-                for zid in cel.zid:
-                    coords.add(zid.center)
-        return coords
+    @classmethod
+    def getMatCoordZiduri(cls,matr):
+
+        cls.ziduri_dict = defaultdict(def_val)
+        for il, linie in enumerate(matr):
+            for ic, cel in enumerate(linie):                    
+                for iz,zid in enumerate(cel.zid):
+                    pos = zid.center
+                    if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
+                        cls.ziduri_dict[pos].append((il,ic,iz))
+        print(cls.ziduri_dict)
+        # for lin in matr:
+        #     for cel in lin:
+        #         for zid in cel.zid:
+        #             cls.coords.add(zid.center)
+
+
+        return 
 
     # coloreaza castigatorul
     def marcheaza(self,simbol):
@@ -135,13 +151,18 @@ class Interfata:
         juc_opus = self.jucator_opus(jucator)
         #iterez prin toata tabla mea
         # pt fiecare zid, iau celulele pe care selectarea lui le va afecta
-        for pos in self.matCoordZiduri:
+        for lst in Interfata.ziduri_dict.values():
             zidGasit = []
-            for il, linie in enumerate(self.matrCelule):
-                for ic, cel in enumerate(linie):                    
-                    for iz,zid in enumerate(cel.zid):
-                        if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
-                                zidGasit.append((il,ic,iz))
+            for (il,ic,iz) in lst:
+                if not self.matrCelule[il][ic].exista_zid(iz):
+                    zidGasit.append((il,ic,iz))
+        # for pos in Interfata.coords:
+        #     zidGasit = []
+        #     for il, linie in enumerate(self.matrCelule):
+        #         for ic, cel in enumerate(linie):                    
+        #             for iz,zid in enumerate(cel.zid):
+        #                 if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
+        #                         zidGasit.append((il,ic,iz))
 
             if zidGasit != []:
                 matr_tabla_noua = copy.deepcopy(self.matrCelule)
@@ -223,10 +244,7 @@ class Interfata:
     def jucator_opus(cls, jucator):
         return cls.JMAX if jucator==cls.JMIN else cls.JMIN
 
-    @classmethod
-    def precalculeaza(cls):
-        cls.ziduri = {}
-        
+
 
     @classmethod
     def initializeaza(cls,tip_joc,dificultate,nr_linii,nr_coloane,simbol_player):

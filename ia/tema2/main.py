@@ -42,8 +42,7 @@ def main():
     ecr = pygame.display.set_mode(size=(game.Config.latime_ecran,game.Config.lungime_ecran))
     game.Config.set_ecran(ecr)
     tabla_curenta = game.Interfata(None,nr_linii,nr_coloane)
-
-    game.Interfata.precalculeaza()
+    game.Interfata.getMatCoordZiduri(tabla_curenta.matrCelule)
     tabla_curenta.deseneazaEcranJoc()
     tabla_curenta.afiseazaDebug()
 
@@ -90,6 +89,8 @@ def main():
             pygame.display.update()
     ######### COMPUTER
         else:
+            # print(game.Interfata.ziduri_dict)
+            # input()
             # TODO: ai stuff
             stare_curenta.tabla_joc.deseneazaEcranJoc()
             ecr.blit(game.Interfata.dotSurface,(0,0))
