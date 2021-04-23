@@ -151,23 +151,15 @@ class Interfata:
         #iterez prin toata tabla mea
         # pt fiecare zid, iau celulele pe care selectarea lui le va afecta
         for lst in Interfata.ziduri_dict.values():
-            zidGasit = []
+            celAfectate = []
             for (il,ic,iz) in lst:
                 if not self.matrCelule[il][ic].exista_zid(iz):
-                    zidGasit.append((il,ic,iz))
-        # for pos in Interfata.coords:
-        #     zidGasit = []
-        #     for il, linie in enumerate(self.matrCelule):
-        #         for ic, cel in enumerate(linie):                    
-        #             for iz,zid in enumerate(cel.zid):
-        #                 if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
-        #                         zidGasit.append((il,ic,iz))
-
-            if zidGasit != []:
+                    celAfectate.append((il,ic,iz))
+            if celAfectate != []:
                 matr_tabla_noua = copy.deepcopy(self.matrCelule)
                 jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane,self.capturaPlayer,self.capturaComputer)
                 switchPlayer = True
-                for (il,ic,iz) in zidGasit:
+                for (il,ic,iz) in celAfectate:
                     jn.matrCelule[il][ic].cod|=2**iz
                     # daca mutarea captureaza un patrat
                     if jn.matrCelule[il][ic].cod == 15:

@@ -107,6 +107,7 @@ def main():
                 timp = round((timpEndPc-timpStartPc)*1000)
                 s.Statistici.timpiGandirePc.append(timp)
                 s.Statistici.nrMutariJMAX+=1
+                s.Statistici.nrNoduriGenerate.append(m.nrNoduriGen)
                 print("Scor user:", str(len(stare_actualizata.tabla_joc.capturaPlayer)))
                 print("Scor calculator:", str(len(stare_actualizata.tabla_joc.capturaComputer)))
                 print("Calculatorul s-a \"gandit\" {0}ms".format( timp ) )
@@ -135,8 +136,7 @@ def main():
     
 if __name__ == "__main__" :
     mesaj = main()
-    
-    print(s.Statistici.timpiGandirePc)
+    s.Statistici.showFinalStats()
     font = pygame.font.SysFont('arial',16)
     text_win = font.render(mesaj,True,(0,0,0)).convert_alpha()
 

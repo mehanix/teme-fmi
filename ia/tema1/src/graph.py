@@ -109,6 +109,7 @@ class Graph:
             if not nodCurent.contineInDrum(infoNodNou):
                 listaSuccesori.append(NodParcurgere(infoNodNou, g = nodCurent.g + 1, parinte = nodCurent, key = key, h= self.calculeaza_h(infoNodNou)))
 
+
         Graph.noduriTotale += len(listaSuccesori)
         return listaSuccesori
         

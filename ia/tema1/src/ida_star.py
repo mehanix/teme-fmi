@@ -21,18 +21,22 @@ def construieste_drum(nodCurent: NodParcurgere, limita, out, gr,nmax=0):
         return (True, mini)
 
     succesori = gr.genereazaSuccesori(nodCurent)
-    Graph.maxim = max(Graph.maxim, len(succesori))
     for nod in succesori:
-        info = nod.info
-        g = nod.g
-        h = nod.h 
-        key = nod.key
-        (ajuns, lim) = construieste_drum(NodParcurgere(info, g, nodCurent, key, h), limita,out, gr, nmax+len(succesori))
+        (ajuns, lim) = construieste_drum(nod, limita, out, gr, nmax+len(succesori))
+        # info = nod.info
+        # g = nod.g
+        # h = nod.h 
+        # key = nod.key
+        # (ajuns, lim) = construieste_drum(NodParcurgere(info, g, nodCurent, key, h), limita,out, gr, nmax+len(succesori))
         if ajuns:
             return(True, 0)
         mini = min(mini, lim)
 
     return (False, mini)
+
+
+
+
 
 
 def ida_star(start,scopuri,out,euristica="banala"):
