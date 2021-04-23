@@ -17,13 +17,13 @@ class Config:
 class Celula:
     #coordonatele nodurilor ()
     grosimeZid=11 #numar impar
-    fundalCelula=(255,255,255)
-    culoareLinii=(0,0,0)
+    culoareLinii=(62,53,54)
     culoarePuncte = (0,0,0)
     razaPuncte = 12
     afisImagini=True
 
     def __init__ (self, left, top, w, h,  lin, col,interfata, cod=0):
+        self.fundalCelula=(255,255,255)
         self.dreptunghi=pygame.Rect(left, top, w, h)
         self.zid=[None,None,None,None]
         #zidurile vor fi pe pozitiile 0-sus, 1-dreapta, 2-jos, 3-stanga
@@ -39,7 +39,7 @@ class Celula:
         #0001 zid doar sus
         #0011 zid sus si dreapta etc
     def deseneaza(self):
-        pygame.draw.rect(Config.ecran, self.__class__.fundalCelula, self.dreptunghi)
+        pygame.draw.rect(Config.ecran, self.fundalCelula, self.dreptunghi)
         #masti=[1,2,4,8]
         masca=1
         for i in range(4):
@@ -63,7 +63,7 @@ class Celula:
         return "Celula " + str(self.dreptunghi.x) + '  ' + str(self.dreptunghi.y)
 
 class Interfata:
-    culoareEcran=(255,255,255)
+    culoareEcran=(210,205,201)
     JMIN = None #player
     JMAX = None #computer
     scor_maxim = 0
@@ -85,6 +85,18 @@ class Interfata:
                 for zid in cel.zid:
                     coords.add(zid.center)
         return coords
+
+    # coloreaza castigatorul
+    def marcheaza(self,simbol):
+
+        winner = self.capturaPlayer if simbol == Interfata.JMIN else self.capturaComputer
+        bkg_color = (167,89,179)
+        for il, linie in enumerate(self.matrCelule):
+            for ic, cel in enumerate(linie): 
+                if (il,ic) in winner:
+                    cel.fundalCelula = bkg_color
+                    cel.deseneaza()
+            
 
 
     def final(self):
@@ -154,13 +166,12 @@ class Interfata:
         return l_mutari
 
     def estimeaza_scor(self, adancime):
-        #de revizuit
         t_final = self.final()
         # if (adancime==0):
         if t_final == self.__class__.JMAX:
             return (Interfata.scor_maxim + adancime)
         elif t_final == self.__class__.JMIN:
-            return (Interfata.scor_maxim - adancime)
+            return (-Interfata.scor_maxim - adancime)
         elif t_final == 'remiza':
             return 0
         else:
@@ -212,6 +223,10 @@ class Interfata:
     def jucator_opus(cls, jucator):
         return cls.JMAX if jucator==cls.JMIN else cls.JMIN
 
+    @classmethod
+    def precalculeaza(cls):
+        cls.ziduri = {}
+        
 
     @classmethod
     def initializeaza(cls,tip_joc,dificultate,nr_linii,nr_coloane,simbol_player):
@@ -230,6 +245,9 @@ class Interfata:
         img_0 = pygame.image.load('src/zero.png')
         img_x = pygame.transform.scale(img_x, (cls.dimImagine,cls.dimImagine))
         img_0 = pygame.transform.scale(img_0,  (cls.dimImagine,cls.dimImagine))
+
+
+
 
         cls.img_player = img_x if simbol_player == 'X' else img_0
         cls.img_computer = img_0 if simbol_player == 'X' else img_x
