@@ -19,6 +19,7 @@ def a_star(start,scopuri,out,euristica="banala"):
     out.write("#" + " "*spaces + msg + " "*(spaces+1) + "#\n")
     out.write("########################################\n")
 
+    NodParcurgere.out = out
     gr = Graph(start, scopuri,euristica)
     _astar(gr,out)
 

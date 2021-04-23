@@ -14,6 +14,7 @@ def ucs(start, scopuri,out):
     out.write("#         Uniform Cost Search         #\n")
     out.write("#######################################\n")
 
+    NodParcurgere.out = out
     gr = Graph(start, scopuri)
     _uniform_cost(gr,out)
 

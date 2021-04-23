@@ -48,12 +48,19 @@ def main(argv):
     for filename in os.listdir(input_folder):
         output_filename = "output_" + filename
         inp = open("{0}/{1}".format(input_folder, filename),"r")
-        out = open("{0}/{1}".format(output_folder,output_filename),"w")
-        run(inp, out)
-        inp.close()
-        out.close()
+        out_ucs = open("{0}/{1}_ucs".format(output_folder,output_filename),"w")
+        out_astar = open("{0}/{1}_astar".format(output_folder,output_filename),"w")
+        out_astar_v2 = open("{0}/{1}_astar_v2".format(output_folder,output_filename),"w")
+        out_idastar = open("{0}/{1}_idastar".format(output_folder,output_filename),"w")
 
-def run(inp, out):
+        run(inp, out_ucs,out_astar,out_astar_v2,out_idastar)
+        inp.close()
+        out_ucs.close()
+        out_astar.close()
+        out_astar_v2.close()
+        out_idastar.close()
+
+def run(inp, out_ucs,out_astar,out_astar_v2,out_idastar):
     """ Pregateste variabilele pentru testul cu datele din fisierul inp. Ruleaza algoritmii.
 
     Args:
@@ -82,21 +89,20 @@ def run(inp, out):
     Graph.keys = key_strings
     Graph.timeout = timeout
     Graph.nsol = nsol
-    Graph.out = out
-    NodParcurgere.out = out
-    ucs(start,scopuri,out)
-    a_star(start,scopuri,out,euristica="banala")
-    a_star(start,scopuri,out,euristica="admisibila_1")
-    a_star(start,scopuri,out,euristica='admisibila_2')
-    a_star(start,scopuri,out,euristica="neadmisibila")
-    a_star_v2(start,scopuri,out,euristica="banala")
-    a_star_v2(start,scopuri,out,euristica="admisibila_1")
-    a_star_v2(start,scopuri,out,euristica="admisibila_2")
-    a_star_v2(start,scopuri,out,euristica="neadmisibila")
-    ida_star(start,scopuri,out,euristica="banala")
-    ida_star(start,scopuri,out,euristica="admisibila_1")
-    ida_star(start,scopuri,out,euristica="admisibila_2")
-    ida_star(start,scopuri,out,euristica="neadmisibila")
+    # Graph.out = out
+    ucs(start,scopuri,out_ucs)
+    a_star(start,scopuri,out_astar,euristica="banala")
+    a_star(start,scopuri,out_astar,euristica="admisibila_1")
+    a_star(start,scopuri,out_astar,euristica='admisibila_2')
+    a_star(start,scopuri,out_astar,euristica="neadmisibila")
+    a_star_v2(start,scopuri,out_astar_v2,euristica="banala")
+    a_star_v2(start,scopuri,out_astar_v2,euristica="admisibila_1")
+    a_star_v2(start,scopuri,out_astar_v2,euristica="admisibila_2")
+    a_star_v2(start,scopuri,out_astar_v2,euristica="neadmisibila")
+    ida_star(start,scopuri,out_idastar,euristica="banala")
+    ida_star(start,scopuri,out_idastar,euristica="admisibila_1")
+    ida_star(start,scopuri,out_idastar,euristica="admisibila_2")
+    ida_star(start,scopuri,out_idastar,euristica="neadmisibila")
 
 if __name__ == "__main__":
     main(sys.argv[1:])
