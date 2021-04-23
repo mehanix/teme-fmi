@@ -54,7 +54,6 @@ def _uniform_cost(gr,out):
             nodCurent.afisDrum()
             out.write("\n----------------\n")
             gr.nsol -= 1
-            
             if gr.nsol==0:
                 return
 

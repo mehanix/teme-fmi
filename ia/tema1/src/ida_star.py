@@ -76,6 +76,5 @@ def _idastar(gr, out):
         if ajuns:
             break
         if lim == float('inf'):
-            print("Nu exista drum!")
             break
         nivel = lim

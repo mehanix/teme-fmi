@@ -1,12 +1,12 @@
 ########################################
-#                 IDA*                 #
+#   A* - open/closed, doar sol min     #
 ########################################
 #          Euristica: banala           #
 ########################################
 0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
-Folosim cheia: ['iddd'] pentru a ajunge la...
-1) Incuietori: [inc(i,2), inc(d,0), inc(d,0), inc(d,0)]
 Folosim cheia: ['dggg'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['iddd'] pentru a ajunge la...
 2) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(d,0)]
 Folosim cheia: ['dggg'] pentru a ajunge la...
 3) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
@@ -17,18 +17,18 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 7ms
-Nr noduri maxim existente in memorie: 0
-Nr total noduri calculate: 147
+Timp gasire solutie: 11ms
+Nr noduri maxim existente in memorie: 90
+Nr total noduri calculate: 175
 ########################################
-#                 IDA*                 #
+#   A* - open/closed, doar sol min     #
 ########################################
 #       Euristica: admisibila_1        #
 ########################################
 0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
-Folosim cheia: ['iddd'] pentru a ajunge la...
-1) Incuietori: [inc(i,2), inc(d,0), inc(d,0), inc(d,0)]
 Folosim cheia: ['dggg'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['iddd'] pentru a ajunge la...
 2) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(d,0)]
 Folosim cheia: ['dggg'] pentru a ajunge la...
 3) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
@@ -40,17 +40,17 @@ Stats:
 Lungime drum: 3
 Cost drum: 3
 Timp gasire solutie: 3ms
-Nr noduri maxim existente in memorie: 0
-Nr total noduri calculate: 57
+Nr noduri maxim existente in memorie: 28
+Nr total noduri calculate: 41
 ########################################
-#                 IDA*                 #
+#   A* - open/closed, doar sol min     #
 ########################################
 #       Euristica: admisibila_2        #
 ########################################
 0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
-Folosim cheia: ['iddd'] pentru a ajunge la...
-1) Incuietori: [inc(i,2), inc(d,0), inc(d,0), inc(d,0)]
 Folosim cheia: ['dggg'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['iddd'] pentru a ajunge la...
 2) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(d,0)]
 Folosim cheia: ['dggg'] pentru a ajunge la...
 3) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
@@ -61,28 +61,30 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 Stats:
 Lungime drum: 3
 Cost drum: 3
-Timp gasire solutie: 7ms
-Nr noduri maxim existente in memorie: 0
-Nr total noduri calculate: 129
+Timp gasire solutie: 34ms
+Nr noduri maxim existente in memorie: 184
+Nr total noduri calculate: 510
 ########################################
-#                 IDA*                 #
+#   A* - open/closed, doar sol min     #
 ########################################
 #       Euristica: neadmisibila        #
 ########################################
 0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['gdgg'] pentru a ajunge la...
+1) Incuietori: [inc(i,1), inc(d,0), inc(i,1), inc(i,1)]
+Folosim cheia: ['dggg'] pentru a ajunge la...
+2) Incuietori: [inc(d,0), inc(d,0), inc(i,1), inc(i,1)]
 Folosim cheia: ['iddd'] pentru a ajunge la...
-1) Incuietori: [inc(i,2), inc(d,0), inc(d,0), inc(d,0)]
+3) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(d,0)]
 Folosim cheia: ['dggg'] pentru a ajunge la...
-2) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(d,0)]
-Folosim cheia: ['dggg'] pentru a ajunge la...
-3) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+4) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 
 Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
 
 ------------
 Stats:
-Lungime drum: 3
-Cost drum: 3
-Timp gasire solutie: 1ms
-Nr noduri maxim existente in memorie: 0
-Nr total noduri calculate: 23
+Lungime drum: 4
+Cost drum: 4
+Timp gasire solutie: 2ms
+Nr noduri maxim existente in memorie: 24
+Nr total noduri calculate: 32

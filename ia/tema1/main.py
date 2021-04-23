@@ -72,6 +72,7 @@ def run(inp, out_ucs,out_astar,out_astar_v2,out_idastar):
     key_strings = inp.readlines()
     key_strings = [s.strip() for s in key_strings]
     
+    # verificarea corectitudinii datelor de intrare
     nr_incuietori = len(key_strings[0])
     for key in key_strings:
         if len(key) != nr_incuietori:
@@ -82,6 +83,20 @@ def run(inp, out_ucs,out_astar,out_astar_v2,out_idastar):
                 print("Input error, caracter nerecunoscut in cheia: ",key)
                 sys.exit(-1)
 
+    # verific daca problema e fara solutii
+    exista_d = [0 for x in range(nr_incuietori)]
+    for key in key_strings:
+        for i,ch in enumerate(key):
+            if ch == 'd':
+                exista_d[i]=1
+    
+    #daca exista incuietori pe care nicio cheie nu le poate deschide => problema fara solutii
+    if sum(exista_d) != nr_incuietori:
+        for out in [out_ucs,out_astar,out_astar_v2,out_idastar]:
+            out.write("Input fara solutii!")
+            out.close
+        return
+
     # la inceput, toate incuietorile sunt inchise 1 data
     start = [Incuietoare(1) for x in range (nr_incuietori)]
     scopuri = [Incuietoare(0) for x in range (nr_incuietori)]
@@ -89,20 +104,15 @@ def run(inp, out_ucs,out_astar,out_astar_v2,out_idastar):
     Graph.keys = key_strings
     Graph.timeout = timeout
     Graph.nsol = nsol
-    # Graph.out = out
-    # ucs(start,scopuri,out_ucs)
-    # a_star(start,scopuri,out_astar,euristica="banala")
-    # a_star(start,scopuri,out_astar,euristica="admisibila_1")
-    # a_star(start,scopuri,out_astar,euristica='admisibila_2')
-    # a_star(start,scopuri,out_astar,euristica="neadmisibila")
-    # a_star_v2(start,scopuri,out_astar_v2,euristica="banala")
-    # a_star_v2(start,scopuri,out_astar_v2,euristica="admisibila_1")
-    # a_star_v2(start,scopuri,out_astar_v2,euristica="admisibila_2")
-    # a_star_v2(start,scopuri,out_astar_v2,euristica="neadmisibila")
-    ida_star(start,scopuri,out_idastar,euristica="banala")
-    ida_star(start,scopuri,out_idastar,euristica="admisibila_1")
-    ida_star(start,scopuri,out_idastar,euristica="admisibila_2")
-    ida_star(start,scopuri,out_idastar,euristica="neadmisibila")
+
+    print("hi")
+    ucs(start,scopuri,out_ucs)
+    print("hi")
+
+    for eur in ["banala","admisibila_1","admisibila_2","neadmisibila"]:
+        a_star(start,scopuri,out_astar,euristica=eur)
+        a_star_v2(start,scopuri,out_astar_v2,euristica=eur)
+        ida_star(start,scopuri,out_idastar,euristica=eur)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
