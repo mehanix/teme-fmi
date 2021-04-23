@@ -6,6 +6,7 @@ import time
 import copy
 import src.Alegeri as alegeri
 import src.Minmax as m
+import src.Alphabeta as a
 import src.Statistici as s
 import math
 def afis_daca_final(stare_curenta):
@@ -65,6 +66,7 @@ def main():
                 timpStartUser = time.time()
             for ev in pygame.event.get(): 
                 if ev.type == pygame.QUIT:
+                    s.Statistici.showFinalStats()
                     pygame.quit()
                     sys.exit()
                 elif ev.type == pygame.MOUSEBUTTONDOWN: 
@@ -89,6 +91,12 @@ def main():
             pygame.display.update()
     ######### COMPUTER
         else:
+
+            for ev in pygame.event.get(): 
+                if ev.type == pygame.QUIT:
+                    s.Statistici.showFinalStats()
+                    pygame.quit()
+                    sys.exit()
             # print(game.Interfata.ziduri_dict)
             # input()
             # TODO: ai stuff
@@ -102,7 +110,11 @@ def main():
             if len(stari_noi):
                 timpStartPc = time.time()
                 m.nrNoduriGen = 0
-                stare_actualizata = m.min_max(stare_curenta)
+                stare_actualizata = None 
+                if tip_joc == "minimax":
+                    stare_actualizata = m.min_max(stare_curenta)
+                else:
+                    stare_actualizata = a.alpha_beta(-999,999,stare_curenta)
                 timpEndPc = time.time()
                 timp = round((timpEndPc-timpStartPc)*1000)
                 s.Statistici.timpiGandirePc.append(timp)
