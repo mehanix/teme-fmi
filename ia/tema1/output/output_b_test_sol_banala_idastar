@@ -14,7 +14,7 @@ Stats:
 Lungime drum: 1
 Cost drum: 1
 Timp gasire solutie: 0ms
-Nr noduri maxim existente in memorie: 0
+Nr noduri maxim existente in memorie: 1
 Nr total noduri calculate: 1
 ########################################
 #                 IDA*                 #
@@ -32,7 +32,7 @@ Stats:
 Lungime drum: 1
 Cost drum: 1
 Timp gasire solutie: 0ms
-Nr noduri maxim existente in memorie: 0
+Nr noduri maxim existente in memorie: 1
 Nr total noduri calculate: 1
 ########################################
 #                 IDA*                 #
@@ -50,7 +50,7 @@ Stats:
 Lungime drum: 1
 Cost drum: 1
 Timp gasire solutie: 0ms
-Nr noduri maxim existente in memorie: 0
+Nr noduri maxim existente in memorie: 1
 Nr total noduri calculate: 1
 ########################################
 #                 IDA*                 #
@@ -68,5 +68,5 @@ Stats:
 Lungime drum: 1
 Cost drum: 1
 Timp gasire solutie: 0ms
-Nr noduri maxim existente in memorie: 0
+Nr noduri maxim existente in memorie: 1
 Nr total noduri calculate: 1

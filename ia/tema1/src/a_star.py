@@ -45,7 +45,7 @@ def _astar(gr, out):
         # print(nodCurent.info, nodCurent.g,nodCurent.h,nodCurent.f)
         # daca e solutie, afisam si scadem nr de solutii
         if gr.testeaza_scop(nodCurent):
-            nodCurent.afisDrum(len(c))
+            nodCurent.afisDrum()
             out.write("\n----------------\n")
             gr.nsol -= 1
             

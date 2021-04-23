@@ -23,7 +23,8 @@ class NodParcurgere:
             nod=nod.parinte
         return l
         
-    def afisDrum(self,lungimeCoada): #returneaza si lungimea drumului
+    def afisDrum(self,ida_max=None): #returneaza si lungimea drumului
+        global max_ida
         stop_time = time.time()
         l = self.obtineDrum()
         chei = [x.key for x in l]
@@ -38,9 +39,10 @@ class NodParcurgere:
         NodParcurgere.out.write("Lungime drum: " +str(lg-1) +'\n')
         NodParcurgere.out.write("Cost drum: " +str(lg-1) +'\n')
         NodParcurgere.out.write("Timp gasire solutie: " +str(round(1000*(stop_time - Graph.start_time))) +'ms\n')
-        NodParcurgere.out.write("Nr noduri maxim existente in memorie: " +str(Graph.maxim) +'\n')
-        NodParcurgere.out.write("Nr total noduri calculate: " +str(Graph.noduriTotale) +'\n')
 
+        maxim = Graph.maxim if ida_max is None else ida_max
+        NodParcurgere.out.write("Nr noduri maxim existente in memorie: " +str(maxim) +'\n')
+        NodParcurgere.out.write("Nr total noduri calculate: " +str(Graph.noduriTotale) +'\n')
         return len(l)
 
 

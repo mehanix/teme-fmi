@@ -63,7 +63,7 @@ def _astar_v2(gr, out):
         closed.append(current_node)
 
         if current_node.info == gr.scopuri:
-            current_node.afisDrum(len(opened))
+            current_node.afisDrum()
             continua = False
 
         succesori = gr.genereazaSuccesori(current_node)

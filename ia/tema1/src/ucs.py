@@ -51,7 +51,7 @@ def _uniform_cost(gr,out):
         
         # daca e solutie, afisam si scadem nr de solutii
         if gr.testeaza_scop(nodCurent):
-            nodCurent.afisDrum(len(c))
+            nodCurent.afisDrum()
             out.write("\n----------------\n")
             gr.nsol -= 1
             
