@@ -93,7 +93,6 @@ class Interfata:
                     pos = zid.center
                     if zid and zid.collidepoint(pos) and not cel.exista_zid(iz):
                         cls.ziduri_dict[pos].append((il,ic,iz))
-        print(cls.ziduri_dict)
         # for lin in matr:
         #     for cel in lin:
         #         for zid in cel.zid:
@@ -142,8 +141,8 @@ class Interfata:
                         self.deseneazaImag(self.img_player, cel)
                     else:
                         self.deseneazaImag(self.img_computer,cel)
-                    print("PLAYER",self.capturaPlayer)
-                    print("Computer",self.capturaComputer)
+                    # print("PLAYER",self.capturaPlayer)
+                    # print("Computer",self.capturaComputer)
             
     #mutari calculator, yay
     def mutari(self,jucator):
@@ -172,7 +171,6 @@ class Interfata:
                     jn.matrCelule[il][ic].cod|=2**iz
                     # daca mutarea captureaza un patrat
                     if jn.matrCelule[il][ic].cod == 15:
-                        print("nu switch!")
                         switchPlayer = False
                         if jucator == Interfata.JMIN:
                             jn.capturaPlayer.append((il,ic))
@@ -181,9 +179,7 @@ class Interfata:
                             
 
                 l_mutari.append((jn,juc_opus if switchPlayer else jucator))
-        for m in l_mutari:
-            print(m)
-        # input()
+    
         return l_mutari
 
     def estimeaza_scor(self, adancime):
