@@ -2,6 +2,8 @@ import src.Game as game
 
 nrNoduriGen = 0
 def alpha_beta(alpha, beta, stare):
+    global nrNoduriGen
+    nrNoduriGen+=1
     if stare.adancime==0 or stare.tabla_joc.final() :
         stare.scor=stare.tabla_joc.estimeaza_scor(stare.adancime)
         return stare

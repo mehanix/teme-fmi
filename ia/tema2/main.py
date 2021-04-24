@@ -76,6 +76,7 @@ def main():
                         timpEndUser = time.time()
                         s.Statistici.nrMutariJMIN+=1
                         timp = round((timpEndUser-timpStartUser)*1000)
+                        timpStartUser = None
                         s.Statistici.timpiGandireUser.append(timp)
                         print("Utilizatorul s-a gandit {0}ms".format(timp))
                         tabla_curenta.afiseazaDebug()
@@ -110,6 +111,7 @@ def main():
             if len(stari_noi):
                 timpStartPc = time.time()
                 m.nrNoduriGen = 0
+                a.nrNoduriGen = 0
                 stare_actualizata = None 
                 if tip_joc == "minimax":
                     stare_actualizata = m.min_max(stare_curenta)
@@ -119,11 +121,12 @@ def main():
                 timp = round((timpEndPc-timpStartPc)*1000)
                 s.Statistici.timpiGandirePc.append(timp)
                 s.Statistici.nrMutariJMAX+=1
-                s.Statistici.nrNoduriGenerate.append(m.nrNoduriGen)
+                s.Statistici.nrNoduriGenerate.append(m.nrNoduriGen if tip_joc == "minimax" else a.nrNoduriGen)
                 print("Scor user:", str(len(stare_actualizata.tabla_joc.capturaPlayer)))
                 print("Scor calculator:", str(len(stare_actualizata.tabla_joc.capturaComputer)))
                 print("Calculatorul s-a \"gandit\" {0}ms".format( timp ) )
-                print("Minmax a ales starea cu scorul estimat: "+ str(stare_actualizata.scor) + " si pt asta a generat " + str(m.nrNoduriGen) + " noduri")
+                estimat = m.nrNoduriGen if tip_joc == "minimax" else a.nrNoduriGen 
+                print(f"{tip_joc} a ales starea cu scorul estimat: {stare_actualizata.scor} si pt asta a generat {estimat} noduri")
 
                 # stare_actualizata = stari_noi[random.randrange(len(stari_noi))]
                 # TODO: if stuff acts weird, investigate
