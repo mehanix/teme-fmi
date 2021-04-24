@@ -1,6 +1,8 @@
 import statistics
 import time
 class Statistici:
+    """Clasa, mai mult un namespace, in care tin datele despre jocul curent.
+    """
     timpiGandirePc = []
     timpiGandireUser = []
     nrNoduriGenerate = []
@@ -10,6 +12,8 @@ class Statistici:
 
     @classmethod
     def showFinalStats(cls):
+        """Calculeaza si afiseaza statisticile jocului
+        """
         timpEndJoc = time.time()
         print()
         print("Statistici joc")

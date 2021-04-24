@@ -78,19 +78,29 @@ def deseneaza_alegeri(display):
         left=30,  
         listaButoane=[
             Buton(display=display, w=80, h=30, text="minimax", valoare="minimax"), 
-            Buton(display=display, w=80, h=30, text="alphabeta", valoare="alphabeta")
+            Buton(display=display, w=90, h=30, text="alphabeta", valoare="alphabeta")
             ],
         indiceSelectat=1)
-    btn_juc=GrupButoane(
+
+    btn_est=GrupButoane(
         top=100, 
         left=30, 
         listaButoane=[
+            Buton(display=display, w=100, h=30, text="estimare_1", valoare="estimare_1"), 
+            Buton(display=display, w=100, h=30, text="estimare_2", valoare="estimare_2")
+            ]) 
+
+    btn_juc=GrupButoane(
+        top=170, 
+        left=30, 
+        listaButoane=[
             Buton(display=display, w=35, h=30, text="x", valoare="X"), 
-            Buton(display=display, w=35, h=30, text="zero", valoare="0")
+            Buton(display=display, w=45, h=30, text="zero", valoare="0")
             ], 
         indiceSelectat=0)
+
     btn_dif=GrupButoane(
-        top=170, 
+        top=240, 
         left=30, 
         listaButoane=[
             Buton(display=display, w=60, h=30, text="usor", valoare="0"), 
@@ -99,10 +109,11 @@ def deseneaza_alegeri(display):
 
             ], 
         indiceSelectat=1)
-    ok=Buton(display=display, top=240, left=30, w=40, h=30, text="ok", culoareFundal=(155,0,55))
+    ok=Buton(display=display, top=310, left=30, w=40, h=30, text="ok", culoareFundal=(155,0,55))
     btn_alg.deseneaza()
     btn_juc.deseneaza()
     btn_dif.deseneaza()
+    btn_est.deseneaza()
     ok.deseneaza()
     while True:
         for ev in pygame.event.get(): 
@@ -114,8 +125,9 @@ def deseneaza_alegeri(display):
                 if not btn_alg.selecteazaDupacoord(pos):
                     if not btn_juc.selecteazaDupacoord(pos):
                         if not btn_dif.selecteazaDupacoord(pos):
-                            if ok.selecteazaDupacoord(pos):
-                                # display.fill((0,0,0)) #stergere ecran 
-                                # tabla_curenta.deseneaza_grid()
-                                return btn_alg.getValoare(), btn_dif.getValoare(), btn_juc.getValoare()
+                            if not btn_est.selecteazaDupacoord(pos):
+                                if ok.selecteazaDupacoord(pos):
+                                    # display.fill((0,0,0)) #stergere ecran 
+                                    # tabla_curenta.deseneaza_grid()
+                                    return btn_alg.getValoare(), btn_dif.getValoare(), btn_juc.getValoare(),btn_est.getValoare()
         pygame.display.update()

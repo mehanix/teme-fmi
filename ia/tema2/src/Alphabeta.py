@@ -1,11 +1,11 @@
 import src.Game as game
 
 nrNoduriGen = 0
-def alpha_beta(alpha, beta, stare):
+def alpha_beta(alpha, beta, stare,tip_estimat):
     global nrNoduriGen
     nrNoduriGen+=1
     if stare.adancime==0 or stare.tabla_joc.final() :
-        stare.scor=stare.tabla_joc.estimeaza_scor(stare.adancime)
+        stare.scor=stare.tabla_joc.estimeaza_scor(stare.adancime,tip_estimat)
         return stare
     
     if alpha>beta:
@@ -19,7 +19,7 @@ def alpha_beta(alpha, beta, stare):
         
         for mutare in stare.mutari_posibile:
             #calculeaza scorul
-            stare_noua=alpha_beta(alpha, beta, mutare)
+            stare_noua=alpha_beta(alpha, beta, mutare,tip_estimat)
             
             if (scor_curent<stare_noua.scor):
                 stare.stare_aleasa=stare_noua
@@ -34,7 +34,7 @@ def alpha_beta(alpha, beta, stare):
         
         for mutare in stare.mutari_posibile:
             
-            stare_noua=alpha_beta(alpha, beta, mutare)
+            stare_noua=alpha_beta(alpha, beta, mutare,tip_estimat)
             
             if (scor_curent>stare_noua.scor):
                 stare.stare_aleasa=stare_noua

@@ -1,11 +1,11 @@
 import src.Game as game
 
 nrNoduriGen = 0
-def min_max(stare):
+def min_max(stare,tip_estimat):
     global nrNoduriGen
     nrNoduriGen +=1
     if stare.adancime==0 or stare.tabla_joc.final() :
-        stare.scor=stare.tabla_joc.estimeaza_scor(stare.adancime)
+        stare.scor=stare.tabla_joc.estimeaza_scor(stare.adancime,tip_estimat)
         return stare
         
     #calculez toate mutarile posibile din starea curenta
