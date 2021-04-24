@@ -223,13 +223,15 @@ class Interfata:
             for (il,ic,iz) in lst:
                 if not self.matrCelule[il][ic].exista_zid(iz):
                     celAfectate.append((il,ic,iz))
-                    
+            
+            #daca mutarea e valida(daca afecteaza macar 1 celula)
             if celAfectate != []:
                 # creez joc nou
                 matr_tabla_noua = copy.deepcopy(self.matrCelule)
                 jn = Interfata(matr_tabla_noua, Interfata.nrLinii, Interfata.nrColoane,self.capturaPlayer,self.capturaComputer)
                 switchPlayer = True
                 for (il,ic,iz) in celAfectate:
+                    #fac mutarea in jocul nou
                     jn.matrCelule[il][ic].cod|=2**iz
                     # daca mutarea captureaza un patrat
                     if jn.matrCelule[il][ic].cod == 15:
@@ -240,7 +242,7 @@ class Interfata:
                         else:
                             jn.capturaComputer.append((il,ic))
                             
-
+                # adaug tabla noua in lista de mutari posibile
                 l_mutari.append((jn,juc_opus if switchPlayer else jucator))
     
         return l_mutari
@@ -257,7 +259,7 @@ class Interfata:
         """
         t_final = self.final()
 
-        # daca starea e finala, in functie de cine a castigat, trimite scoruri 
+        # daca starea e finala, in functie de cine a castigat, returneaza un nr ft mare
         if t_final == self.__class__.JMAX:
             return (999 + adancime)
         elif t_final == self.__class__.JMIN:
@@ -266,15 +268,19 @@ class Interfata:
             return 0
         else:
             if tip_estimat == "estimare_1":    
-                # Estimarea 1: Nr patratele capturate calculator - nr patratele calculate player    
+                # Estimarea 1: Nr patratele capturate calculator - nr patratele calculate player = > cu cat nr e mai mare cu atat starea e mai buna pentru MAX   
                 return len(self.capturaComputer) -len(self.capturaPlayer)
             else:
                 # Estimarea 2: Nr patratele capturate calculator - nr patratele calculate player + nr patratele aproape complete (3/4 ziduri)
+
+                #iau celulele cu 3 pereti selectati
                 celule_capturabile = 0
                 for lin in self.matrCelule:
                     for cel in lin:
+                        # 0bXXXX e codul fiecarei celule, fiecare pozitie ii corespunde unui zid, daca am 3 de 1 => am 3 pereti selectati
                         if cel.cod in [0b1110,0b1101, 0b1011, 0b0111]:
                             celule_capturabile+=1
+                # la fel, cu cat nr e mai mare cu atat starea e mai buna pt MAx (pe langa ce am capturat deja, iau in calcul si ce pot sa mai capturez)
                 return len(self.capturaComputer) - len(self.capturaPlayer) + celule_capturabile
 
     def aplica_mutare_player(self,pos):
@@ -425,8 +431,10 @@ class Stare:
         Returns:
             [Stari]: Lista de stari ce pot fi obtinute din starea curenta.
         """
+        #iau toate tablele cu mutari noi facute
         l_mutari=self.tabla_joc.mutari(self.j_curent)
 
+        # creez cate o stare pt fiecare mutare noua, si cobor in adancime
         l_stari_mutari=[Stare(mutare, juc, self.adancime-1, parinte=self) for (mutare,juc) in l_mutari]
         return l_stari_mutari
 
