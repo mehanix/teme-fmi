@@ -1,0 +1,57 @@
+5
+-4 3
+2 1
+1 0
+-1 6
+5 4import math
+
+# cu asta iterez stg -> dr
+def iter(i,nr):
+    while True:
+        yield i
+        i = (i+1) % nr
+
+# cu asta iterez dr -> stg
+def iter_rev(i,nr):
+    while True:
+        yield i
+        i = i-1
+        if i < 0:
+            i = nr-1
+    
+
+# citesc punctele si retin punctul cel mai din stg si din dreapta pe OX
+
+min_x = math.inf
+max_x = -math.inf
+leftmost = None
+rightmost = None
+n = int(input())
+
+# punctele s date in sens trigonometric
+puncte = []
+for i in range(n):
+    x = int(input())
+    y = int(input())
+    if x > max_x:
+        leftmost = i
+        max_x = x
+    if x < min_x:
+        rightmost = i
+        min_x = x
+
+
+puncte.append((x,y))
+
+print(puncte)
+#incep din stanga
+k = iter(leftmost,n)
+a = next(k)
+b = next(k)
+print(a,b)
+while b != rightmost: # pana am completat lantul
+    print(a,b)
+
+    a = b
+    b = next(k)
+print()

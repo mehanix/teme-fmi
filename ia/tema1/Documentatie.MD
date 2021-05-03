@@ -135,5 +135,6 @@ Cum in acest caz h' > h, rezulta ca euristica este neadmisibila.
 Putem concluziona urmatoarele:
 
 * Euristica neadmisibila poate duce la solutii care nu sunt optime
-* Pe primul exemplu, UCS este de 14 ori mai lent decat A*
+* Pe primul exemplu, UCS este de 6 ori mai lent decat A*
 * Cea mai buna performanta obtinuta pe ambele teste este A* open/closed si cu euristica admisibila 1.
+* Euristicile influenteaza foarte mult viteza algoritmilor.

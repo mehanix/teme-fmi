@@ -1,0 +1,23 @@
+1. 
+closed = (a 0 0 null)
+open = (e 5 14 a) (b 7 15 a) (f 17 17 a)
+
+closed = (a 0 0 null) (e 5 14 a)
+open = (b 7 15 a) (f 17 17 a) (g 14 19 e)
+
+closed = (a 0 0 null) (e 5 14 a) (b 7 15 a)
+open = (g 10 15 b) (d 11 16 b) (f 17 17 a)
+
+closed = (a 0 0 null) (e 5 14 a) (b 7 15 a) (g 10 15 b)
+open = (c 12 15 g) (d 11 16 b) (f 17 17 a)
+
+closed = (a 0 0 null) (e 5 14 a) (b 7 15 a) (g 10 15 b) (c 12 15 g)
+open = (f 15 15 c) (d 11 16 b)
+
+extrag (f 15 15 c), e nod scop, opresc cautarea
+
+drum = a -> b -> g -> c -> f
+cost = 15
+
+
+2.

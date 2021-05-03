@@ -43,7 +43,7 @@ Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d
 Stats:
 Lungime drum: 7
 Cost drum: 7
-Timp gasire solutie: 102ms
+Timp gasire solutie: 109ms
 Nr noduri maxim existente in memorie: 761
 Nr total noduri calculate: 867
 

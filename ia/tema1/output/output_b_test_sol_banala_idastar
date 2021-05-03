@@ -57,3 +57,16 @@ Nr total noduri calculate: 1
 ########################################
 #       Euristica: neadmisibila        #
 ########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['ddddd'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 1
+Cost drum: 1
+Timp gasire solutie: 0ms
+Nr noduri maxim existente in memorie: 1
+Nr total noduri calculate: 1

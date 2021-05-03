@@ -12,7 +12,7 @@ def min_max(stare,tip_estimat):
     stare.mutari_posibile=stare.mutari()
 
     #aplic algoritmul minimax pe toate mutarile posibile (calculand astfel subarborii lor)
-    mutari_scor=[min_max(mutare) for mutare in stare.mutari_posibile]
+    mutari_scor=[min_max(mutare,tip_estimat) for mutare in stare.mutari_posibile]
     
 
 

@@ -11,6 +11,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         Service service = new Service();
 
+        service.incarcaDate();
         String command = "";
         while (command != "11") {
             System.out.println("========================================");

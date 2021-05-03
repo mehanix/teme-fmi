@@ -15,6 +15,7 @@ class Config:
         cls.latime_ecran = lat
         cls.lungime_ecran = lung + 40
         cls.ADANCIME_MAX = 1 + int(dificultate)
+
  
     @classmethod
     def set_ecran(cls,ecr):

@@ -87,8 +87,8 @@ def _astar_v2(gr, out):
                 continue
             insert(node_parc, opened)
     
-    if len(opened) == 0:
-        print("Nu exista drum!")
+    # if len(opened) == 0:
+    #     print("Nu exista drum!")
     
 
 
