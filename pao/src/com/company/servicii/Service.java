@@ -14,6 +14,7 @@ public class Service {
     private final ArrayList<Distribuitor> distribuitori = new ArrayList<Distribuitor>();
     private List<Tranzactie> tranzactii;
     private AuditService audit = AuditService.getInstance();
+    private FileWriterService fws = FileWriterService.getInstance();
 
     // 1
     public void adaugaCategorie(Scanner in) {
@@ -22,12 +23,18 @@ public class Service {
         nume = in.nextLine();
         _creeazaCategorie(nume);
         audit.log("adauga_categorie");
+        ArrayList<String> mesaj =new ArrayList<String>();
+        mesaj.add(nume);
+        fws.write("./date/Categorie.csv",mesaj);
+
+
     }
 
     private void _creeazaCategorie(String nume) {
 
         Categorie cat = new Categorie(nume);
         categorii.add(cat);
+
     }
     public void adaugaDistribuitor(Scanner in) {
 
@@ -43,6 +50,11 @@ public class Service {
 
             int id = in.nextInt();
             _creeazaDistribuitor(nume, id);
+
+            ArrayList<String> mesaj =new ArrayList<String>();
+            mesaj.add(nume);
+            mesaj.add(String.valueOf(id));
+            fws.write("./date/Distribuitor.csv",mesaj);
 
             System.out.println("Adaugat cu succes!");
             audit.log("adauga_distribuitor");
@@ -131,20 +143,27 @@ public class Service {
             int res = in.nextInt();
 
             Produs p;
+            int val;
             if (res == 1) {
                 System.out.println("Introdu durata de valabilitate a produsului: (in luni)");
-                int valabilitate = in.nextInt();
-                p = new ProdusPerisabil(nume,pret,valabilitate);
+                val = in.nextInt();
+                p = new ProdusPerisabil(nume,pret,val);
             } else if (res == 2) {
                 System.out.println("Introdu lungimea perioadei de garantie a produsului: (in ani)");
-                int garantie = in.nextInt();
-                p = new ProdusNeperisabil(nume,pret,garantie);
+                val = in.nextInt();
+                p = new ProdusNeperisabil(nume,pret,val);
             } else { return; }
 
             categorii.get(idCategorie).adaugaProdus(p);
             in.nextLine();
             audit.log("adauga_produs");
-
+            ArrayList<String> mesaj =new ArrayList<String>();
+            mesaj.add(String.valueOf(idCategorie));
+            mesaj.add(nume);
+            mesaj.add(String.valueOf(pret));
+            mesaj.add(String.valueOf(res));
+            mesaj.add(String.valueOf(val));
+            fws.write("./date/Produs.csv",mesaj);
 
         } catch (Exception e) {
             System.out.println("Ai introdus input gresit!");
@@ -185,6 +204,17 @@ public class Service {
                 l.adaugaProdus(p,cantitate);
                 System.out.println("Adaugat!");
                 audit.log("adauga_livrare");
+
+                // actualizez si in fisier
+                ArrayList<String> mesaj =new ArrayList<String>();
+                mesaj.add(String.valueOf(idDistribuitor));
+                mesaj.add(new SimpleDateFormat("yyyy-MM-dd").format(data));
+                mesaj.add(String.valueOf(l.getProduseCantitati().size()));
+                for(Map.Entry<Produs,Integer> el : l.getProduseCantitati().entrySet()) {
+                    mesaj.add(String.valueOf(el.getKey().getId()));
+                    mesaj.add(String.valueOf(el.getValue()));
+                }
+                fws.write("./date/Livrare.csv",mesaj);
 
 
             } catch(Exception e) {
@@ -351,7 +381,6 @@ public class Service {
 
         //livrare
         ArrayList<ArrayList<String>> listaLivrare = fsv.read(pathLivrare);
-        System.out.println(listaLivrare);
         for(ArrayList<String> l : listaLivrare) {
             int idDistribuitor = Integer.parseInt(l.get(0));
             Categorie cat = distribuitori.get(idDistribuitor).getCategorie();
@@ -363,8 +392,6 @@ public class Service {
                 for (int i=0; i<nrProduse*2; i+=2) {
                     int idProdus = Integer.parseInt(l.get(3+i));
                     int pret = Integer.parseInt(l.get(4+i));
-                    System.out.println(idProdus);
-                    System.out.println(pret);
 
                     liv.adaugaProdus(cat.getProdus(idProdus),pret);
                 }
@@ -372,10 +399,8 @@ public class Service {
             }catch (ParseException p) {
                 System.out.println("Bad date format");
             }
-
-
-
         }
+        System.out.println("Am incarcat datele din csv!");
 
     }
 }

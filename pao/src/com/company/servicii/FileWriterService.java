@@ -37,7 +37,6 @@ public class FileWriterService {
             mesaj.deleteCharAt(mesaj.length()-1);
             mesaj.append("\n");
             w.write(mesaj.toString());
-            System.out.println(mesaj.toString());
             w.flush();
             w.close();
         } catch (IOException e) {
