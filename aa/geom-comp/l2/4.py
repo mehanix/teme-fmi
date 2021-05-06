@@ -20,33 +20,32 @@ def th(x_a,y_a,x_b,y_b,x_c,y_c,x_d,y_d):
                       [x_b, y_b, x_b*x_b + y_b*y_b, 1],
                       [x_c, y_c, x_c*x_c + y_c*y_c, 1],
                       [x_d, y_d, x_d*x_d + y_d*y_d, 1]])
-    print(theta)
+
     res =  np.linalg.det(theta)
     if -eps <= res <= eps:
         return 0
     else:
         return res
 
-x_a = int(input())
-y_a = int(input())
-x_b = int(input())
-y_b = int(input())
-x_c = int(input())
-y_c = int(input())
-x_d = int(input())
-y_d = int(input())
 
-semn = 1
+#citire
+x_a = float(input())
+y_a = float(input())
+x_b = float(input())
+y_b = float(input())
+x_c = float(input())
+y_c = float(input())
+x_d = float(input())
+y_d = float(input())
 
-if not testeaza_viraj((x_a,y_a), (x_b,y_b), (x_c,y_c)) == "viraj stanga":
-    semn = -1
+# verific AC => punctul D e in interiorul cercului circumscris ABC ?
 
-
-res = th(x_a,y_a,x_b,y_b,x_c,y_c,x_d,y_d) * semn
-print(res)
+res = th(x_a,y_a,x_b,y_b,x_c,y_c,x_d,y_d)
 if  res > 0:
-    print("inauntru")
-elif res == 0:
-    print("pe cerc")
-else:
-    print("in afara")
+    print("AC muchie ilegala")
+
+# verific BD => punctul C in interiorul cercului ABD ?
+
+res = th(x_a,y_a,x_b,y_b,x_d,y_d,x_c,y_c)
+if  res > 0:
+    print("BD muchie ilegala")
