@@ -20,7 +20,7 @@ public class AuditService {
     }
 
     public void log(String numeActiune) {
-        String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         ArrayList<String> mesaj =new ArrayList<String>();
         mesaj.add(numeActiune);
         mesaj.add(timestamp);
