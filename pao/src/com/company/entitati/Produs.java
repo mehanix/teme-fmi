@@ -1,7 +1,6 @@
 package com.company.entitati;
 
 public class Produs {
-    static int uniqueIdCounter = 0;
 
     private Integer id;
     private String nume;
@@ -23,8 +22,8 @@ public class Produs {
         this.pret = pret;
     }
 
-    public Produs(String nume, Integer pret) {
-        this.id = uniqueIdCounter++;
+    public Produs(int id, String nume, Integer pret) {
+        this.id = id;
         this.nume = nume;
         this.pret = pret;
     }

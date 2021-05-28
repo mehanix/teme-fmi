@@ -14,8 +14,8 @@ public class ProdusPerisabil extends Produs {
         this.valabilitate = valabilitate;
     }
 
-    public ProdusPerisabil(String nume, Integer pret, Integer valabilitate) {
-        super(nume, pret);
+    public ProdusPerisabil(int id, String nume, Integer pret, Integer valabilitate) {
+        super(id, nume, pret);
         this.valabilitate = valabilitate;
     }
 

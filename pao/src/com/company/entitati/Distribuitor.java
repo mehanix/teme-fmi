@@ -1,10 +1,12 @@
 package com.company.entitati;
 
 public class Distribuitor {
+    private int id;
     private String nume;
     private Categorie categorie;
 
-    public Distribuitor(String nume, Categorie categorie) {
+    public Distribuitor(int id, String nume, Categorie categorie) {
+        this.id = id;
         this.nume = nume;
         this.categorie = categorie;
     }
@@ -26,4 +28,7 @@ public class Distribuitor {
     }
 
 
+    public int getId() {
+        return this.id;
+    }
 }

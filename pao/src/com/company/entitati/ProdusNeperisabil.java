@@ -4,8 +4,8 @@ public class ProdusNeperisabil extends Produs {
     private Integer aniGarantie;
 
 
-    public ProdusNeperisabil(String nume, Integer pret, Integer aniGarantie) {
-        super(nume, pret);
+    public ProdusNeperisabil(int id,String nume, Integer pret, Integer aniGarantie) {
+        super(id, nume, pret);
         this.aniGarantie = aniGarantie;
     }
 

@@ -1,13 +1,15 @@
 package com.company.entitati;
 
 import com.company.entitati.Produs;
+import com.company.servicii.CategorieService;
 
 import java.util.*;
 
 public class Stoc {
     private Set<Livrare> istoricLivrari;
-    private Map<Produs,Integer> stoc;
+    private Map<Integer,Integer> stoc;
     static private Integer incasari = 0;
+    private CategorieService categorieService = CategorieService.getInstance();
 
 
     Comparator<Livrare> sortByDate = new Comparator<Livrare>() {
@@ -25,11 +27,11 @@ public class Stoc {
     * */
     public Stoc() {
 
-        this.stoc = new HashMap<Produs, Integer>();
+        this.stoc = new HashMap<Integer, Integer>();
         this.istoricLivrari = new TreeSet<Livrare>(sortByDate);
     }
 
-    public Map<Produs, Integer> getStoc() {
+    public Map<Integer, Integer> getStoc() {
         return stoc;
     }
 
@@ -37,7 +39,7 @@ public class Stoc {
     public void adaugaLivrare(Livrare l) {
         istoricLivrari.add(l);
         l.getProduseCantitati().forEach((produs, cantitate) -> {
-            int old = stoc.containsKey(produs) ? stoc.get(produs) : 0;
+            int old = stoc.getOrDefault(produs, 0);
            stoc.put(produs, old+cantitate);
         });
     }
@@ -47,9 +49,11 @@ public class Stoc {
         System.out.println("=     Produse pe stoc     =");
         System.out.println("===========================");
 
-        stoc.forEach((produs, cantitate) -> {
-            if(cantitate > 0)
+        stoc.forEach((idProdus, cantitate) -> {
+            if(cantitate > 0) {
+                Produs produs = categorieService.findProdus(idProdus);
                 System.out.println("[" + produs.getId() + "] " + produs.getNume() + ": " + cantitate);
+            }
         });
 
         System.out.println("---------------------------");
@@ -74,18 +78,23 @@ public class Stoc {
         }
     }
 
-    public int get(Produs p) {
-        return stoc.get(p);
+    public int get(int idP) {
+        return stoc.get(idP);
     }
 
     public void efectueaza(Tranzactie t) {
         incasari += t.getTotal();
 
-        for (Map.Entry<Produs, Integer> entry : t.getProduseCumparate().entrySet()) {
-            Produs p = entry.getKey();
+        for (Map.Entry<Integer, Integer> entry : t.getProduseCumparate().entrySet()) {
+            Integer idP = entry.getKey();
             Integer c = entry.getValue();
-            stoc.put(p,stoc.get(p) - c);
+            stoc.put(entry.getKey(),stoc.get(idP) - c);
         }
     }
 
+    public void clear() {
+        istoricLivrari.clear();
+        stoc.clear();
+        incasari = 0;
+    }
 }

@@ -1,8 +1,8 @@
 package com.company;
 
+import com.company.servicii.CategorieService;
 import com.company.servicii.Service;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -10,10 +10,10 @@ public class Main {
     public static void main(String[] args)  {
         Scanner in = new Scanner(System.in);
         Service service = new Service();
-
-        service.incarcaDate();
+        CategorieService cats  = CategorieService.getInstance();
+        service.incarcaDate(in);
         String command = "";
-        while (command != "11") {
+        while (command != "13") {
             System.out.println("========================================");
             System.out.println("= Sistem de gestionare al magazinului: =");
             System.out.println("========================================");
@@ -28,6 +28,9 @@ public class Main {
             System.out.println("8. Alerta stoc - afiseaza produsele cu stoc 0");
             System.out.println("9. Vezi detaliile unui produs");
             System.out.println("10. Vezi istoric livrari");
+            System.out.println("11. Modifica numele unui distribuitor");
+            System.out.println("12. Sterge o categorie");
+            System.out.println("13. Iesire");
 
             command = in.nextLine();
             try {
@@ -71,6 +74,17 @@ public class Main {
                     case "10": {
                         service.veziIstoricLivrari();
                         break;
+                    }
+                    case "11": {
+                        service.modificaNumeDistribuitor(in);
+                        break;
+                    }
+                    case "12": {
+                        service.stergeCategorie(in);
+                        break;
+                    }
+                    case "13": {
+                       return;
                     }
                 }
             } catch (Exception e) {

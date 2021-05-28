@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Categorie {
+    private Integer id;
     private String nume;
     private List<Produs> produse;
 
@@ -12,6 +13,11 @@ public class Categorie {
         this.produse = new ArrayList<Produs>();
     }
 
+    public Categorie(int id, String nume) {
+        this.id = id;
+        this.nume = nume;
+        this.produse = new ArrayList<Produs>();
+    }
     public String getNume() {
         return nume;
     }
@@ -37,5 +43,9 @@ public class Categorie {
     }
     public void adaugaProdus(Produs p) {
         this.produse.add(p);
+    }
+
+    public Integer getId() {
+        return id;
     }
 }
