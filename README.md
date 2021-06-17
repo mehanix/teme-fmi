@@ -17,9 +17,13 @@ Sunt anul II, 2020-2021.
 * [poo](https://github.com/mehanix/teme-fmi/tree/master/poo): Programare Orientată pe Obiecte (în C++)
 
 ### Anul II:
-* [ps](): Probabilități și Statistică
-* [alg](): Algoritmi fundamentali
-* [sgbd](): Sisteme de gestiune a bazelor de date
+* [ps](): Probabilități și Statistică (în R)
+* [alg](): Algoritmi fundamentali (în Python)
+* [sgbd](): Sisteme de gestiune a bazelor de date(în PL/SQL)
 * [pf](): Programare funcțională (în Haskell)
-* [so](): Sisteme de Operare
+* [so](): Sisteme de Operare (în C)
 * [pao](): Programare avansată pe obiecte (în Java)
+* [daw](): Dezvoltarea Aplicatiilor Web (în C#)
+* [retele](): Rețele de calculatoare (în Python)
+* [ia](): Inteligență artificială (în Python)
+* [aa](): Algoritmi Avansati (în Python)
