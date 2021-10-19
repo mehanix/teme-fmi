@@ -1,0 +1,104 @@
+{ 
+
+for (int i = 0; i < n ; i ++) { ... }
+
+n = i + 1;
+
+}
+
+
+
+{
+
+  int i = 5;
+  int x = 9;
+  cout << i;
+    
+  { 
+    cout << i;
+ 
+    int i = 7;
+  
+    cout << i;
+    cout << x;
+  }
+  
+  cout << i;
+ 
+}
+
+5575
+
+
+\y.\x.x y
+
+
+x (λ x . xy ) (\x.x)
+
+
+x (λ x . x ((\x.x) y) ) (\x.x)
+
+
+
+
+
+
+
+
+
+
+
+
+
+FV ( x \x.x y )
+= FV(x) U FV(\x.x y)
+= {x} U (FV(x y) \ { x })
+= {x} U ((FV(x) U FV(y)) \ { x })
+= {x} U (({x} U {y}) \ { x })
+= {x} U ({x, y} \ { x })
+= {x} U {y}
+= {x, y}
+
+
+
+
+f(x) = x + 1
+
+f(2) = 2 + 1
+
+
+(\x.t) u  ---beta---> [u/x]t
+
+
+-----------
+
+[5/x]\x.x   ===????=== \x.[5/x]x = \x.5
+
+
+Variable Capture
+[3+y/x]\y.x ===????=== \y.[3+y/x]x = \y.3+y
+
+
+f : Int -> Int
+f(x) = x + 1
+
+g : Int -> Int
+g(y) = y + 1
+
+-------------
+
+(λ x .(λ y . yx ) z ) v
+1. (λ x .(λ y . yx ) z ) v --beta--> 
+   [v/x] (λ y . yx ) z = (\y.yv) z --beta -->
+   [z/y] yv  = z v
+2. (λ x .(λ y . yx ) z ) v --beta--> 
+   (λ x .[z/y] yx) v  = (\x.z x) v --beta -->
+   [v/x]z x = z v
+   
+
+(\x.x x)(\x.x x) --
+
+
+
+
+

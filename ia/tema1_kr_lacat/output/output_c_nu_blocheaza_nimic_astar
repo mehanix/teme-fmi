@@ -1,0 +1,98 @@
+########################################
+#                   A*                 #
+########################################
+#          Euristica: banala           #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['didgg'] pentru a ajunge la...
+1) Incuietori: [inc(d,0), inc(i,2), inc(d,0), inc(i,1), inc(i,1)]
+Folosim cheia: ['gddgd'] pentru a ajunge la...
+2) Incuietori: [inc(d,0), inc(i,1), inc(d,0), inc(i,1), inc(d,0)]
+Folosim cheia: ['gdddg'] pentru a ajunge la...
+3) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 3
+Cost drum: 3
+Timp gasire solutie: 2ms
+Nr noduri maxim existente in memorie: 14
+Nr total noduri calculate: 19
+
+----------------
+########################################
+#                   A*                 #
+########################################
+#       Euristica: admisibila_1        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['gddgd'] pentru a ajunge la...
+1) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(i,1), inc(d,0)]
+Folosim cheia: ['didgg'] pentru a ajunge la...
+2) Incuietori: [inc(d,0), inc(i,1), inc(d,0), inc(i,1), inc(d,0)]
+Folosim cheia: ['gdddg'] pentru a ajunge la...
+3) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 3
+Cost drum: 3
+Timp gasire solutie: 2ms
+Nr noduri maxim existente in memorie: 11
+Nr total noduri calculate: 16
+
+----------------
+########################################
+#                   A*                 #
+########################################
+#       Euristica: admisibila_2        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['gddgd'] pentru a ajunge la...
+1) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(i,1), inc(d,0)]
+Folosim cheia: ['didgg'] pentru a ajunge la...
+2) Incuietori: [inc(d,0), inc(i,1), inc(d,0), inc(i,1), inc(d,0)]
+Folosim cheia: ['gdddg'] pentru a ajunge la...
+3) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 3
+Cost drum: 3
+Timp gasire solutie: 7ms
+Nr noduri maxim existente in memorie: 32
+Nr total noduri calculate: 48
+
+----------------
+########################################
+#                   A*                 #
+########################################
+#       Euristica: neadmisibila        #
+########################################
+0) Initial: [inc(i,1), inc(i,1), inc(i,1), inc(i,1), inc(i,1)]
+Folosim cheia: ['gddgd'] pentru a ajunge la...
+1) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(i,1), inc(d,0)]
+Folosim cheia: ['gdddg'] pentru a ajunge la...
+2) Incuietori: [inc(i,1), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+Folosim cheia: ['didgg'] pentru a ajunge la...
+3) Incuietori: [inc(d,0), inc(i,1), inc(d,0), inc(d,0), inc(d,0)]
+Folosim cheia: ['gddgd'] pentru a ajunge la...
+4) Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+Stare scop: Incuietori: [inc(d,0), inc(d,0), inc(d,0), inc(d,0), inc(d,0)]
+
+------------
+Stats:
+Lungime drum: 4
+Cost drum: 4
+Timp gasire solutie: 3ms
+Nr noduri maxim existente in memorie: 11
+Nr total noduri calculate: 19
+
+----------------

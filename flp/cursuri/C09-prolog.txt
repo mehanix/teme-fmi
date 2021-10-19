@@ -1,0 +1,38 @@
+
+[X | [Y | T]] = [1,2,3]
+X = 1
+Y = 2
+T = [3]
+
+[X,Y | T] = [1,2,3]
+X = 1
+Y = 2
+T = [3]
+
+[X, Y | T] == [X | [Y | T]]
+true
+
+?- [5,1,1,3,2]=[_, X, X | _].
+X = 1.
+
+
+is_list([3 | 4]).  % false ?
+is_list([3 | [4 | []]]).  % true
+
+is_list([]).
+is_list([_ | T]) :- is_list(T).
+
+
+last :: [a] -> a
+last [x] = x
+last (_ : t) = last t
+
+
+% elim(X, LX, L)
+elim(X, [X|T], T).
+elim(X, [H|TX], [H|T]) :- elim(X, TX, T).
+
+perm(L, L).
+perm([H|T], L) :-
+  elim(H, L, L1),
+  perm(T, L1).

@@ -1,0 +1,9 @@
+.
+# import os, shutil
+
+# with open("validation.txt") as f:
+#     lines = f.readlines()
+#     for l in lines:
+#         fn,i = l.strip().split(",")
+#         shutil.move(f"validation/{fn}",f"validation/{i}/{fn}")
+    

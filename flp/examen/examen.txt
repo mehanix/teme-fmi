@@ -1,0 +1,141 @@
+1. Să se descrie detaliat (regula aplicată, unificare cap, obținerea noii ținte,...)  execuția țintei indicate pentru programul Prolog de mai jos:
+
+Program Prolog:
+p(c,b).
+p(a,b).
+r(b,c).
+r(b,a).
+r(X,Z) :- r(Y,X), r(Y,Z).
+r(X,Y) :- p(Y,X). 
+
+
+Ținta
+
+?- r(a,Y)
+
+r(a,Y) - > putem aplica 3,4,5 sau 6.
+  \-> Aplic (3):
+      Unific r(a,Y) cu r(b,c)
+      \-> FAIL. backtrack
+  \-> Aplic (4):
+        Unific r(a,Y) cu r(b,a)
+        \-> FAIL. backtrack
+  \-> Aplicam (5):
+      Unificam r(a,Y)    cu r(X,Z): substitui X = a, Z = Y.
+       => r(Y,a), r(Y,Z) Pot aplica 3,4,5,6.
+               \-> Aplic (3):
+                   Unific r(Y,a) cu r(b,c). FAIL. backtracking
+               \-> Aplic (4):
+                   Unific r(Y,a) cu r(b,a): substitui Y = b.
+                   => r(b,Z)
+                       \-> Aplic (3):
+                           Unific r(b,Z) cu r(b,c): substitui Z = c.
+                           Obtin multimea vida. SUCCESS. (solutie: X = a, Y = b, Z = c)
+
+
+2. 
+Pentru lambda-expresia de mai jos, indicați pentru fiecare apariție a unei variabile dacă este variabilă de legătură, variabilă liberă sau variabilă legată. Pentru fiecare variabilă legată indicați apariția variabilei de legătură de care aceasta este legată.
+
+Puteți redenumi/sublinia, colora aparițiile variabilelor, dar trebuie să includeți o explicație a modului în care ați făcut acest lucru.
+
+Se aplică convențiile sintactice precizate în curs.
+
+
+(λi.e i) ((λi.(λe.e + i) ((λe.i) (i + e))) ((λi.e i) i))
+
+
+           /------------------------------
+/-------  /    /--------   /----             /-----
+(λi.e i) ((λi.(λe.e + i) ((λe.i) (i + e))) ((λi.e i) i))
+  1 2 3     4   5 6   7     8 9  10   11    12 13 14 15
+ 
+ i1 = de legatura
+ e2 = libera
+ i3 = legata de i1
+ i4 = de legatura
+ e5 = de legatura
+ e6 = legata de e5
+ i7 = legata de i4
+ e8 = de legatura
+ i9 = legata de i4
+ i10 = legata de i4
+ e11 = libera
+ i12 = de legatura
+ e13 = libera
+ i14 = legata de i12
+ i15 = libera
+
+ 3.
+ Pentru acest exercițiu folosim limbajul IMP definit în curs. 
+
+Folosind regulile semanticii operaționale "small step" definite in curs justificați pașii de tranziție ceruți de exercițiu, indicând  la fiecare pas regula folosita și termenul prelucrat de regula. 
+
+Atenție:  `mvid` este starea memoriei vida, iar o stare a memoriei va fi reprezentata prin {x->vx,y->vy, ...} unde x,y,... sunt variabile, iar vx,yy,... sunt valori.
+
+Executati 5 pasi de executie din configuratia:
+
+<if(not(1=<b),rez=true,rez=false), {b->0} >
+
+Original:<if(not(1=<b),rez=true,rez=false), {b->0} >
+
+1. scoatem pe b din env
+<if(not(1=<0),rez=true,rez=false), {b->0} >
+2. evaluez expresie
+<if(not(false),rez=true,rez=false), {b->0} >
+3. aplic not
+<if(true,rez=true,rez=false), {b->0} >
+4. execut if caz true
+<rez=true, {b->0} >
+5. evaluez rez, il pun in env
+<{rez->true, b->0}>
+
+4. 
+Consideram sistemul de inferenta a tipurilor pentru limbajul LAMBDA prezentat la curs (accesibil la link-ul: http://tinyurl.com/lambdatype ) si  presupunem ca am adaugat la limbaj o operatie `cast` care converteste `int` la `bool` si `bool` la `int`.
+
+Extindeti sistemul de inferenta a tipurilor astfel adaugand reguli pentru operația `cast`. 
+
+Precizati in caseta de raspuns numai regulile noi. 
+
+Exemple pentru testare:
+
+
+%:- run(x -> if(cast(x), (x -> x) $ 3, 4 )).            % int->int
+%:- run(x -> if(x, (x -> x) $ 3, cast(x) )).            % bool->int
+%:- run(x -> y -> if(cast(x + y), (x -> x) $ 3, 4 )).   % int->int->int  
+%:- run(x -> if(cast(x), (x -> x) $ 3, cast(x) )).      % doesn't type
+%:- run(cast(x -> x)).                                  % doesn't type
+
+R: nu stiu lol nu cred c-a facut-o nimeni
+
+5.
+În acest exercițiu: a,b,c sunt simboluri de constante; x,y,z,u,v,w sunt variabile;  f,g,h,p sunt simboluri de funcții, aritatea fiind dedusa din context.
+
+Aplicând algoritmul de unificare din curs, verificați dacă exista un unificator pentru următorii termeni (detaliați fiecare pas din algoritm):
+
+p(f(x,y), z, f(x,b)) și  p(z,f(h(x),x),z)
+
+
+Pas 1: (Initial)
+    S: []
+    R: p(f(x,y), z, f(x,b)) = p(z,f(h(x),x),z)
+    
+Pas 2: (Descompune)
+    S: []
+    R: [z = f(x,y)
+        z = f(h(x),x)
+        z = f(x,b) ]    
+                   
+Pas 3: (Rezolva)
+    S = [z = f(x,y)]
+    R = [f(x,y) = f(h(x),x)
+         f(x,y) = f(x,b)]
+
+
+Pas 4: Descompune
+    S = [z = f(x,y)]
+    R = [x = h(x),
+         x = y,
+         f(x,y) = f(x,b)]
+
+
+Cum x = h(x) => nu exista unificator

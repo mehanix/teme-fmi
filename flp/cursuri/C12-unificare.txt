@@ -1,0 +1,123 @@
+Problema unificării:  există X, Y a.î.
+
+f(g(X), h(a))   =?=      f(Y, h(X))
+
+Care e cea mai generală soluție?
+
+
+
+f(g(X), h(a)) [b / X]  = f(g(b), h(a))
+
+
+
+Problema unificării:  există substituție sigma a.î.
+
+sigma( f(g(X), h(a)) )  =  sigma( f(Y, h(X)) )
+
+
+DA.  sigma =  X |->  a ;  Y |->  g(a)
+
+
+Care e cea mai generală soluție?  sigma e
+
+
+
+sigma( f(g(X), Z) )  =   sigma( f(Y, h(X)) )
+
+sigma(Y) = sigma(g(X))
+sigma(Z) = sigma(h(X))
+
+DA. sigma =  X |->  a ;  Y |->  g(a) ; Z |-> h(a)
+
+E sigma cea mai generală? NU
+
+
+sigma1  X |->  A ;  Y |-> g(A)  ;  Z |-> h(A)
+
+sigma1( f(g(X), Z) ) = f(g(A), h(A)) =   sigma1( f(Y, h(X)) )
+
+Deci sigma1 este soluție 
+sigma1 e mai generală decât sigma
+
+sigma = {A |-> a} compus cu sigma1
+
+
+
+X = X - OK
+
+
+X <> f(X)  - Nu e OK. detecție ciclu
+
+
+f(X) <> g(Y)  - nepotrivire de operații  operator clash
+
+f(X, Y) <> f(X)  - nepotrivire de operații  operator clash
+
+
+
+
+
+S = {},  R = { g (y ) = x,   f (x, h(x), y ) = f (g (z), w , z) }
+--Descompune-->
+S = {},  R = { g (y ) = x,   x = g(z), h(x) = w, y = z }
+--Rezolva(x = g(z)) -->
+S = {x = g(z)},  R = { g (y ) = g(z),  h(g(z)) = w, y = z }
+--Descompune-->
+S = {x = g(z)},  R = { y = z,  h(g(z)) = w, y = z }
+--Rezolva(y = z)-->
+S = {x = g(y), z = y},  R = { h(g(y)) = w, y = y }
+--Scoate-->
+S = {x = g(y), z = y},  R = { h(g(y)) = w }
+--Rezolva-->
+S = {x = g(y), z = y, w = h(g(y))},  R = {}
+
+
+
+S = {}, R = {g (y ) = x, f (x, h(y ), y ) = f (g (z), b, z)}
+--Descompune-->
+S = {}, R = {g (y ) = x, x = g(z), h(y ) = b, y = z} -- STOP
+--> Rezolva(g(y) = x) -->
+S = {x = g(y)}, R = {g (y ) = g(z), h(y ) = b, y = z}
+--Descompune-->
+S = {x = g(y)}, R = {y = z, h(y ) = b, y = z}
+--Rezolva(y = z)-->
+S = {x = g(z), y = z}, R = {h(z ) = b, z = z}
+--Scoate(z = z)-->
+S = {x = g(z), y = z}, R = {h(z ) = b}
+
+Nu avem unificator!
+
+
+S = {}, R = {g (y ) = x, f (x, h(x ), y ) = f (y, w, z)}
+--Descompune-->
+S = {}, R = {g (y ) = x, x = y, h(x ) = w, y = z}
+--Rezolva(x = y)-->
+S = {x = y}, R = {g (y ) = y,h(y ) = w, y = z}  -- STOP(ciclu y = g(y))
+
+
+
+
+?-  p(X, Y), q(Y, Z).
+
+~ p(X, Y) \/ ~ q(Y,Z)
+
+
+~ p(X, Y) \/ p(X,Y)
+
+
+Sum {}  = 0
+Produs {} = 1
+
+Sum A + Sum B = Sum (A ++ B)
+
+Or {}  = False
+And {} = True
+
+
+
+
+
+
+
+
+

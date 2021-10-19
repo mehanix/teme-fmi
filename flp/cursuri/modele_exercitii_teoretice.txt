@@ -1,0 +1,143 @@
+# unificare
+
+   f(X, g(Y)) = f(h(Y), g(X))
+   
+   X = h(Y)
+   g(Y) = g(X)
+   
+   X = Y
+   
+   h(Y) = Y  - detectie ciclu
+  
+
+
+
+# variabile libere / variabile legate
+
+
+\ x . (\ y . (\ x . x + z) ((\x . x x) (x + y) + x) ) (\ z . x y z)
+
+
+
+\ x(1) . (\ y(2) . (\ x(3) . x(4) + z(5)) ((\x(6) . x(7) x(8)) (x(9) + y(10)) + x(11)) ) (\ z(12) . x(13) y(14) z(15))
+
+x(13) legat de x(1)
+y(14) liber
+z(15) legat de z(12)
+x(4) legat de x(3)
+z(5) liber
+x(7) legat de x(6)
+x(8) legat de x(6)
+x(9) legat de x(1)
+y(10) legat de y(2)
+x(11) legat de x(1)
+
+
+
+
+# Descrieți evoluția expresiei de mai jos prin aplicarea de trei ori a regulii de beta reducție
+
+Strict order (bootom-up)
+
+\ x . (\ y . (\ x . x + y) ((\x . x x) (x + y) + x) ) (\ z . x y z)
+
+--beta-->
+
+\ x . (\ y . (\ x . x + y) ((x + y) (x + y) + x) ) (\ z . x y z)
+
+--beta-->
+
+\ x . (\ y . ((x + y) (x + y) + x) + y ) (\ z . x y z)
+
+--beta-->
+
+\ x . ((x + (\ z . x y z)) (x + (\ z . x y z)) + x) + (\ z . x y z) 
+
+
+
+Normal order (topmost, leftmost)
+
+\ x . (\ y . (\ x . x + y) ((\x . x x) (x + y) + x) ) (\ z . x y z)
+
+--beta--> (gresit)
+
+\ x . (\ x . x + (\ z . x y z)) ((\x . x x) (x + (\ z . x y z)) + x) 
+
+corect: mai intai redenumesc x
+
+
+\ x . (\ y . (\ x . x + y) ((\x . x x) (x + y) + x) ) (\ z . x y z)
+
+==alpha==
+
+\ x . (\ y . (\ a . a + y) ((\x . x x) (x + y) + x) ) (\ z . x y z)
+
+--beta-->
+
+\ x . (\ a . a + (\ z . x y z)) ((\x . x x) (x + (\ z . x y z)) + x)
+
+--beta-->
+
+\ x . ((\x . x x) (x + (\ z . x y z)) + x) + (\ z . x y z)
+
+--beta-->
+
+\ x . ((x + (\ z . x y z)) (x + (\ z . x y z)) + x) + (\ z . x y z)
+
+
+
+
+# Are expresia de mai jos tip sau nu. Dacă da, scrieți tipul. Dacă nu, argumentați de ce nu.
+
+e := \ x . (\ y . (\ x . x + z) ((\x . x x) (x + y) + x) ) (\ z . x y z)
+
+Pentru ca e să aibă tip, orice subexpresie a lui e trebuie să aibă tip.
+
+În particular, (\x . x x) (x + y) trebuie să aibă tip.
+  - (x + y) trebuie sa aiba tip, care nu poate fi decât int (regula lui +)
+  - din regula pentru aplicare, (\x . x x) (x + y) are tip t dacă (\x . x x) are tipul int -> t
+    dar din regula pentru lambda, (\x . x x) are tipul int -> t daca din x : int putem deduce că x x : t
+    dar, din regula pentru aplicare x x : t dacă x are tipul t1 -> t și x are tipul t1
+    de unde int = int -> t    (imposibil, pentru că int și -> sunt constructori)
+
+
+e := \ x . (\ y . (\ x . x:int + z:int):int->int ((\x . x:?int x:?int):?int->int (x:int + y:int):int + x:int) ) (\ z . x y z)
+
+
+
+# Fie programul IMP  Pgm ::=  "if x >= y then max := x else max := y" și starea sigma ::= "x |-> 3, y |-> 5". Descrieți următoarele cinci tranziții într-un pas ale configurației de execuție < Pgm, sigma >  (indicând axioma folosită).
+
+
+   < if x >= y then max := x else max := y  ,   {x |-> 3, y |-> 5} > 
+--ax. variabile-->
+   < if 3 >= y then max := x else max := y  ,   {x |-> 3, y |-> 5} > 
+--ax. variabile-->
+   < if 3 >= 5 then max := x else max := y  ,   {x |-> 3, y |-> 5} > 
+--ax. >=-->
+   < if false then max := x else max := y  ,   {x |-> 3, y |-> 5} > 
+--ax. if-->
+   < max := y  ,   {x |-> 3, y |-> 5} > 
+--ax. variabile-->
+   < max := 5  ,   {x |-> 3, y |-> 5} > 
+
+
+# Dat fiind programul Prolog Pgm, scrieți un query (de forma ...) care produce rezultatele ...
+
+
+# Lambda-calcul: Care este forma normală a expresiei: ....
+
+
+
+# Adăugați la limbajul IMP "++ x" ca expresie de incerementare a identificatorului x și scrieți regulile de execuție într-un pas care trebuie adăugate sau modificate pentru a putea da semantică lui ++
+
+
+
+
+
+
+
+
+
+
+
+

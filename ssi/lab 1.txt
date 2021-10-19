@@ -1,0 +1,66 @@
+Lab 1:
+
+1.
+
+A - 3
+B - 1
+C - 5
+D - 2
+E - 4
+
+2. m-am uitat :)
+
+Modul de gandire: incearca sa cauti toate metodele prin care se poate strica un sistem
+Etica/legalitate: doar pentru ca te gandesti la asta/poti in teorie sa strici ceva nu inseamna ca trebuie sa o si faci
+
+3. m-am nascut pe 9 => 19
+
+19/2= 9 r 1
+      9 / 2 = 4 r 1
+      		  4 / 2 = 2 r 0
+      		  		  2 / 2 = 1 r 0
+      		  		      	  1 / 2 = 0 r 1 si am terminat
+
+(19)10 = (10011)2
+
+invers:
+(10011)2 = 1*1 + 1*2 + 0 * 4 + 0*8 + 1*16 = (19)10 
+
+--------
+1A2B din hex in binary
+scriu fiecare cifra in binar
+
+1    A    2    B
+0001 1010 0010 1011
+=> (1A2B)16 = (1 1010 0010 1011)2
+
+Invers:
+se ia numarul si se grupeaza cate 4, incepand de la LSB
+1 1010 0010 1011
+1  A    2    B
+fiecare se transforma in hex
+=>
+(1 1010 0010 1011)2 = 1A2B in baza 16
+
+4.
+
+NICOLETA = 78 73 67 79 76 69 84 65
+66 82 65 86 79 = B R A V O
+
+5. 
+NICOLETA = TklDT0xFVEE=
+Sunt student la FMI.
+
+6.
+malware = cod/program rau intentionat, care isi propuna sa faca lucruri ilegale, neautorizate asupra unui sistem.
+virus = program cu efecte daunatoare care infecteaza un calculator si se foloseste de el ca sa se replice si sa se trimita si la altii 
+dropper = trojan care instaleaza un alt malware pe un sistem
+downloader = trojan care odata ajuns pe un calculator asteapta sa primeasca conexiune la internet ca sa descarce la randul sau alte tipuri de malware
+riskware = program normal dar care are vulnerabilitati ce reprezinta un risc de securitate 
+trojan = program care in esenta pare inofensiv dar care ascunde comportamente malitioase (ex antivirusii aia fake sau toolbars pt browsere)
+spyware = program instalat fara stirea utilizatorului care colecteaza date
+adware = program care serveste reclame nedorite
+worm = program care se auto-replica, propaga singur si calatoreste prin retea (porturi deschise) pentru a infecta
+obfuscare = tehnica prin care se face codul unui program cat mai greu de inteles (variabile nedescriptive, logica alambicata, bucati care nu fac nimic, etc)
+
+
