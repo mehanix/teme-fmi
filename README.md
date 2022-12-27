@@ -27,3 +27,13 @@ Sunt anul II, 2020-2021.
 * [retele](https://github.com/mehanix/teme-fmi/tree/master/retele): Rețele de calculatoare (în Python)
 * [ia](https://github.com/mehanix/teme-fmi/tree/master/ia): Inteligență artificială (în Python)
 * [aa](https://github.com/mehanix/teme-fmi/tree/master/aa): Algoritmi Avansati (în Python)
+
+# Anul III:
+* [ssi](https://github.com/mehanix/teme-fmi/tree/master/ssi): Securitatea Sistemelor Informatice
+* [cc](https://github.com/mehanix/teme-fmi/tree/master/ssi): Calculabilitate & Complexitate (Masini Turing, în Python) - opțional
+* [nodejs](https://github.com/mehanix/teme-fmi/tree/master/nodejs): JavaScript Server-side: NodeJS si GraphQL (in JS) - opțional
+* [roboti](https://github.com/mehanix/IntroductionToRobotics): Introducere in Robotică (Arduino, C) - opțional
+* [esla](https://github.com/mehanix/teme-fmi/tree/master/esla): Elemente de Securitate si Logica Aplicata (C, Packet Tracer) - opțional
+* [crypto](https://github.com/mehanix/teme-fmi/tree/master/crypto): Criptografie - opțional
+* [nlp](https://github.com/mehanix/teme-fmi/tree/master/nlp): Procesarea Limbajului Natural (în Python)- opțional
+* [ios](https://github.com/mehanix/teme-fmi/tree/master/ios): Dezvoltarea aplicatiilor mobile - IOS (în Swift) - opțional
