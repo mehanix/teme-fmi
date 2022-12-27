@@ -2,8 +2,6 @@
 
 Acest repository conține programe scrise de mine în timpul studiilor de licență la [Facultatea de Matematică și Informatică, Universitatea din București.](http://fmi.unibuc.ro/ro/)
 
-Sunt anul II, 2020-2021.
-
  Conținut
 ---------
 ### Anul I:
